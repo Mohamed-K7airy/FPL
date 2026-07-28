@@ -16,19 +16,39 @@ import { startScheduler } from './jobs/scheduler.js';
 
 const app = express();
 
-// Security and utility middlewares
-app.use(helmet());
+// Security & Robust Cross-Origin Resource Sharing (CORS) setup for Vercel & Production
 app.use(
-  cors({
-    origin: true, // Allow configured origins in production
-    credentials: true,
+  helmet({
+    crossOriginResourcePolicy: { policy: 'cross-origin' },
   })
 );
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Allow requests from Vercel deployments, localhost, and custom domains
+      if (
+        !origin ||
+        origin.endsWith('.vercel.app') ||
+        origin === config.clientUrl ||
+        origin.includes('localhost')
+      ) {
+        callback(null, true);
+      } else {
+        callback(null, true); // Permissive CORS for seamless multi-platform access
+      }
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  })
+);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// Mount Routes
+// Mount API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/players', playerRoutes);
 app.use('/api/squad', squadRoutes);
