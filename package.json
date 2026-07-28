@@ -2,6 +2,9 @@
   "name": "fpl-root",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "build": "npm run build --prefix server",
     "start": "npm start --prefix server"
