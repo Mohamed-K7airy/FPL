@@ -1,3 +1,19 @@
+const DEFAULT_RAILWAY_API = 'https://fpl-production-fb03.up.railway.app/api';
+
+function getApiBaseUrl(): string {
+  const envUrl = import.meta.env.VITE_API_BASE_URL;
+  if (envUrl && envUrl.trim().length > 0) {
+    return envUrl;
+  }
+  
+  // If running on Vercel production domain, automatically fallback to Railway API
+  if (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')) {
+    return DEFAULT_RAILWAY_API;
+  }
+
+  return '/api';
+}
+
 export async function apiFetch<T>(
   endpoint: string,
   options: RequestInit = {}
@@ -13,7 +29,7 @@ export async function apiFetch<T>(
     headers['Authorization'] = `Bearer ${token}`;
   }
 
-  const baseUrl = import.meta.env.VITE_API_BASE_URL || '/api';
+  const baseUrl = getApiBaseUrl();
   const cleanBase = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
   const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
 
