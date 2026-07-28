@@ -28,6 +28,8 @@ export const GoogleAd: React.FC<GoogleAdProps> = ({
     }
   }, []);
 
+  const publisherId = import.meta.env.VITE_ADSENSE_CLIENT_ID || 'ca-pub-0000000000000000';
+
   return (
     <div className={`google-ad-wrapper ${className}`} style={{ margin: '20px 0', textAlign: 'center' }}>
       <div
@@ -51,7 +53,7 @@ export const GoogleAd: React.FC<GoogleAdProps> = ({
           overflow: 'hidden',
           ...style,
         }}
-        data-ad-client="ca-pub-0000000000000000"
+        data-ad-client={publisherId}
         data-ad-slot={adSlot}
         data-ad-format={adFormat}
         data-full-width-responsive={fullWidthResponsive ? 'true' : 'false'}
