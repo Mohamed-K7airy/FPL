@@ -28,7 +28,7 @@ export const GoogleAd: React.FC<GoogleAdProps> = ({
     }
   }, []);
 
-  const publisherId = import.meta.env.VITE_ADSENSE_CLIENT_ID || 'ca-pub-0000000000000000';
+  const publisherId = import.meta.env.VITE_ADSENSE_CLIENT_ID || 'ca-pub-6219326586167234';
 
   return (
     <div className={`google-ad-wrapper ${className}`} style={{ margin: '20px 0', textAlign: 'center' }}>
