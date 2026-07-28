@@ -1,5 +1,3 @@
-const API_BASE = '/api';
-
 export async function apiFetch<T>(
   endpoint: string,
   options: RequestInit = {}
@@ -15,15 +13,29 @@ export async function apiFetch<T>(
     headers['Authorization'] = `Bearer ${token}`;
   }
 
-  const res = await fetch(`${API_BASE}${endpoint}`, {
+  const baseUrl = import.meta.env.VITE_API_BASE_URL || '/api';
+  const cleanBase = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+  const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+
+  const url = `${cleanBase}${cleanEndpoint}`;
+
+  const res = await fetch(url, {
     ...options,
     headers,
   });
 
-  const data = await res.json();
+  let data: any;
+  try {
+    data = await res.json();
+  } catch (err) {
+    if (!res.ok) {
+      throw new Error(`Server returned HTTP ${res.status}`);
+    }
+    throw new Error('Invalid response received from API server.');
+  }
 
   if (!res.ok) {
-    throw new Error(data?.error?.message || 'An API error occurred.');
+    throw new Error(data?.error?.message || data?.message || 'An API error occurred.');
   }
 
   return data as T;
