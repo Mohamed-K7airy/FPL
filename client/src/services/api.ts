@@ -1,17 +1,24 @@
 const DEFAULT_RAILWAY_API = 'https://fpl-production-fb03.up.railway.app/api';
 
 function getApiBaseUrl(): string {
-  const envUrl = import.meta.env.VITE_API_BASE_URL;
-  if (envUrl && envUrl.trim().length > 0) {
-    return envUrl;
-  }
+  let envUrl = import.meta.env.VITE_API_BASE_URL;
   
-  // If running on Vercel production domain, automatically fallback to Railway API
-  if (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')) {
-    return DEFAULT_RAILWAY_API;
+  if (!envUrl || envUrl.trim().length === 0) {
+    if (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')) {
+      envUrl = DEFAULT_RAILWAY_API;
+    } else {
+      envUrl = '/api';
+    }
   }
 
-  return '/api';
+  let clean = envUrl.endsWith('/') ? envUrl.slice(0, -1) : envUrl;
+
+  // Auto-fix if domain is missing '/api' prefix (e.g. https://fpl-production-fb03.up.railway.app -> https://fpl-production-fb03.up.railway.app/api)
+  if (clean.startsWith('http') && !clean.endsWith('/api') && !clean.includes('/api/')) {
+    clean += '/api';
+  }
+
+  return clean;
 }
 
 export async function apiFetch<T>(
@@ -30,10 +37,9 @@ export async function apiFetch<T>(
   }
 
   const baseUrl = getApiBaseUrl();
-  const cleanBase = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
   const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
 
-  const url = `${cleanBase}${cleanEndpoint}`;
+  const url = `${baseUrl}${cleanEndpoint}`;
 
   const res = await fetch(url, {
     ...options,
