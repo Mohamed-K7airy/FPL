@@ -108,7 +108,7 @@ router.post('/register', authLimiter, async (req: Request, res: Response): Promi
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: config.nodeEnv === 'production',
-      sameSite: 'strict',
+      sameSite: config.nodeEnv === 'production' ? 'none' as const : 'lax' as const,
       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
     });
 
@@ -161,7 +161,7 @@ router.post('/login', authLimiter, async (req: Request, res: Response): Promise<
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: config.nodeEnv === 'production',
-      sameSite: 'strict',
+      sameSite: config.nodeEnv === 'production' ? 'none' as const : 'lax' as const,
       maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 
@@ -202,7 +202,7 @@ router.post('/refresh', async (req: Request, res: Response): Promise<void> => {
     res.cookie('refreshToken', tokens.refreshToken, {
       httpOnly: true,
       secure: config.nodeEnv === 'production',
-      sameSite: 'strict',
+      sameSite: config.nodeEnv === 'production' ? 'none' as const : 'lax' as const,
       maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 

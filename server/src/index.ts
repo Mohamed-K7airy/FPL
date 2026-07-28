@@ -44,9 +44,28 @@ app.use(
   })
 );
 
+// Explicitly handle preflight requests for all routes
+app.options('*', cors());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+// Request logging middleware
+app.use((req: Request, _res: Response, next: NextFunction) => {
+  logger.info({ method: req.method, url: req.url }, 'Incoming request');
+  next();
+});
+
+// Root route handler
+app.get('/', (req: Request, res: Response) => {
+  res.status(200).json({
+    status: 'ok',
+    service: 'Mini FPL API Server',
+    version: '1.0.0',
+    docs: '/health',
+  });
+});
 
 // Mount API Routes
 app.use('/api/auth', authRoutes);
@@ -61,11 +80,7 @@ app.use('/api/admin', adminRoutes);
 // Start Background Jobs Scheduler
 startScheduler();
 
-// Request logging middleware
-app.use((req: Request, res: Response, next: NextFunction) => {
-  logger.info({ method: req.method, url: req.url }, 'Incoming request');
-  next();
-});
+
 
 // Health check endpoint
 app.get('/health', (req: Request, res: Response) => {
