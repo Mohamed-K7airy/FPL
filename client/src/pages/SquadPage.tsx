@@ -6,7 +6,7 @@ import { PitchView, SquadSlotItem } from '../components/PitchView';
 import { PlayerDetailModal, PlayerDetailData } from '../components/PlayerDetailModal';
 import { GoogleAd } from '../components/GoogleAd';
 import { useNavigate } from 'react-router-dom';
-import { Bot, Headset, GitCompare, Edit, Save } from 'lucide-react';
+import { Bot, Headset, GitCompare, Edit, Save, CheckCircle2, AlertCircle } from 'lucide-react';
 
 export const SquadPage: React.FC = () => {
   const { user } = useAuth();
@@ -19,12 +19,69 @@ export const SquadPage: React.FC = () => {
   const [selectedSlot, setSelectedSlot] = useState<number | null>(null);
   const [activePlayerModal, setActivePlayerModal] = useState<PlayerDetailData | null>(null);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
-
-  const [gw, setGw] = useState(1);
-  const [hideFixtures, setHideFixtures] = useState(false);
-  const [benchBoostUsed, setBenchBoostUsed] = useState(false);
-  const [tripleCaptainUsed, setTripleCaptainUsed] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
+  const [hideFixtures, setHideFixtures] = useState(false);
+  const [gw, setGw] = useState(1);
+  const [usedChips, setUsedChips] = useState<string[]>([]);
+  const [activatingChip, setActivatingChip] = useState(false);
+
+  const fetchChips = async () => {
+    try {
+      const data = await apiFetch<{ usedChips: any[] }>('/chips');
+      const chipsList = (data.usedChips || []).map((c) => c.chip);
+      setUsedChips(chipsList);
+    } catch {
+      // Ignore if empty
+    }
+  };
+
+  useEffect(() => {
+    fetchChips();
+  }, []);
+
+  const isTripleCaptainActive = usedChips.includes('3xc');
+
+  const handleActivateTripleCaptain = async () => {
+    setActivatingChip(true);
+    try {
+      await apiFetch('/chips/activate', {
+        method: 'POST',
+        body: JSON.stringify({ chip: '3xc' }),
+      });
+      await fetchChips();
+      setMessage({ type: 'success', text: isRtl ? 'تم تفعيل خاصية تريبل كابتن بنجاح!' : 'Triple Captain chip activated!' });
+    } catch (err) {
+      setMessage({ type: 'error', text: (err as Error).message });
+    } finally {
+      setActivatingChip(false);
+    }
+  };
+
+  const handleDeactivateTripleCaptain = async () => {
+    setActivatingChip(true);
+    try {
+      await apiFetch('/chips/deactivate', {
+        method: 'POST',
+        body: JSON.stringify({ chip: '3xc' }),
+      });
+      await fetchChips();
+      setMessage({ type: 'success', text: isRtl ? 'تم إلغاء تفعيل خاصية تريبل كابتن بنجاح!' : 'Triple Captain chip deactivated!' });
+    } catch (err) {
+      setMessage({ type: 'error', text: (err as Error).message });
+    } finally {
+      setActivatingChip(false);
+    }
+  };
+
+  // Auto-dismiss toast messages after 3.5s
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage(null);
+      }, 3500);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
 
   const fetchSquad = async () => {
     try {
@@ -144,7 +201,13 @@ export const SquadPage: React.FC = () => {
   };
 
   const totalCost = squad.reduce((sum, p) => sum + (p.nowCost || 50), 0);
-  const teamRating = Math.min(100, Math.round((squad.reduce((acc, p) => acc + (p.fullData?.total_points || 0), 0) / 15) * 1.2 + 65));
+  const gwPoints = squad.reduce((sum, p) => {
+    let pPts = p.points || 0;
+    if (p.isCaptain) {
+      pPts = pPts * (isTripleCaptainActive ? 3 : 2);
+    }
+    return sum + pPts;
+  }, 0);
 
   if (loading) {
     return (
@@ -157,76 +220,122 @@ export const SquadPage: React.FC = () => {
   return (
     <div style={{ maxWidth: '900px', margin: '0 auto' }}>
       {message && (
-        <div
-          style={{
-            padding: '12px 18px',
-            borderRadius: '12px',
-            marginBottom: '16px',
-            background: message.type === 'success' ? '#f0fdf4' : '#fff1f2',
-            border: `1px solid ${message.type === 'success' ? '#bbf7d0' : '#fecdd3'}`,
-            color: message.type === 'success' ? '#16a34a' : '#e11d48',
-            fontSize: '0.9rem',
-            fontWeight: 700,
-          }}
-        >
-          {message.text}
+        <div className="fpl-toast-popup-container">
+          <div className={`fpl-toast-popup ${message.type}`}>
+            <div className="fpl-toast-icon">
+              {message.type === 'success' ? <CheckCircle2 size={20} /> : <AlertCircle size={20} />}
+            </div>
+            <div className="fpl-toast-text">{message.text}</div>
+            <button onClick={() => setMessage(null)} className="fpl-toast-close">×</button>
+          </div>
         </div>
       )}
 
       {/* FantasyProManager Style Master Pitch Card */}
       <div className="fpl-pitch-master-card">
-        {/* Top Nav Bar (السابق / الجولة 1 / التالي + Checkbox) */}
-        <div className="fpl-top-nav-bar">
+        {/* Top Nav Bar (السابق / الجولة 1 / التالي) */}
+        <div className="fpl-top-nav-bar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <button
             onClick={() => setGw((prev) => Math.max(1, prev - 1))}
-            className="fpl-nav-pink-btn"
+            className="fpl-nav-purple-btn"
           >
             {isRtl ? 'السابق' : 'Previous'}
           </button>
 
-          <div className="fpl-gw-pill-badge">
+          <div className="fpl-gw-pill-badge" style={{ margin: '0 auto' }}>
             <span className="fpl-dot-live" />
             <span>{isRtl ? `الجولة ${gw}` : `Gameweek ${gw}`}</span>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <label className="fpl-checkbox-label">
-              <input
-                type="checkbox"
-                checked={hideFixtures}
-                onChange={(e) => setHideFixtures(e.target.checked)}
-              />
-              <span>{isRtl ? 'إخفاء المباريات القادمة' : 'Hide Fixtures'}</span>
-            </label>
-
-            <button
-              onClick={() => setGw((prev) => Math.min(38, prev + 1))}
-              className="fpl-nav-purple-btn"
-            >
-              {isRtl ? 'التالي' : 'Next'}
-            </button>
-          </div>
+          <button
+            onClick={() => setGw((prev) => Math.min(38, prev + 1))}
+            className="fpl-nav-purple-btn"
+          >
+            {isRtl ? 'التالي' : 'Next'}
+          </button>
         </div>
 
-        {/* Top 3 Stat Cards Widget Row */}
+        {/* Stat Cards Row (اليمين: خاصية الجولة | الوسط: قيمة التشكيلة | اليسار: ترتيب الجولة) */}
         <div className="fpl-top-widgets-row">
+          {/* Card 1 (اليمين - Right): خاصية التريبل كابتن (3x) */}
           <div className="fpl-widget-card">
-            <div className="widget-label">{isRtl ? 'اللاعبون المختارون' : 'Players Selected'}</div>
-            <div className="widget-badge purple">
-              15 / 15
+            <div className="widget-label">{isRtl ? 'خاصية الجولة (Chip)' : 'Gameweek Chip'}</div>
+            {isTripleCaptainActive ? (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginTop: '6px', width: '100%' }}>
+                <div
+                  style={{
+                    background: '#10b981',
+                    color: '#ffffff',
+                    padding: '6px 10px',
+                    borderRadius: '8px',
+                    fontWeight: 900,
+                    fontSize: '0.82rem',
+                    textAlign: 'center',
+                  }}
+                >
+                  {isRtl ? 'تريبل كابتن (مفعّلة x3)' : 'Triple Captain Active (x3)'}
+                </div>
+                <button
+                  onClick={handleDeactivateTripleCaptain}
+                  disabled={activatingChip}
+                  style={{
+                    background: '#e11d48',
+                    color: '#ffffff',
+                    border: 'none',
+                    padding: '6px 10px',
+                    borderRadius: '8px',
+                    fontSize: '0.78rem',
+                    fontWeight: 800,
+                    cursor: 'pointer',
+                    width: '100%',
+                  }}
+                >
+                  {activatingChip ? (isRtl ? 'جاري الإلغاء...' : 'Cancelling...') : (isRtl ? 'إلغاء التفعيل' : 'Deactivate')}
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={handleActivateTripleCaptain}
+                disabled={activatingChip}
+                style={{
+                  background: 'linear-gradient(135deg, #0284c7 0%, #38bdf8 100%)',
+                  color: '#ffffff',
+                  padding: '10px 14px',
+                  borderRadius: '12px',
+                  fontWeight: 900,
+                  border: 'none',
+                  cursor: 'pointer',
+                  width: '100%',
+                  marginTop: '6px',
+                  fontSize: '0.85rem',
+                  boxShadow: '0 4px 12px rgba(2, 132, 199, 0.4)',
+                }}
+              >
+                {activatingChip ? (isRtl ? 'جاري التفعيل...' : 'Activating...') : (isRtl ? 'تفعيل تريبل كابتن (3x)' : 'Play Triple Captain (3x)')}
+              </button>
+            )}
+            <div className="widget-sub-label" style={{ marginTop: '4px' }}>
+              {isTripleCaptainActive
+                ? (isRtl ? 'محفوظة ومفعلة للجولة' : 'Saved & Active for GW')
+                : (isRtl ? 'اضغط لتفعيل الخاصية' : 'Click to activate')}
             </div>
           </div>
 
+          {/* Card 2 (الوسط - Center Featured): قيمة التشكيلة */}
           <div className="fpl-widget-card featured">
-            <div className="widget-label">{isRtl ? 'الميزانية' : 'Budget'}</div>
-            <div className="widget-num">£{((user?.bank || 1000 - totalCost) / 10).toFixed(1)}</div>
-            <div className="widget-sub-label">{isRtl ? 'إدخال الميزانية' : 'Edit Budget'}</div>
+            <div className="widget-label">{isRtl ? 'قيمة التشكيلة' : 'Squad Value'}</div>
+            <div className="widget-num">£{((squad.reduce((sum, p) => sum + (p.nowCost || 50), 0)) / 10).toFixed(1)}m</div>
+            <div className="widget-sub-label">{isRtl ? 'إجمالي قيمة لاعبي التشكيلة' : 'Total squad value'}</div>
           </div>
 
+          {/* Card 3 (اليسار - Left): ترتيب الجولة بين جميع المشاركين */}
           <div className="fpl-widget-card">
-            <div className="widget-label">{isRtl ? 'تقييم الفريق' : 'Team Rating'}</div>
+            <div className="widget-label">{isRtl ? 'ترتيب الجولة' : 'GW Rank'}</div>
             <div className="widget-badge purple">
-              {teamRating}/100
+              #{user?.rank || 1}
+            </div>
+            <div className="widget-sub-label" style={{ marginTop: '4px' }}>
+              {isRtl ? 'ترتيبك بين جميع المشاركين' : 'Rank among all users'}
             </div>
           </div>
         </div>
@@ -241,12 +350,7 @@ export const SquadPage: React.FC = () => {
             onSetVice={handleSetVice}
             onPlayerInfoClick={(pData) => setActivePlayerModal(pData)}
             hideFixtures={hideFixtures}
-            benchChips={{
-              benchBoostUsed,
-              tripleCaptainUsed,
-              onToggleBenchBoost: () => setBenchBoostUsed(!benchBoostUsed),
-              onToggleTripleCaptain: () => setTripleCaptainUsed(!tripleCaptainUsed),
-            }}
+            gw={gw}
           />
         </div>
 
@@ -272,23 +376,6 @@ export const SquadPage: React.FC = () => {
               <span>{isRtl ? 'تعديل الفريق' : 'Edit Team / Transfers'}</span>
             </button>
           )}
-
-          <div className="fpl-toolbar-actions-row">
-            <button className="fpl-tool-btn gray">
-              <GitCompare size={16} />
-              <span>{isRtl ? 'مقارنة الفرق' : 'Compare Teams'}</span>
-            </button>
-
-            <button onClick={() => navigate('/transfers')} className="fpl-tool-btn cyan">
-              <Headset size={16} />
-              <span>{isRtl ? 'استشارة خبير' : 'Expert Advice'}</span>
-            </button>
-
-            <button onClick={() => navigate('/transfers')} className="fpl-tool-btn purple">
-              <Bot size={16} />
-              <span>{isRtl ? 'تغييرات بالذكاء الاصطناعي' : 'AI Smart Transfers'}</span>
-            </button>
-          </div>
         </div>
       </div>
 

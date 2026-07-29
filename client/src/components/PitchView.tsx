@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { PlayerDetailData } from './PlayerDetailModal';
-import { ArrowUpDown, Crown, Shield, Info, X } from 'lucide-react';
+import { ArrowUpDown, Crown, Shield, Info, X, Eye } from 'lucide-react';
 
 export interface SquadSlotItem {
   playerId?: number;
@@ -31,6 +31,7 @@ interface PitchViewProps {
   onPlayerInfoClick?: (player: PlayerDetailData) => void;
   readOnly?: boolean;
   hideFixtures?: boolean;
+  gw?: number;
   benchChips?: {
     benchBoostUsed?: boolean;
     tripleCaptainUsed?: boolean;
@@ -39,44 +40,60 @@ interface PitchViewProps {
   };
 }
 
-/* Premier League Official Team Fixtures & FDR Mapping */
-const TEAM_SCHEDULES: Record<string, { next: string; fixtures: { opp: string; diff: number }[] }> = {
-  ARS: { next: 'WOL (H)', fixtures: [{ opp: 'WOL', diff: 2 }, { opp: 'AVL', diff: 3 }, { opp: 'BHA', diff: 3 }, { opp: 'TOT', diff: 4 }, { opp: 'MCI', diff: 5 }] },
-  MCI: { next: 'CHE (A)', fixtures: [{ opp: 'CHE', diff: 4 }, { opp: 'IPS', diff: 2 }, { opp: 'WHU', diff: 2 }, { opp: 'BRE', diff: 2 }, { opp: 'ARS', diff: 5 }] },
-  LIV: { next: 'IPS (A)', fixtures: [{ opp: 'IPS', diff: 2 }, { opp: 'BRE', diff: 2 }, { opp: 'MUN', diff: 4 }, { opp: 'NFO', diff: 2 }, { opp: 'BOU', diff: 2 }] },
-  CHE: { next: 'MCI (H)', fixtures: [{ opp: 'MCI', diff: 5 }, { opp: 'WOL', diff: 2 }, { opp: 'CRY', diff: 3 }, { opp: 'BOU', diff: 2 }, { opp: 'WHU', diff: 3 }] },
-  MUN: { next: 'FUL (H)', fixtures: [{ opp: 'FUL', diff: 2 }, { opp: 'BHA', diff: 3 }, { opp: 'LIV', diff: 5 }, { opp: 'SOU', diff: 2 }, { opp: 'CRY', diff: 3 }] },
-  TOT: { next: 'LEI (A)', fixtures: [{ opp: 'LEI', diff: 2 }, { opp: 'EVE', diff: 2 }, { opp: 'NEW', diff: 4 }, { opp: 'ARS', diff: 5 }, { opp: 'BRE', diff: 2 }] },
-  NEW: { next: 'SOU (H)', fixtures: [{ opp: 'SOU', diff: 2 }, { opp: 'BOU', diff: 2 }, { opp: 'TOT', diff: 4 }, { opp: 'WOL', diff: 2 }, { opp: 'FUL', diff: 2 }] },
-  AVL: { next: 'WHU (A)', fixtures: [{ opp: 'WHU', diff: 3 }, { opp: 'ARS', diff: 5 }, { opp: 'LEI', diff: 2 }, { opp: 'EVE', diff: 2 }, { opp: 'WOL', diff: 2 }] },
-  BOU: { next: 'NFO (A)', fixtures: [{ opp: 'NFO', diff: 2 }, { opp: 'NEW', diff: 4 }, { opp: 'EVE', diff: 2 }, { opp: 'CHE', diff: 4 }, { opp: 'LIV', diff: 5 }] },
-  BRE: { next: 'CRY (H)', fixtures: [{ opp: 'CRY', diff: 3 }, { opp: 'LIV', diff: 5 }, { opp: 'SOU', diff: 2 }, { opp: 'MCI', diff: 5 }, { opp: 'TOT', diff: 4 }] },
-  BHA: { next: 'EVE (A)', fixtures: [{ opp: 'EVE', diff: 2 }, { opp: 'MUN', diff: 4 }, { opp: 'ARS', diff: 5 }, { opp: 'IPS', diff: 2 }, { opp: 'NFO', diff: 2 }] },
-  CRY: { next: 'BRE (A)', fixtures: [{ opp: 'BRE', diff: 2 }, { opp: 'WHU', diff: 3 }, { opp: 'CHE', diff: 4 }, { opp: 'LEI', diff: 2 }, { opp: 'MUN', diff: 4 }] },
-  EVE: { next: 'BHA (H)', fixtures: [{ opp: 'BHA', diff: 3 }, { opp: 'TOT', diff: 4 }, { opp: 'BOU', diff: 2 }, { opp: 'AVL', diff: 3 }, { opp: 'LEI', diff: 2 }] },
-  FUL: { next: 'MUN (A)', fixtures: [{ opp: 'MUN', diff: 4 }, { opp: 'LEI', diff: 2 }, { opp: 'IPS', diff: 2 }, { opp: 'WHU', diff: 3 }, { opp: 'NEW', diff: 4 }] },
-  IPS: { next: 'LIV (H)', fixtures: [{ opp: 'LIV', diff: 5 }, { opp: 'MCI', diff: 5 }, { opp: 'FUL', diff: 3 }, { opp: 'BHA', diff: 3 }, { opp: 'SOU', diff: 2 }] },
-  LEI: { next: 'TOT (H)', fixtures: [{ opp: 'TOT', diff: 4 }, { opp: 'FUL', diff: 3 }, { opp: 'AVL', diff: 3 }, { opp: 'CRY', diff: 3 }, { opp: 'EVE', diff: 2 }] },
-  NFO: { next: 'BOU (H)', fixtures: [{ opp: 'BOU', diff: 2 }, { opp: 'SOU', diff: 2 }, { opp: 'WOL', diff: 2 }, { opp: 'LIV', diff: 5 }, { opp: 'BHA', diff: 3 }] },
-  SOU: { next: 'NEW (A)', fixtures: [{ opp: 'NEW', diff: 4 }, { opp: 'NFO', diff: 2 }, { opp: 'BRE', diff: 2 }, { opp: 'MUN', diff: 4 }, { opp: 'IPS', diff: 2 }] },
-  WHU: { next: 'AVL (H)', fixtures: [{ opp: 'AVL', diff: 3 }, { opp: 'CRY', diff: 3 }, { opp: 'MCI', diff: 5 }, { opp: 'FUL', diff: 3 }, { opp: 'CHE', diff: 4 }] },
-  WOL: { next: 'ARS (A)', fixtures: [{ opp: 'ARS', diff: 5 }, { opp: 'CHE', diff: 4 }, { opp: 'NFO', diff: 2 }, { opp: 'NEW', diff: 4 }, { opp: 'AVL', diff: 3 }] },
+/* Premier League 2026/27 Official Team Fixtures for All 38 Gameweeks (from Official FPL API) */
+const TEAM_SCHEDULES: Record<string, { opp: string; isHome: boolean }[]> = {
+  ARS: [{ opp: 'COV', isHome: true }, { opp: 'AVL', isHome: false }, { opp: 'CHE', isHome: true }, { opp: 'SUN', isHome: false }, { opp: 'BHA', isHome: false }, { opp: 'LEE', isHome: true }, { opp: 'NFO', isHome: false }, { opp: 'EVE', isHome: true }, { opp: 'LIV', isHome: false }, { opp: 'HUL', isHome: true }, { opp: 'NEW', isHome: false }, { opp: 'MCI', isHome: true }, { opp: 'BRE', isHome: false }, { opp: 'TOT', isHome: false }, { opp: 'BOU', isHome: true }, { opp: 'MUN', isHome: true }, { opp: 'CRY', isHome: false }, { opp: 'FUL', isHome: false }, { opp: 'IPS', isHome: true }, { opp: 'BRE', isHome: true }, { opp: 'HUL', isHome: false }, { opp: 'NEW', isHome: true }, { opp: 'MCI', isHome: false }, { opp: 'LIV', isHome: true }, { opp: 'IPS', isHome: false }, { opp: 'FUL', isHome: true }, { opp: 'MUN', isHome: false }, { opp: 'CRY', isHome: true }, { opp: 'CHE', isHome: false }, { opp: 'SUN', isHome: true }, { opp: 'COV', isHome: false }, { opp: 'AVL', isHome: true }, { opp: 'BOU', isHome: false }, { opp: 'TOT', isHome: true }, { opp: 'LEE', isHome: false }, { opp: 'NFO', isHome: true }, { opp: 'EVE', isHome: false }, { opp: 'BHA', isHome: true }],
+  AVL: [{ opp: 'BHA', isHome: false }, { opp: 'ARS', isHome: true }, { opp: 'HUL', isHome: false }, { opp: 'NFO', isHome: true }, { opp: 'TOT', isHome: false }, { opp: 'BRE', isHome: true }, { opp: 'NEW', isHome: false }, { opp: 'MCI', isHome: true }, { opp: 'FUL', isHome: true }, { opp: 'MUN', isHome: false }, { opp: 'SUN', isHome: true }, { opp: 'IPS', isHome: false }, { opp: 'EVE', isHome: true }, { opp: 'CRY', isHome: true }, { opp: 'COV', isHome: false }, { opp: 'CHE', isHome: false }, { opp: 'LEE', isHome: true }, { opp: 'LIV', isHome: true }, { opp: 'BOU', isHome: false }, { opp: 'EVE', isHome: false }, { opp: 'MUN', isHome: true }, { opp: 'FUL', isHome: false }, { opp: 'IPS', isHome: true }, { opp: 'SUN', isHome: false }, { opp: 'BOU', isHome: true }, { opp: 'LEE', isHome: false }, { opp: 'CHE', isHome: true }, { opp: 'LIV', isHome: false }, { opp: 'HUL', isHome: true }, { opp: 'NFO', isHome: false }, { opp: 'BHA', isHome: true }, { opp: 'ARS', isHome: false }, { opp: 'COV', isHome: true }, { opp: 'CRY', isHome: false }, { opp: 'BRE', isHome: false }, { opp: 'NEW', isHome: true }, { opp: 'MCI', isHome: false }, { opp: 'TOT', isHome: true }],
+  BHA: [{ opp: 'AVL', isHome: true }, { opp: 'CHE', isHome: false }, { opp: 'LEE', isHome: true }, { opp: 'COV', isHome: false }, { opp: 'ARS', isHome: true }, { opp: 'SUN', isHome: false }, { opp: 'CRY', isHome: true }, { opp: 'LIV', isHome: false }, { opp: 'MCI', isHome: false }, { opp: 'BRE', isHome: true }, { opp: 'HUL', isHome: false }, { opp: 'NEW', isHome: true }, { opp: 'BOU', isHome: false }, { opp: 'NFO', isHome: false }, { opp: 'EVE', isHome: true }, { opp: 'IPS', isHome: true }, { opp: 'FUL', isHome: false }, { opp: 'TOT', isHome: false }, { opp: 'MUN', isHome: true }, { opp: 'BOU', isHome: true }, { opp: 'BRE', isHome: false }, { opp: 'MCI', isHome: true }, { opp: 'NEW', isHome: false }, { opp: 'HUL', isHome: true }, { opp: 'MUN', isHome: false }, { opp: 'TOT', isHome: true }, { opp: 'IPS', isHome: false }, { opp: 'FUL', isHome: true }, { opp: 'LEE', isHome: false }, { opp: 'COV', isHome: true }, { opp: 'AVL', isHome: false }, { opp: 'CHE', isHome: true }, { opp: 'EVE', isHome: false }, { opp: 'NFO', isHome: true }, { opp: 'SUN', isHome: true }, { opp: 'CRY', isHome: false }, { opp: 'LIV', isHome: true }, { opp: 'ARS', isHome: false }],
+  BOU: [{ opp: 'MCI', isHome: false }, { opp: 'EVE', isHome: true }, { opp: 'NEW', isHome: false }, { opp: 'BRE', isHome: true }, { opp: 'LIV', isHome: true }, { opp: 'CHE', isHome: false }, { opp: 'SUN', isHome: true }, { opp: 'MUN', isHome: false }, { opp: 'LEE', isHome: true }, { opp: 'IPS', isHome: false }, { opp: 'NFO', isHome: true }, { opp: 'FUL', isHome: false }, { opp: 'BHA', isHome: true }, { opp: 'HUL', isHome: true }, { opp: 'ARS', isHome: false }, { opp: 'COV', isHome: true }, { opp: 'TOT', isHome: false }, { opp: 'CRY', isHome: false }, { opp: 'AVL', isHome: true }, { opp: 'BHA', isHome: false }, { opp: 'IPS', isHome: true }, { opp: 'NFO', isHome: false }, { opp: 'FUL', isHome: true }, { opp: 'LEE', isHome: false }, { opp: 'AVL', isHome: false }, { opp: 'CRY', isHome: true }, { opp: 'COV', isHome: false }, { opp: 'TOT', isHome: true }, { opp: 'NEW', isHome: true }, { opp: 'BRE', isHome: false }, { opp: 'MCI', isHome: true }, { opp: 'EVE', isHome: false }, { opp: 'ARS', isHome: true }, { opp: 'HUL', isHome: false }, { opp: 'MUN', isHome: true }, { opp: 'SUN', isHome: false }, { opp: 'CHE', isHome: true }, { opp: 'LIV', isHome: false }],
+  BRE: [{ opp: 'TOT', isHome: true }, { opp: 'LEE', isHome: false }, { opp: 'SUN', isHome: true }, { opp: 'BOU', isHome: false }, { opp: 'CHE', isHome: true }, { opp: 'AVL', isHome: false }, { opp: 'LIV', isHome: true }, { opp: 'HUL', isHome: false }, { opp: 'NFO', isHome: true }, { opp: 'BHA', isHome: false }, { opp: 'EVE', isHome: true }, { opp: 'MUN', isHome: false }, { opp: 'ARS', isHome: true }, { opp: 'MCI', isHome: true }, { opp: 'FUL', isHome: false }, { opp: 'NEW', isHome: true }, { opp: 'IPS', isHome: false }, { opp: 'COV', isHome: false }, { opp: 'CRY', isHome: true }, { opp: 'ARS', isHome: false }, { opp: 'BHA', isHome: true }, { opp: 'EVE', isHome: false }, { opp: 'MUN', isHome: true }, { opp: 'NFO', isHome: false }, { opp: 'CRY', isHome: false }, { opp: 'COV', isHome: true }, { opp: 'NEW', isHome: false }, { opp: 'IPS', isHome: true }, { opp: 'SUN', isHome: false }, { opp: 'BOU', isHome: true }, { opp: 'TOT', isHome: false }, { opp: 'LEE', isHome: true }, { opp: 'FUL', isHome: true }, { opp: 'MCI', isHome: false }, { opp: 'AVL', isHome: true }, { opp: 'LIV', isHome: false }, { opp: 'HUL', isHome: true }, { opp: 'CHE', isHome: false }],
+  CHE: [{ opp: 'FUL', isHome: false }, { opp: 'BHA', isHome: true }, { opp: 'ARS', isHome: false }, { opp: 'HUL', isHome: true }, { opp: 'BRE', isHome: false }, { opp: 'BOU', isHome: true }, { opp: 'EVE', isHome: false }, { opp: 'TOT', isHome: true }, { opp: 'MUN', isHome: true }, { opp: 'SUN', isHome: false }, { opp: 'LEE', isHome: true }, { opp: 'NFO', isHome: false }, { opp: 'CRY', isHome: true }, { opp: 'LIV', isHome: true }, { opp: 'MCI', isHome: false }, { opp: 'AVL', isHome: true }, { opp: 'COV', isHome: false }, { opp: 'IPS', isHome: false }, { opp: 'NEW', isHome: true }, { opp: 'CRY', isHome: false }, { opp: 'SUN', isHome: true }, { opp: 'LEE', isHome: false }, { opp: 'NFO', isHome: true }, { opp: 'MUN', isHome: false }, { opp: 'NEW', isHome: false }, { opp: 'IPS', isHome: true }, { opp: 'AVL', isHome: false }, { opp: 'COV', isHome: true }, { opp: 'ARS', isHome: true }, { opp: 'HUL', isHome: false }, { opp: 'FUL', isHome: true }, { opp: 'BHA', isHome: false }, { opp: 'MCI', isHome: true }, { opp: 'LIV', isHome: false }, { opp: 'TOT', isHome: false }, { opp: 'EVE', isHome: true }, { opp: 'BOU', isHome: false }, { opp: 'BRE', isHome: true }],
+  COV: [{ opp: 'ARS', isHome: false }, { opp: 'HUL', isHome: true }, { opp: 'MCI', isHome: false }, { opp: 'BHA', isHome: true }, { opp: 'NFO', isHome: false }, { opp: 'NEW', isHome: true }, { opp: 'TOT', isHome: false }, { opp: 'FUL', isHome: true }, { opp: 'SUN', isHome: true }, { opp: 'EVE', isHome: false }, { opp: 'CRY', isHome: true }, { opp: 'LEE', isHome: false }, { opp: 'IPS', isHome: true }, { opp: 'MUN', isHome: false }, { opp: 'AVL', isHome: true }, { opp: 'BOU', isHome: false }, { opp: 'CHE', isHome: true }, { opp: 'BRE', isHome: true }, { opp: 'LIV', isHome: false }, { opp: 'IPS', isHome: false }, { opp: 'EVE', isHome: true }, { opp: 'SUN', isHome: false }, { opp: 'LEE', isHome: true }, { opp: 'CRY', isHome: false }, { opp: 'LIV', isHome: true }, { opp: 'BRE', isHome: false }, { opp: 'BOU', isHome: true }, { opp: 'CHE', isHome: false }, { opp: 'MCI', isHome: true }, { opp: 'BHA', isHome: false }, { opp: 'ARS', isHome: true }, { opp: 'HUL', isHome: false }, { opp: 'AVL', isHome: false }, { opp: 'MUN', isHome: true }, { opp: 'NEW', isHome: false }, { opp: 'TOT', isHome: true }, { opp: 'FUL', isHome: false }, { opp: 'NFO', isHome: true }],
+  CRY: [{ opp: 'EVE', isHome: false }, { opp: 'MCI', isHome: true }, { opp: 'FUL', isHome: false }, { opp: 'IPS', isHome: true }, { opp: 'LEE', isHome: false }, { opp: 'NFO', isHome: true }, { opp: 'BHA', isHome: false }, { opp: 'NEW', isHome: true }, { opp: 'TOT', isHome: false }, { opp: 'LIV', isHome: true }, { opp: 'COV', isHome: false }, { opp: 'HUL', isHome: true }, { opp: 'CHE', isHome: false }, { opp: 'AVL', isHome: false }, { opp: 'MUN', isHome: true }, { opp: 'SUN', isHome: false }, { opp: 'ARS', isHome: true }, { opp: 'BOU', isHome: true }, { opp: 'BRE', isHome: false }, { opp: 'CHE', isHome: true }, { opp: 'LIV', isHome: false }, { opp: 'TOT', isHome: true }, { opp: 'HUL', isHome: false }, { opp: 'COV', isHome: true }, { opp: 'BRE', isHome: true }, { opp: 'BOU', isHome: false }, { opp: 'SUN', isHome: true }, { opp: 'ARS', isHome: false }, { opp: 'FUL', isHome: true }, { opp: 'IPS', isHome: false }, { opp: 'EVE', isHome: true }, { opp: 'MCI', isHome: false }, { opp: 'MUN', isHome: false }, { opp: 'AVL', isHome: true }, { opp: 'NFO', isHome: false }, { opp: 'BHA', isHome: true }, { opp: 'NEW', isHome: false }, { opp: 'LEE', isHome: true }],
+  EVE: [{ opp: 'CRY', isHome: true }, { opp: 'BOU', isHome: false }, { opp: 'MUN', isHome: true }, { opp: 'TOT', isHome: false }, { opp: 'IPS', isHome: true }, { opp: 'HUL', isHome: false }, { opp: 'CHE', isHome: true }, { opp: 'ARS', isHome: false }, { opp: 'NEW', isHome: false }, { opp: 'COV', isHome: true }, { opp: 'BRE', isHome: false }, { opp: 'LIV', isHome: true }, { opp: 'AVL', isHome: false }, { opp: 'FUL', isHome: true }, { opp: 'BHA', isHome: false }, { opp: 'NFO', isHome: false }, { opp: 'SUN', isHome: true }, { opp: 'MCI', isHome: true }, { opp: 'LEE', isHome: false }, { opp: 'AVL', isHome: true }, { opp: 'COV', isHome: false }, { opp: 'BRE', isHome: true }, { opp: 'LIV', isHome: false }, { opp: 'NEW', isHome: true }, { opp: 'LEE', isHome: true }, { opp: 'SUN', isHome: false }, { opp: 'NFO', isHome: true }, { opp: 'MCI', isHome: false }, { opp: 'MUN', isHome: false }, { opp: 'TOT', isHome: true }, { opp: 'CRY', isHome: false }, { opp: 'BOU', isHome: true }, { opp: 'BHA', isHome: true }, { opp: 'FUL', isHome: false }, { opp: 'HUL', isHome: true }, { opp: 'CHE', isHome: false }, { opp: 'ARS', isHome: true }, { opp: 'IPS', isHome: false }],
+  FUL: [{ opp: 'CHE', isHome: true }, { opp: 'SUN', isHome: false }, { opp: 'CRY', isHome: true }, { opp: 'LIV', isHome: false }, { opp: 'MUN', isHome: true }, { opp: 'IPS', isHome: false }, { opp: 'HUL', isHome: true }, { opp: 'COV', isHome: false }, { opp: 'AVL', isHome: false }, { opp: 'NEW', isHome: true }, { opp: 'MCI', isHome: false }, { opp: 'BOU', isHome: true }, { opp: 'TOT', isHome: false }, { opp: 'EVE', isHome: false }, { opp: 'BRE', isHome: true }, { opp: 'LEE', isHome: false }, { opp: 'BHA', isHome: true }, { opp: 'ARS', isHome: true }, { opp: 'NFO', isHome: false }, { opp: 'TOT', isHome: true }, { opp: 'NEW', isHome: false }, { opp: 'AVL', isHome: true }, { opp: 'BOU', isHome: false }, { opp: 'MCI', isHome: true }, { opp: 'NFO', isHome: true }, { opp: 'ARS', isHome: false }, { opp: 'LEE', isHome: true }, { opp: 'BHA', isHome: false }, { opp: 'CRY', isHome: false }, { opp: 'LIV', isHome: true }, { opp: 'CHE', isHome: false }, { opp: 'SUN', isHome: true }, { opp: 'BRE', isHome: false }, { opp: 'EVE', isHome: true }, { opp: 'IPS', isHome: true }, { opp: 'HUL', isHome: false }, { opp: 'COV', isHome: true }, { opp: 'MUN', isHome: false }],
+  HUL: [{ opp: 'MUN', isHome: true }, { opp: 'COV', isHome: false }, { opp: 'AVL', isHome: true }, { opp: 'CHE', isHome: false }, { opp: 'NEW', isHome: false }, { opp: 'EVE', isHome: true }, { opp: 'FUL', isHome: false }, { opp: 'BRE', isHome: true }, { opp: 'IPS', isHome: true }, { opp: 'ARS', isHome: false }, { opp: 'BHA', isHome: true }, { opp: 'CRY', isHome: false }, { opp: 'NFO', isHome: true }, { opp: 'BOU', isHome: false }, { opp: 'TOT', isHome: true }, { opp: 'MCI', isHome: false }, { opp: 'LIV', isHome: true }, { opp: 'LEE', isHome: true }, { opp: 'SUN', isHome: false }, { opp: 'NFO', isHome: false }, { opp: 'ARS', isHome: true }, { opp: 'IPS', isHome: false }, { opp: 'CRY', isHome: true }, { opp: 'BHA', isHome: false }, { opp: 'SUN', isHome: true }, { opp: 'LIV', isHome: false }, { opp: 'MCI', isHome: true }, { opp: 'LEE', isHome: false }, { opp: 'AVL', isHome: false }, { opp: 'CHE', isHome: true }, { opp: 'MUN', isHome: false }, { opp: 'COV', isHome: true }, { opp: 'TOT', isHome: false }, { opp: 'BOU', isHome: true }, { opp: 'EVE', isHome: false }, { opp: 'FUL', isHome: true }, { opp: 'BRE', isHome: false }, { opp: 'NEW', isHome: true }],
+  IPS: [{ opp: 'SUN', isHome: true }, { opp: 'MUN', isHome: false }, { opp: 'LIV', isHome: true }, { opp: 'CRY', isHome: false }, { opp: 'EVE', isHome: false }, { opp: 'FUL', isHome: true }, { opp: 'MCI', isHome: false }, { opp: 'NFO', isHome: true }, { opp: 'HUL', isHome: false }, { opp: 'BOU', isHome: true }, { opp: 'TOT', isHome: false }, { opp: 'AVL', isHome: true }, { opp: 'COV', isHome: false }, { opp: 'LEE', isHome: false }, { opp: 'NEW', isHome: true }, { opp: 'BHA', isHome: false }, { opp: 'BRE', isHome: true }, { opp: 'CHE', isHome: true }, { opp: 'ARS', isHome: false }, { opp: 'COV', isHome: true }, { opp: 'BOU', isHome: false }, { opp: 'HUL', isHome: true }, { opp: 'AVL', isHome: false }, { opp: 'TOT', isHome: true }, { opp: 'ARS', isHome: true }, { opp: 'CHE', isHome: false }, { opp: 'BHA', isHome: true }, { opp: 'BRE', isHome: false }, { opp: 'LIV', isHome: false }, { opp: 'CRY', isHome: true }, { opp: 'SUN', isHome: false }, { opp: 'MUN', isHome: true }, { opp: 'NEW', isHome: false }, { opp: 'LEE', isHome: true }, { opp: 'FUL', isHome: false }, { opp: 'MCI', isHome: true }, { opp: 'NFO', isHome: false }, { opp: 'EVE', isHome: true }],
+  LEE: [{ opp: 'NFO', isHome: false }, { opp: 'BRE', isHome: true }, { opp: 'BHA', isHome: false }, { opp: 'NEW', isHome: true }, { opp: 'CRY', isHome: true }, { opp: 'ARS', isHome: false }, { opp: 'MUN', isHome: true }, { opp: 'SUN', isHome: false }, { opp: 'BOU', isHome: false }, { opp: 'TOT', isHome: true }, { opp: 'CHE', isHome: false }, { opp: 'COV', isHome: true }, { opp: 'MCI', isHome: false }, { opp: 'IPS', isHome: true }, { opp: 'LIV', isHome: false }, { opp: 'FUL', isHome: true }, { opp: 'AVL', isHome: false }, { opp: 'HUL', isHome: false }, { opp: 'EVE', isHome: true }, { opp: 'MCI', isHome: true }, { opp: 'TOT', isHome: false }, { opp: 'CHE', isHome: true }, { opp: 'COV', isHome: false }, { opp: 'BOU', isHome: true }, { opp: 'EVE', isHome: false }, { opp: 'AVL', isHome: true }, { opp: 'FUL', isHome: false }, { opp: 'HUL', isHome: true }, { opp: 'BHA', isHome: true }, { opp: 'NEW', isHome: false }, { opp: 'NFO', isHome: true }, { opp: 'BRE', isHome: false }, { opp: 'LIV', isHome: true }, { opp: 'IPS', isHome: false }, { opp: 'ARS', isHome: true }, { opp: 'MUN', isHome: false }, { opp: 'SUN', isHome: true }, { opp: 'CRY', isHome: false }],
+  LIV: [{ opp: 'NEW', isHome: false }, { opp: 'NFO', isHome: true }, { opp: 'IPS', isHome: false }, { opp: 'FUL', isHome: true }, { opp: 'BOU', isHome: false }, { opp: 'MCI', isHome: true }, { opp: 'BRE', isHome: false }, { opp: 'BHA', isHome: true }, { opp: 'ARS', isHome: true }, { opp: 'CRY', isHome: false }, { opp: 'MUN', isHome: true }, { opp: 'EVE', isHome: false }, { opp: 'SUN', isHome: true }, { opp: 'CHE', isHome: false }, { opp: 'LEE', isHome: true }, { opp: 'TOT', isHome: true }, { opp: 'HUL', isHome: false }, { opp: 'AVL', isHome: false }, { opp: 'COV', isHome: true }, { opp: 'SUN', isHome: false }, { opp: 'CRY', isHome: true }, { opp: 'MUN', isHome: false }, { opp: 'EVE', isHome: true }, { opp: 'ARS', isHome: false }, { opp: 'COV', isHome: false }, { opp: 'HUL', isHome: true }, { opp: 'TOT', isHome: false }, { opp: 'AVL', isHome: true }, { opp: 'IPS', isHome: true }, { opp: 'FUL', isHome: false }, { opp: 'NEW', isHome: true }, { opp: 'NFO', isHome: false }, { opp: 'LEE', isHome: false }, { opp: 'CHE', isHome: true }, { opp: 'MCI', isHome: false }, { opp: 'BRE', isHome: true }, { opp: 'BHA', isHome: false }, { opp: 'BOU', isHome: true }],
+  MCI: [{ opp: 'BOU', isHome: true }, { opp: 'CRY', isHome: false }, { opp: 'COV', isHome: true }, { opp: 'MUN', isHome: false }, { opp: 'SUN', isHome: true }, { opp: 'LIV', isHome: false }, { opp: 'IPS', isHome: true }, { opp: 'AVL', isHome: false }, { opp: 'BHA', isHome: true }, { opp: 'NFO', isHome: false }, { opp: 'FUL', isHome: true }, { opp: 'ARS', isHome: false }, { opp: 'LEE', isHome: true }, { opp: 'BRE', isHome: false }, { opp: 'CHE', isHome: true }, { opp: 'HUL', isHome: true }, { opp: 'NEW', isHome: false }, { opp: 'EVE', isHome: false }, { opp: 'TOT', isHome: true }, { opp: 'LEE', isHome: false }, { opp: 'NFO', isHome: true }, { opp: 'BHA', isHome: false }, { opp: 'ARS', isHome: true }, { opp: 'FUL', isHome: false }, { opp: 'TOT', isHome: false }, { opp: 'NEW', isHome: true }, { opp: 'HUL', isHome: false }, { opp: 'EVE', isHome: true }, { opp: 'COV', isHome: false }, { opp: 'MUN', isHome: true }, { opp: 'BOU', isHome: false }, { opp: 'CRY', isHome: true }, { opp: 'CHE', isHome: false }, { opp: 'BRE', isHome: true }, { opp: 'LIV', isHome: true }, { opp: 'IPS', isHome: false }, { opp: 'AVL', isHome: true }, { opp: 'SUN', isHome: false }],
+  MUN: [{ opp: 'HUL', isHome: false }, { opp: 'IPS', isHome: true }, { opp: 'EVE', isHome: false }, { opp: 'MCI', isHome: true }, { opp: 'FUL', isHome: false }, { opp: 'TOT', isHome: true }, { opp: 'LEE', isHome: false }, { opp: 'BOU', isHome: true }, { opp: 'CHE', isHome: false }, { opp: 'AVL', isHome: true }, { opp: 'LIV', isHome: false }, { opp: 'BRE', isHome: true }, { opp: 'NEW', isHome: false }, { opp: 'COV', isHome: true }, { opp: 'CRY', isHome: false }, { opp: 'ARS', isHome: false }, { opp: 'NFO', isHome: true }, { opp: 'SUN', isHome: true }, { opp: 'BHA', isHome: false }, { opp: 'NEW', isHome: true }, { opp: 'AVL', isHome: false }, { opp: 'LIV', isHome: true }, { opp: 'BRE', isHome: false }, { opp: 'CHE', isHome: true }, { opp: 'BHA', isHome: true }, { opp: 'NFO', isHome: false }, { opp: 'ARS', isHome: true }, { opp: 'SUN', isHome: false }, { opp: 'EVE', isHome: true }, { opp: 'MCI', isHome: false }, { opp: 'HUL', isHome: true }, { opp: 'IPS', isHome: false }, { opp: 'CRY', isHome: true }, { opp: 'COV', isHome: false }, { opp: 'BOU', isHome: false }, { opp: 'LEE', isHome: true }, { opp: 'TOT', isHome: false }, { opp: 'FUL', isHome: true }],
+  NEW: [{ opp: 'LIV', isHome: true }, { opp: 'TOT', isHome: false }, { opp: 'BOU', isHome: true }, { opp: 'LEE', isHome: false }, { opp: 'HUL', isHome: true }, { opp: 'COV', isHome: false }, { opp: 'AVL', isHome: true }, { opp: 'CRY', isHome: false }, { opp: 'EVE', isHome: true }, { opp: 'FUL', isHome: false }, { opp: 'ARS', isHome: true }, { opp: 'BHA', isHome: false }, { opp: 'MUN', isHome: true }, { opp: 'SUN', isHome: true }, { opp: 'IPS', isHome: false }, { opp: 'BRE', isHome: false }, { opp: 'MCI', isHome: true }, { opp: 'NFO', isHome: true }, { opp: 'CHE', isHome: false }, { opp: 'MUN', isHome: false }, { opp: 'FUL', isHome: true }, { opp: 'ARS', isHome: false }, { opp: 'BHA', isHome: true }, { opp: 'EVE', isHome: false }, { opp: 'CHE', isHome: true }, { opp: 'MCI', isHome: false }, { opp: 'BRE', isHome: true }, { opp: 'NFO', isHome: false }, { opp: 'BOU', isHome: false }, { opp: 'LEE', isHome: true }, { opp: 'LIV', isHome: false }, { opp: 'TOT', isHome: true }, { opp: 'IPS', isHome: true }, { opp: 'SUN', isHome: false }, { opp: 'COV', isHome: true }, { opp: 'AVL', isHome: false }, { opp: 'CRY', isHome: true }, { opp: 'HUL', isHome: false }],
+  NFO: [{ opp: 'LEE', isHome: true }, { opp: 'LIV', isHome: false }, { opp: 'TOT', isHome: true }, { opp: 'AVL', isHome: false }, { opp: 'COV', isHome: true }, { opp: 'CRY', isHome: false }, { opp: 'ARS', isHome: true }, { opp: 'IPS', isHome: false }, { opp: 'BRE', isHome: false }, { opp: 'MCI', isHome: true }, { opp: 'BOU', isHome: false }, { opp: 'CHE', isHome: true }, { opp: 'HUL', isHome: false }, { opp: 'BHA', isHome: true }, { opp: 'SUN', isHome: false }, { opp: 'EVE', isHome: true }, { opp: 'MUN', isHome: false }, { opp: 'NEW', isHome: false }, { opp: 'FUL', isHome: true }, { opp: 'HUL', isHome: true }, { opp: 'MCI', isHome: false }, { opp: 'BOU', isHome: true }, { opp: 'CHE', isHome: false }, { opp: 'BRE', isHome: true }, { opp: 'FUL', isHome: false }, { opp: 'MUN', isHome: true }, { opp: 'EVE', isHome: false }, { opp: 'NEW', isHome: true }, { opp: 'TOT', isHome: false }, { opp: 'AVL', isHome: true }, { opp: 'LEE', isHome: false }, { opp: 'LIV', isHome: true }, { opp: 'SUN', isHome: true }, { opp: 'BHA', isHome: false }, { opp: 'CRY', isHome: true }, { opp: 'ARS', isHome: false }, { opp: 'IPS', isHome: true }, { opp: 'COV', isHome: false }],
+  SUN: [{ opp: 'IPS', isHome: false }, { opp: 'FUL', isHome: true }, { opp: 'BRE', isHome: false }, { opp: 'ARS', isHome: true }, { opp: 'MCI', isHome: false }, { opp: 'BHA', isHome: true }, { opp: 'BOU', isHome: false }, { opp: 'LEE', isHome: true }, { opp: 'COV', isHome: false }, { opp: 'CHE', isHome: true }, { opp: 'AVL', isHome: false }, { opp: 'TOT', isHome: true }, { opp: 'LIV', isHome: false }, { opp: 'NEW', isHome: false }, { opp: 'NFO', isHome: true }, { opp: 'CRY', isHome: true }, { opp: 'EVE', isHome: false }, { opp: 'MUN', isHome: false }, { opp: 'HUL', isHome: true }, { opp: 'LIV', isHome: true }, { opp: 'CHE', isHome: false }, { opp: 'COV', isHome: true }, { opp: 'TOT', isHome: false }, { opp: 'AVL', isHome: true }, { opp: 'HUL', isHome: false }, { opp: 'EVE', isHome: true }, { opp: 'CRY', isHome: false }, { opp: 'MUN', isHome: true }, { opp: 'BRE', isHome: true }, { opp: 'ARS', isHome: false }, { opp: 'IPS', isHome: true }, { opp: 'FUL', isHome: false }, { opp: 'NFO', isHome: false }, { opp: 'NEW', isHome: true }, { opp: 'BHA', isHome: false }, { opp: 'BOU', isHome: true }, { opp: 'LEE', isHome: false }, { opp: 'MCI', isHome: true }],
+  TOT: [{ opp: 'BRE', isHome: false }, { opp: 'NEW', isHome: true }, { opp: 'NFO', isHome: false }, { opp: 'EVE', isHome: true }, { opp: 'AVL', isHome: true }, { opp: 'MUN', isHome: false }, { opp: 'COV', isHome: true }, { opp: 'CHE', isHome: false }, { opp: 'CRY', isHome: true }, { opp: 'LEE', isHome: false }, { opp: 'IPS', isHome: true }, { opp: 'SUN', isHome: false }, { opp: 'FUL', isHome: true }, { opp: 'ARS', isHome: true }, { opp: 'HUL', isHome: false }, { opp: 'LIV', isHome: false }, { opp: 'BOU', isHome: true }, { opp: 'BHA', isHome: true }, { opp: 'MCI', isHome: false }, { opp: 'FUL', isHome: false }, { opp: 'LEE', isHome: true }, { opp: 'CRY', isHome: false }, { opp: 'SUN', isHome: true }, { opp: 'IPS', isHome: false }, { opp: 'MCI', isHome: true }, { opp: 'BHA', isHome: false }, { opp: 'LIV', isHome: true }, { opp: 'BOU', isHome: false }, { opp: 'NFO', isHome: true }, { opp: 'EVE', isHome: false }, { opp: 'BRE', isHome: true }, { opp: 'NEW', isHome: false }, { opp: 'HUL', isHome: true }, { opp: 'ARS', isHome: false }, { opp: 'CHE', isHome: true }, { opp: 'COV', isHome: false }, { opp: 'MUN', isHome: true }, { opp: 'AVL', isHome: false }],
 };
 
-const getTeamSchedule = (teamCode?: string) => {
-  const code = teamCode?.toUpperCase().trim() || 'FPL';
-  return (
-    TEAM_SCHEDULES[code] || {
-      next: 'MUN (H)',
-      fixtures: [
-        { opp: 'IPS', diff: 2 },
-        { opp: 'FUL', diff: 2 },
-        { opp: 'BRE', diff: 3 },
-        { opp: 'ARS', diff: 5 },
-        { opp: 'MCI', diff: 5 },
-      ],
-    }
-  );
+const TEAM_NAME_TO_SHORT: Record<string, string> = {
+  ARSENAL: 'ARS', ARS: 'ARS',
+  'ASTON VILLA': 'AVL', VILLA: 'AVL', AVL: 'AVL',
+  BRIGHTON: 'BHA', BHA: 'BHA',
+  BOURNEMOUTH: 'BOU', BOU: 'BOU',
+  BRENTFORD: 'BRE', BRE: 'BRE',
+  CHELSEA: 'CHE', CHE: 'CHE',
+  COVENTRY: 'COV', COV: 'COV',
+  'CRYSTAL PALACE': 'CRY', PALACE: 'CRY', CRY: 'CRY',
+  EVERTON: 'EVE', EVE: 'EVE',
+  FULHAM: 'FUL', FUL: 'FUL',
+  'HULL CITY': 'HUL', HULL: 'HUL', HUL: 'HUL',
+  IPSWICH: 'IPS', IPS: 'IPS',
+  'LEEDS UNITED': 'LEE', LEEDS: 'LEE', LEE: 'LEE',
+  LIVERPOOL: 'LIV', LIV: 'LIV',
+  'MANCHESTER CITY': 'MCI', 'MAN CITY': 'MCI', MCI: 'MCI',
+  'MANCHESTER UNITED': 'MUN', 'MAN UTD': 'MUN', MUN: 'MUN',
+  NEWCASTLE: 'NEW', NEW: 'NEW',
+  'NOTTINGHAM FOREST': 'NFO', FOREST: 'NFO', NFO: 'NFO',
+  SUNDERLAND: 'SUN', SUN: 'SUN',
+  TOTTENHAM: 'TOT', SPURS: 'TOT', TOT: 'TOT',
+};
+
+export const getTeamFixtureForGw = (teamCode?: string, targetGw: number = 1): string => {
+  const raw = teamCode?.toUpperCase().trim() || 'ARS';
+  const code = TEAM_NAME_TO_SHORT[raw] || raw;
+  const list = TEAM_SCHEDULES[code] || TEAM_SCHEDULES['ARS'];
+  const idx = Math.max(0, targetGw - 1) % list.length;
+  const f = list[idx];
+  return `${f.opp} (${f.isHome ? 'H' : 'A'})`;
 };
 
 /* Ultra-Realistic 3D Team Jersey Component Fallback */
@@ -238,13 +255,13 @@ export const PitchView: React.FC<PitchViewProps> = ({
   onPlayerInfoClick,
   readOnly = false,
   hideFixtures = false,
+  gw = 1,
   benchChips,
 }) => {
   const { t, isRtl } = useLanguage();
   const [activeMenuSlot, setActiveMenuSlot] = useState<SquadSlotItem | null>(null);
 
-  const starters = picks.filter((p) => p.slot <= 11);
-  const bench = picks.filter((p) => p.slot > 11).sort((a, b) => a.slot - b.slot);
+  const starters = picks.filter((p) => p.slot <= 5);
 
   const gkpRow = starters.filter((p) => p.position === 1);
   const defRow = starters.filter((p) => p.position === 2);
@@ -270,35 +287,34 @@ export const PitchView: React.FC<PitchViewProps> = ({
     onSlotClick(slot);
   };
 
-  const renderCard = (p: SquadSlotItem, benchIndex?: number) => {
+  const renderCard = (p: SquadSlotItem) => {
     const isSelected = selectedSlot === p.slot;
     const posLabel = p.position === 1 ? t('gkp') : p.position === 2 ? t('def') : p.position === 3 ? t('mid') : t('fwd');
-
-    let benchPosHeader = '';
-    if (benchIndex !== undefined) {
-      benchPosHeader = p.position === 1 ? (isRtl ? 'حارس مرمى' : 'Goalkeeper') : p.position === 2 ? (isRtl ? 'مدافع' : 'Defender') : p.position === 3 ? (isRtl ? 'لاعب وسط' : 'Midfielder') : (isRtl ? 'مهاجم' : 'Forward');
-    }
 
     if (p.isEmpty) {
       return (
         <div key={p.slot} className="fpl-player-wrapper">
-          {benchIndex !== undefined && (
-            <div className="fpl-bench-pos-label">
-              {benchPosHeader}
-            </div>
-          )}
           <div
-            className="fpl-player-node empty"
+            className="fpl-official-card empty"
+            style={{
+              background: 'rgba(0, 60, 35, 0.35)',
+              border: '1.5px dashed rgba(255, 255, 255, 0.4)',
+            }}
             onClick={() => onEmptySlotClick && onEmptySlotClick(p.position, p.slot)}
           >
-            <div className="fpl-jersey-box">
+            <div className="fpl-official-card-top-bar">
+              <span className="fpl-card-price-tag" style={{ opacity: 0.8 }}>£5.0m</span>
+            </div>
+
+            <div className="fpl-official-card-jersey-wrap">
               <RealisticTeamJersey position={p.position} isEmpty={true} />
             </div>
-            <div className="fpl-card-box empty">
-              <div className="fpl-player-name-dark-bar" style={{ background: 'var(--fpl-purple)' }}>
-                {isRtl ? 'إضافة لاعب' : 'Add player'}
+
+            <div className="fpl-official-card-white-box">
+              <div className="fpl-official-card-name" style={{ color: 'var(--fpl-purple)' }}>
+                {isRtl ? '+ إضافة لاعب' : '+ Add Player'}
               </div>
-              <div className="fpl-player-fixture-box" style={{ background: '#f8fafc', color: '#64748b' }}>
+              <div className="fpl-official-card-fixture" style={{ color: '#64748b' }}>
                 {posLabel}
               </div>
             </div>
@@ -307,8 +323,9 @@ export const PitchView: React.FC<PitchViewProps> = ({
       );
     }
 
-    const schedule = getTeamSchedule(p.teamShortName);
-    const fixtureText = p.points !== undefined ? `${p.points} ${t('pts')}` : p.fixtureInfo || schedule.next;
+    const upcomingFix = p.fixtureInfo || getTeamFixtureForGw(p.teamShortName, gw || 1);
+    const pointsText = p.points !== undefined && (gw || 1) === 1 ? `${p.points} ${t('pts')}` : '';
+    const fixtureText = pointsText ? `${pointsText} • ${upcomingFix}` : upcomingFix;
     const costText = p.nowCost ? `£${(p.nowCost / 10).toFixed(1)}m` : '£5.0m';
     const playerNameText = p.webName || p.fullData?.web_name || 'Player';
 
@@ -328,76 +345,61 @@ export const PitchView: React.FC<PitchViewProps> = ({
       }
     };
 
+    const isTransfersMode = Boolean(onRemovePlayer);
+
     return (
       <div key={p.slot} className="fpl-player-wrapper">
-        {benchIndex !== undefined && (
-          <div className="fpl-bench-pos-label">
-            {benchPosHeader}
-          </div>
-        )}
-
         <div
-          className={`fpl-player-node ${isSelected ? 'selected-swap' : ''}`}
+          className={`fpl-official-card ${isSelected ? 'selected-swap' : ''}`}
           onClick={() => handleCardClick(p)}
         >
-          {/* Top-Right White Circle Action Badges matching screenshot (Upper: Eye, Lower: Swap) */}
-          <div className="fpl-action-badges-right-stacked">
-            {onPlayerInfoClick && (
-              <button className="fpl-badge-white-circle" onClick={handleInfoClick} title="View Stats">
-                <span style={{ fontSize: '0.85rem', fontWeight: 900, color: '#0f172a', fontStyle: 'italic' }}>👁</span>
-              </button>
-            )}
-
-            {!readOnly && (
+          {/* Top Bar Header: Non-overlapping badges & price tags */}
+          <div className="fpl-official-card-top-bar">
+            {isTransfersMode ? (
               <button
-                className={`fpl-badge-white-circle swap ${isSelected ? 'active' : ''}`}
-                onClick={(e) => handleDirectSwapClick(e, p.slot)}
-                title="Swap Player"
+                className="fpl-card-remove-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (onRemovePlayer) onRemovePlayer(p.slot);
+                }}
+                title={isRtl ? 'إزالة اللاعب' : 'Remove Player'}
               >
-                <ArrowUpDown size={12} style={{ color: '#0f172a' }} />
+                ×
               </button>
+            ) : p.isCaptain ? (
+              <div className="fpl-role-badge-pill captain" title="Captain (x2 pts)">C</div>
+            ) : p.isVice ? (
+              <div className="fpl-role-badge-pill vice" title="Vice Captain">V</div>
+            ) : (
+              <span className="fpl-card-price-tag">{costText}</span>
             )}
-          </div>
 
-          {/* Captain / Vice Captain Badge Floating on Top Center */}
-          {p.isCaptain && <div className="fpl-role-badge-top captain">C</div>}
-          {p.isVice && <div className="fpl-role-badge-top vice">V</div>}
-
-          {/* Top Graphic Area: Always displays 3D Team Jersey cleanly */}
-          <div className="fpl-photo-portrait-card">
-            <div className="fpl-jersey-center-container">
-              <RealisticTeamJersey position={p.position} teamShort={p.teamShortName} />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+              {(p.isCaptain || p.isVice || isTransfersMode) && (
+                <span className="fpl-card-price-tag">{costText}</span>
+              )}
+              {onPlayerInfoClick && (
+                <button className="fpl-badge-white-circle" onClick={handleInfoClick} title="View Stats">
+                  <Eye size={12} style={{ color: '#0f172a' }} />
+                </button>
+              )}
             </div>
           </div>
 
-          {/* Bottom Official Card Box matching user's screenshot */}
-          <div className="fpl-card-box">
-            {/* Dark Purple Name Bar - Always displays player web name in crisp white text */}
-            <div className="fpl-player-name-dark-bar">{playerNameText}</div>
+          {/* Center Graphic: 3D Jersey */}
+          <div className="fpl-official-card-jersey-wrap">
+            <RealisticTeamJersey position={p.position} teamShort={p.teamShortName} />
+          </div>
 
+          {/* Bottom Official White Card Box matching user screenshot */}
+          <div className="fpl-official-card-white-box">
+            <div className="fpl-official-card-name">{playerNameText}</div>
             {!hideFixtures && (
-              <>
-                {/* White Price & Next Fixture Bar */}
-                <div className="fpl-player-fixture-box">
-                  {costText} {fixtureText}
-                </div>
-
-                {/* 5 FDR Fixtures Bar */}
-                <div className="fpl-fdr-5-bar">
-                  {schedule.fixtures.map((fix, idx) => {
-                    const bg = fix.diff <= 2 ? '#10b981' : fix.diff === 3 ? '#64748b' : fix.diff === 4 ? '#e11d48' : '#881337';
-                    return (
-                      <span key={idx} className="fdr-pill" style={{ background: bg }}>
-                        {fix.opp}
-                      </span>
-                    );
-                  })}
-                </div>
-              </>
+              <div className="fpl-official-card-fixture">{fixtureText}</div>
             )}
           </div>
 
-          {/* Swap Active Badge Indicator */}
+          {/* Swap Active Indicator */}
           {isSelected && (
             <div className="fpl-swap-active-indicator" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
               <ArrowUpDown size={11} />
@@ -433,45 +435,12 @@ export const PitchView: React.FC<PitchViewProps> = ({
           <div className="fpl-center-line" />
         </div>
 
-        {/* Starter Rows */}
+        {/* Pitch Rows */}
         <div className="fpl-pitch-rows">
           <div className="fpl-row">{gkpRow.map((p) => renderCard(p))}</div>
           <div className="fpl-row">{defRow.map((p) => renderCard(p))}</div>
           <div className="fpl-row">{midRow.map((p) => renderCard(p))}</div>
           <div className="fpl-row">{fwdRow.map((p) => renderCard(p))}</div>
-        </div>
-
-        {/* Bench Tray at the Bottom with Chips (Bench Boost & Triple Captain) */}
-        <div className="fpl-bench-tray">
-          <div className="fpl-bench-row">
-            {bench.map((p, idx) => renderCard(p, idx))}
-          </div>
-
-          <div style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'space-between', padding: '0 12px', marginTop: '8px' }}>
-            {/* Left Pink Chip: Bench Boost */}
-            {benchChips && (
-              <button
-                onClick={benchChips.onToggleBenchBoost}
-                className={`fpl-chip-pink-btn ${benchChips.benchBoostUsed ? 'active' : ''}`}
-              >
-                {isRtl ? 'بنش بووست' : 'Bench Boost'}
-              </button>
-            )}
-
-            <div className="fpl-bench-footer-label" style={{ margin: 0 }}>
-              {isRtl ? 'الدكة' : 'Bench'}
-            </div>
-
-            {/* Right Pink Chip: Triple Captain */}
-            {benchChips && (
-              <button
-                onClick={benchChips.onToggleTripleCaptain}
-                className={`fpl-chip-pink-btn ${benchChips.tripleCaptainUsed ? 'active' : ''}`}
-              >
-                {isRtl ? 'تربل كابتن' : 'Triple Captain'}
-              </button>
-            )}
-          </div>
         </div>
       </div>
 
@@ -546,8 +515,8 @@ export const PitchView: React.FC<PitchViewProps> = ({
                 <span>{isRtl ? 'تبديل اللاعب' : 'Switch / Swap Player'}</span>
               </button>
 
-              {/* Option 2: Make Captain (if starter) */}
-              {onSetCaptain && activeMenuSlot.slot <= 11 && (
+              {/* Option 2: Make Captain */}
+              {onSetCaptain && activeMenuSlot.slot <= 5 && (
                 <button
                   onClick={() => {
                     onSetCaptain(activeMenuSlot.slot);
@@ -571,8 +540,8 @@ export const PitchView: React.FC<PitchViewProps> = ({
                 </button>
               )}
 
-              {/* Option 3: Make Vice Captain (if starter) */}
-              {onSetVice && activeMenuSlot.slot <= 11 && (
+              {/* Option 3: Make Vice Captain */}
+              {onSetVice && activeMenuSlot.slot <= 5 && (
                 <button
                   onClick={() => {
                     onSetVice(activeMenuSlot.slot);

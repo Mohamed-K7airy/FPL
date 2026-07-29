@@ -5,21 +5,18 @@ import { useLanguage } from '../context/LanguageContext';
 import { PitchView, SquadSlotItem } from '../components/PitchView';
 import { PlayerDetailModal, PlayerDetailData } from '../components/PlayerDetailModal';
 import { GoogleAd } from '../components/GoogleAd';
-import { Search, Sparkles, RotateCcw, Trash2, CheckCircle2, Info, ChevronLeft, ChevronRight, Eye, EyeOff, Bot, Headset, GitCompare } from 'lucide-react';
+import { Search, Sparkles, RotateCcw, Trash2, CheckCircle2, AlertCircle, Info, ChevronLeft, ChevronRight, Eye, EyeOff, Bot, Headset, GitCompare } from 'lucide-react';
 
 const SLOT_POSITIONS: Record<number, 1 | 2 | 3 | 4> = {
   1: 1,
-  2: 2, 3: 2, 4: 2, 5: 2,
-  6: 3, 7: 3, 8: 3, 9: 3,
-  10: 4, 11: 4,
-  12: 1,
-  13: 2,
-  14: 3,
-  15: 4,
+  2: 2,
+  3: 3,
+  4: 3,
+  5: 4,
 };
 
 export const TransfersPage: React.FC = () => {
-  const { refreshUser } = useAuth();
+  const { user, refreshUser } = useAuth();
   const { t, isRtl } = useLanguage();
 
   const [players, setPlayers] = useState<any[]>([]);
@@ -34,33 +31,41 @@ export const TransfersPage: React.FC = () => {
 
   const [squadSlots, setSquadSlots] = useState<Record<number, any | null>>({
     1: null, 2: null, 3: null, 4: null, 5: null,
-    6: null, 7: null, 8: null, 9: null, 10: null, 11: null,
-    12: null, 13: null, 14: null, 15: null,
   });
 
   const [selectedSlot, setSelectedSlot] = useState<number | null>(null);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
+  const [hasExistingSquad, setHasExistingSquad] = useState(false);
+  const [originalSquad, setOriginalSquad] = useState<Record<number, any>>({});
+
   const fetchExistingSquad = async () => {
     try {
       const data = await apiFetch<{ squad: any[]; squadComplete: boolean }>('/squad');
-      if (data.squadComplete && data.squad.length === 15) {
-        const newSlots: Record<number, any> = { ...squadSlots };
-        data.squad.forEach((item) => {
-          newSlots[item.slot] = {
+      if (data.squad && data.squad.length > 0) {
+        setHasExistingSquad(true);
+        const newSlots: Record<number, any> = { 1: null, 2: null, 3: null, 4: null, 5: null };
+        const savedMap: Record<number, any> = {};
+
+        data.squad.slice(0, 5).forEach((item) => {
+          const formattedPlayer = {
             id: item.player_id,
-            web_name: item.players.web_name,
-            full_name: item.players.full_name,
-            position: item.players.position,
-            fpl_teams: item.players.fpl_teams,
-            now_cost: item.players.now_cost,
-            total_points: item.players.total_points,
-            isCaptain: item.is_captain,
-            isVice: item.is_vice,
+            web_name: item.players?.web_name || 'Player',
+            full_name: item.players?.full_name || 'Player',
+            position: item.players?.position || 2,
+            fpl_teams: item.players?.fpl_teams,
+            now_cost: item.players?.now_cost || 50,
+            total_points: item.players?.total_points || 0,
+            isCaptain: Boolean(item.is_captain),
+            isVice: Boolean(item.is_vice),
           };
+          newSlots[item.slot] = formattedPlayer;
+          savedMap[item.slot] = formattedPlayer;
         });
+
         setSquadSlots(newSlots);
+        setOriginalSquad(savedMap);
       }
     } catch {
       // User has no squad yet
@@ -85,19 +90,86 @@ export const TransfersPage: React.FC = () => {
     }
   };
 
+  const [usedChips, setUsedChips] = useState<string[]>([]);
+  const [activatingChip, setActivatingChip] = useState(false);
+
+  const fetchChips = async () => {
+    try {
+      const data = await apiFetch<{ usedChips: any[] }>('/chips');
+      const chipsList = (data.usedChips || []).map((c) => c.chip);
+      setUsedChips(chipsList);
+    } catch {
+      // Ignore
+    }
+  };
+
   useEffect(() => {
     fetchExistingSquad();
+    fetchChips();
   }, []);
 
   useEffect(() => {
     fetchPlayers();
   }, [search, positionFilter, sort]);
 
+  const isWildcardActive = usedChips.includes('wildcard');
+  const isFreeHitActive = usedChips.includes('freehit');
+
+  const handleActivateChip = async (chipKey: 'wildcard' | 'freehit') => {
+    setActivatingChip(true);
+    try {
+      await apiFetch('/chips/activate', {
+        method: 'POST',
+        body: JSON.stringify({ chip: chipKey }),
+      });
+      await fetchChips();
+      setMessage({
+        type: 'success',
+        text: isRtl
+          ? `تم تفعيل خاصية ${chipKey === 'wildcard' ? 'الوايلد كارد' : 'الفري هيت'} بنجاح وحفظها في الحساب!`
+          : `Activated ${chipKey} chip successfully!`,
+      });
+    } catch (err) {
+      setMessage({ type: 'error', text: (err as Error).message });
+    } finally {
+      setActivatingChip(false);
+    }
+  };
+
+  const handleDeactivateChip = async (chipKey: 'wildcard' | 'freehit') => {
+    setActivatingChip(true);
+    try {
+      await apiFetch('/chips/deactivate', {
+        method: 'POST',
+        body: JSON.stringify({ chip: chipKey }),
+      });
+      await fetchChips();
+      setMessage({
+        type: 'success',
+        text: isRtl
+          ? `تم إلغاء تفعيل خاصية ${chipKey === 'wildcard' ? 'الوايلد كارد' : 'الفري هيت'} بنجاح!`
+          : `Deactivated ${chipKey} chip successfully!`,
+      });
+    } catch (err) {
+      setMessage({ type: 'error', text: (err as Error).message });
+    } finally {
+      setActivatingChip(false);
+    }
+  };
+
+  // Auto-dismiss toast messages after 3.5s
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage(null);
+      }, 3500);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
+
   const filledSlots = Object.values(squadSlots).filter((p) => p !== null);
   const totalCost = filledSlots.reduce((sum, p) => sum + p.now_cost, 0);
-
-  // Calculate team rating out of 100 based on selected squad total points
-  const teamRating = Math.min(100, Math.round((filledSlots.reduce((acc, p) => acc + (p.total_points || 0), 0) / 15) * 1.2));
+  const totalSquadPoints = filledSlots.reduce((sum, p) => sum + (p.total_points || 0), 0);
 
   const handleAddOrTogglePlayer = (player: any) => {
     const existingSlotEntry = Object.entries(squadSlots).find(([_, p]) => p && p.id === player.id);
@@ -109,18 +181,28 @@ export const TransfersPage: React.FC = () => {
 
     let targetSlot = selectedSlot;
 
-    if (!targetSlot || SLOT_POSITIONS[targetSlot] !== player.position || squadSlots[targetSlot] !== null) {
-      const emptySlotStr = Object.keys(SLOT_POSITIONS).find(
-        (s) => SLOT_POSITIONS[parseInt(s, 10)] === player.position && squadSlots[parseInt(s, 10)] === null
-      );
-
-      if (!emptySlotStr) {
-        const posName = player.position === 1 ? t('goalkeepers') : player.position === 2 ? t('defenders') : player.position === 3 ? t('midfielders') : t('forwards');
-        setMessage({ type: 'error', text: `${posName} full.` });
+    // Helper: Goalkeeper must go to slot 1, outfielders (2,3,4) can go to empty slots 2..5
+    if (player.position === 1) {
+      if (squadSlots[1] !== null && selectedSlot !== 1) {
+        setMessage({ type: 'error', text: isRtl ? 'حارس المرمى ممتلئ.' : 'Goalkeeper slot full.' });
         return;
       }
-      targetSlot = parseInt(emptySlotStr, 10);
+      targetSlot = 1;
+    } else {
+      // Outfielder
+      if (!targetSlot || targetSlot === 1 || squadSlots[targetSlot] !== null) {
+        const emptyOutfieldSlot = [2, 3, 4, 5].find((s) => squadSlots[s] === null);
+        if (!emptyOutfieldSlot) {
+          setMessage({ type: 'error', text: isRtl ? 'مراكز اللاعبين ممتلئة (4 لاعبين كحد أقصى).' : 'Outfield slots full (4 players max).' });
+          return;
+        }
+        targetSlot = emptyOutfieldSlot;
+      }
     }
+
+    const currentFilledCount = Object.values(squadSlots).filter((p) => p !== null).length;
+    const isFirstPlayer = currentFilledCount === 0;
+    const isSecondPlayer = currentFilledCount === 1;
 
     setSquadSlots((prev) => ({
       ...prev,
@@ -132,8 +214,8 @@ export const TransfersPage: React.FC = () => {
         fpl_teams: player.fpl_teams,
         now_cost: player.now_cost,
         total_points: player.total_points,
-        isCaptain: targetSlot === 10,
-        isVice: targetSlot === 11,
+        isCaptain: isFirstPlayer,
+        isVice: isSecondPlayer,
       },
     }));
 
@@ -145,32 +227,20 @@ export const TransfersPage: React.FC = () => {
       const allPlayersData = await apiFetch<{ players: any[] }>('/players?limit=300&sort=total_points');
       const allP = allPlayersData.players || [];
 
-      const gkps = allP.filter((p) => p.position === 1).slice(0, 2);
-      const defs = allP.filter((p) => p.position === 2).slice(0, 5);
-      const mids = allP.filter((p) => p.position === 3).slice(0, 5);
-      const fwds = allP.filter((p) => p.position === 4).slice(0, 3);
+      const gkps = allP.filter((p) => p.position === 1).slice(0, 1);
+      const outfielders = allP.filter((p) => p.position !== 1).slice(0, 4);
 
-      if (gkps.length < 2 || defs.length < 5 || mids.length < 5 || fwds.length < 3) {
+      if (gkps.length < 1 || outfielders.length < 4) {
         setMessage({ type: 'error', text: 'Not enough players to auto pick.' });
         return;
       }
 
       const newSlots: Record<number, any> = {
         1: { ...gkps[0], isCaptain: false, isVice: false },
-        2: { ...defs[0], isCaptain: false, isVice: false },
-        3: { ...defs[1], isCaptain: false, isVice: false },
-        4: { ...defs[2], isCaptain: false, isVice: false },
-        5: { ...defs[3], isCaptain: false, isVice: false },
-        6: { ...mids[0], isCaptain: false, isVice: false },
-        7: { ...mids[1], isCaptain: false, isVice: false },
-        8: { ...mids[2], isCaptain: false, isVice: false },
-        9: { ...mids[3], isCaptain: false, isVice: false },
-        10: { ...fwds[0], isCaptain: true, isVice: false },
-        11: { ...fwds[1], isCaptain: false, isVice: true },
-        12: { ...gkps[1], isCaptain: false, isVice: false },
-        13: { ...defs[4], isCaptain: false, isVice: false },
-        14: { ...mids[4], isCaptain: false, isVice: false },
-        15: { ...fwds[2], isCaptain: false, isVice: false },
+        2: { ...outfielders[0], isCaptain: false, isVice: false },
+        3: { ...outfielders[1], isCaptain: false, isVice: false },
+        4: { ...outfielders[2], isCaptain: true, isVice: false },
+        5: { ...outfielders[3], isCaptain: false, isVice: true },
       };
 
       setSquadSlots(newSlots);
@@ -183,8 +253,6 @@ export const TransfersPage: React.FC = () => {
   const handleClearSquad = () => {
     setSquadSlots({
       1: null, 2: null, 3: null, 4: null, 5: null,
-      6: null, 7: null, 8: null, 9: null, 10: null, 11: null,
-      12: null, 13: null, 14: null, 15: null,
     });
   };
 
@@ -212,8 +280,8 @@ export const TransfersPage: React.FC = () => {
   };
 
   const handleConfirmSquad = async () => {
-    if (filledSlots.length !== 15) {
-      setMessage({ type: 'error', text: isRtl ? 'اختر 15 لاعباً قبل الحفظ (حارسان، 5 مدافعين، 5 وسط، 3 مهاجمين).' : 'Select 15 players (2 GKP, 5 DEF, 5 MID, 3 FWD).' });
+    if (filledSlots.length !== 5) {
+      setMessage({ type: 'error', text: isRtl ? 'اختر 5 لاعبين قبل الحفظ (حارس مرمى و 4 لاعبين).' : 'Select 5 players (1 GKP and 4 outfield players).' });
       return;
     }
 
@@ -221,11 +289,22 @@ export const TransfersPage: React.FC = () => {
     setMessage(null);
 
     try {
+      let captainSlot = Object.keys(squadSlots).find((s) => squadSlots[parseInt(s, 10)]?.isCaptain);
+      let viceSlot = Object.keys(squadSlots).find((s) => squadSlots[parseInt(s, 10)]?.isVice);
+
+      // Ensure Captain and Vice-Captain are assigned and distinct
+      if (!captainSlot) {
+        captainSlot = '1';
+      }
+      if (!viceSlot || viceSlot === captainSlot) {
+        viceSlot = Object.keys(squadSlots).find((s) => s !== captainSlot) || '2';
+      }
+
       const picks = Object.entries(squadSlots).map(([slotStr, p]) => ({
         playerId: p.id,
         slot: parseInt(slotStr, 10),
-        isCaptain: p.isCaptain || parseInt(slotStr, 10) === 10,
-        isVice: p.isVice || parseInt(slotStr, 10) === 11,
+        isCaptain: slotStr === captainSlot,
+        isVice: slotStr === viceSlot,
       }));
 
       await apiFetch('/squad', {
@@ -234,7 +313,8 @@ export const TransfersPage: React.FC = () => {
       });
 
       await refreshUser();
-      setMessage({ type: 'success', text: isRtl ? 'تم إنشاء وحفظ الفريق بنجاح!' : 'Team selection confirmed & saved successfully!' });
+      await fetchExistingSquad();
+      setMessage({ type: 'success', text: isRtl ? 'تم حفظ التغييرات والتواكيل بنجاح!' : 'Team changes & squad saved successfully!' });
     } catch (err) {
       setMessage({ type: 'error', text: (err as Error).message });
     } finally {
@@ -281,19 +361,14 @@ export const TransfersPage: React.FC = () => {
   return (
     <div className="fpl-transfers-page">
       {message && (
-        <div
-          style={{
-            padding: '12px 16px',
-            borderRadius: '12px',
-            marginBottom: '16px',
-            background: message.type === 'success' ? '#f0fdf4' : '#fff1f2',
-            border: `1px solid ${message.type === 'success' ? '#bbf7d0' : '#fecdd3'}`,
-            color: message.type === 'success' ? '#16a34a' : '#e11d48',
-            fontSize: '0.9rem',
-            fontWeight: 700,
-          }}
-        >
-          {message.text}
+        <div className="fpl-toast-popup-container">
+          <div className={`fpl-toast-popup ${message.type}`}>
+            <div className="fpl-toast-icon">
+              {message.type === 'success' ? <CheckCircle2 size={20} /> : <AlertCircle size={20} />}
+            </div>
+            <div className="fpl-toast-text">{message.text}</div>
+            <button onClick={() => setMessage(null)} className="fpl-toast-close">×</button>
+          </div>
         </div>
       )}
 
@@ -303,7 +378,7 @@ export const TransfersPage: React.FC = () => {
           <div className="fpl-drawer-card">
             <h2 className="fpl-section-title">{t('playerSelection')}</h2>
             <p className="fpl-section-sub">
-              {isRtl ? 'اختر 15 لاعباً بميزانية £100.0m كحد أقصى (3 لاعبين لكل فريق).' : 'Select 15 players under £100.0m budget limit.'}
+              {isRtl ? 'اختر 5 لاعبين (حارس و 4 لاعبين) بميزانية £50.0m كحد أقصى.' : 'Select 5 players under £50.0m budget limit.'}
             </p>
 
             <div className="fpl-search-box">
@@ -440,61 +515,105 @@ export const TransfersPage: React.FC = () => {
         <div className="fpl-pitch-panel-col">
           {/* Top Gradient Container Wrapper */}
           <div className="fpl-pitch-master-card">
-            {/* Top Bar Navigation (السابق / الجولة 1 / التالي + Checkbox) */}
-            <div className="fpl-top-nav-bar">
+            {/* Top Bar Navigation (السابق / الجولة 1 / التالي) */}
+            <div className="fpl-top-nav-bar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <button
                 onClick={() => setGw((prev) => Math.max(1, prev - 1))}
-                className="fpl-nav-pink-btn"
+                className="fpl-nav-purple-btn"
               >
                 {isRtl ? 'السابق' : 'Previous'}
               </button>
 
-              <div className="fpl-gw-pill-badge">
+              <div className="fpl-gw-pill-badge" style={{ margin: '0 auto' }}>
                 <span className="fpl-dot-live" />
                 <span>{isRtl ? `الجولة ${gw}` : `Gameweek ${gw}`}</span>
               </div>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <label className="fpl-checkbox-label">
-                  <input
-                    type="checkbox"
-                    checked={hideFixtures}
-                    onChange={(e) => setHideFixtures(e.target.checked)}
-                  />
-                  <span>{isRtl ? 'إخفاء المباريات القادمة' : 'Hide Fixtures'}</span>
-                </label>
-
-                <button
-                  onClick={() => setGw((prev) => Math.min(38, prev + 1))}
-                  className="fpl-nav-purple-btn"
-                >
-                  {isRtl ? 'التالي' : 'Next'}
-                </button>
-              </div>
+              <button
+                onClick={() => setGw((prev) => Math.min(38, prev + 1))}
+                className="fpl-nav-purple-btn"
+              >
+                {isRtl ? 'التالي' : 'Next'}
+              </button>
             </div>
 
-            {/* Top 3 Stat Cards Widget Row (اللاعبون المختارون / الميزانية / تقييم الفريق) */}
+            {/* Official FPL Transfers Stat Cards Row (خواص الانتقالات / الميزانية المتبقية / اللاعبون المختارون) */}
             <div className="fpl-top-widgets-row">
-              {/* Widget 1: Selected Players */}
+              {/* Widget 1: Transfers Chips (Wildcard & Free Hit) */}
               <div className="fpl-widget-card">
-                <div className="widget-label">{isRtl ? 'اللاعبون المختارون' : 'Players Selected'}</div>
-                <div className="widget-badge purple">
-                  {filledSlots.length} / 15
+                <div className="widget-label">{isRtl ? 'الخواص المتاحة (Chips)' : 'Chips Available'}</div>
+                <div style={{ display: 'flex', gap: '6px', marginTop: '6px', width: '100%' }}>
+                  {isWildcardActive ? (
+                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                      <div style={{ background: '#10b981', color: '#ffffff', padding: '4px 2px', borderRadius: '6px', fontSize: '0.7rem', fontWeight: 900, textAlign: 'center' }}>
+                        وايلد كارد (مفعل)
+                      </div>
+                      <button
+                        onClick={() => handleDeactivateChip('wildcard')}
+                        disabled={activatingChip}
+                        style={{ background: '#e11d48', color: '#ffffff', border: 'none', padding: '3px', borderRadius: '6px', fontSize: '0.68rem', fontWeight: 800, cursor: 'pointer' }}
+                      >
+                        {isRtl ? 'إلغاء' : 'Cancel'}
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => handleActivateChip('wildcard')}
+                      disabled={activatingChip}
+                      style={{ flex: 1, background: '#1e1b4b', color: '#38bdf8', border: '1px solid #38bdf8', padding: '6px 4px', borderRadius: '8px', fontSize: '0.72rem', fontWeight: 900, cursor: 'pointer' }}
+                    >
+                      تفعيل وايلد كارد
+                    </button>
+                  )}
+
+                  {isFreeHitActive ? (
+                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                      <div style={{ background: '#10b981', color: '#ffffff', padding: '4px 2px', borderRadius: '6px', fontSize: '0.7rem', fontWeight: 900, textAlign: 'center' }}>
+                        فري هيت (مفعل)
+                      </div>
+                      <button
+                        onClick={() => handleDeactivateChip('freehit')}
+                        disabled={activatingChip}
+                        style={{ background: '#e11d48', color: '#ffffff', border: 'none', padding: '3px', borderRadius: '6px', fontSize: '0.68rem', fontWeight: 800, cursor: 'pointer' }}
+                      >
+                        {isRtl ? 'إلغاء' : 'Cancel'}
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => handleActivateChip('freehit')}
+                      disabled={activatingChip}
+                      style={{ flex: 1, background: '#1e1b4b', color: '#ec4899', border: '1px solid #ec4899', padding: '6px 4px', borderRadius: '8px', fontSize: '0.72rem', fontWeight: 900, cursor: 'pointer' }}
+                    >
+                      تفعيل فري هيت
+                    </button>
+                  )}
                 </div>
               </div>
 
-              {/* Widget 2: Budget */}
+              {/* Widget 2: Remaining Budget */}
               <div className="fpl-widget-card featured">
-                <div className="widget-label">{isRtl ? 'الميزانية' : 'Budget'}</div>
-                <div className="widget-num">£{((1000 - totalCost) / 10).toFixed(1)}</div>
-                <div className="widget-sub-label">{isRtl ? 'إدخال الميزانية' : 'Edit Budget'}</div>
+                <div className="widget-label">{isRtl ? 'الميزانية المتبقية' : 'Remaining Budget'}</div>
+                <div className="widget-num">£{((500 - totalCost) / 10).toFixed(1)}m</div>
+                <div className="widget-sub-label">{isRtl ? 'الميزانية الكلية: £50.0m' : 'Total Budget: £50.0m'}</div>
               </div>
 
-              {/* Widget 3: Team Rating */}
+              {/* Widget 3: Available Transfers (التغييرات المتاحة حالياً) */}
               <div className="fpl-widget-card">
-                <div className="widget-label">{isRtl ? 'تقييم الفريق' : 'Team Rating'}</div>
-                <div className="widget-badge purple">
-                  {teamRating}/100
+                <div className="widget-label">{isRtl ? 'التغييرات المتاحة' : 'Transfers Available'}</div>
+                <div className="widget-badge purple" style={{ fontSize: (gw === 1 || isWildcardActive || isFreeHitActive || !hasExistingSquad) ? '0.88rem' : '1.05rem' }}>
+                  {(gw === 1 || isWildcardActive || isFreeHitActive || !hasExistingSquad)
+                    ? (isRtl ? 'غير محدود' : 'Unlimited')
+                    : ((user?.free_transfers ?? 1) > 0 ? (isRtl ? `${user?.free_transfers ?? 1} نقلة مجانية` : `${user?.free_transfers ?? 1} Free`) : (isRtl ? '0 نقلات' : '0 Free'))}
+                </div>
+                <div className="widget-sub-label" style={{ marginTop: '4px', fontSize: '0.7rem' }}>
+                  {(gw === 1 || !hasExistingSquad)
+                    ? (isRtl ? 'انتقالات غير محدودة قبل الجولة 1' : 'Unlimited before GW1')
+                    : (isWildcardActive || isFreeHitActive)
+                    ? (isRtl ? 'خاصية مفعلة - بدون خصم نقاط' : 'Chip Active - 0 pts hit')
+                    : ((user?.free_transfers ?? 1) > 0)
+                    ? (isRtl ? 'نقلة مجانية متاحة للجولة' : 'Free transfer available')
+                    : (isRtl ? 'خصم 4 نقاط لكل نقلة إضافية' : '-4 pts hit per extra transfer')}
                 </div>
               </div>
             </div>
@@ -509,6 +628,7 @@ export const TransfersPage: React.FC = () => {
                 onRemovePlayer={handleRemoveSlot}
                 onPlayerInfoClick={(pData) => setActivePlayerModal(pData)}
                 hideFixtures={hideFixtures}
+                gw={gw}
               />
             </div>
 
@@ -517,7 +637,7 @@ export const TransfersPage: React.FC = () => {
               {/* Primary Emerald Button: Create Team */}
               <button
                 onClick={handleConfirmSquad}
-                disabled={submitting || filledSlots.length !== 15}
+                disabled={submitting || filledSlots.length !== 5}
                 className="fpl-main-submit-emerald-btn"
               >
                 <CheckCircle2 size={18} />

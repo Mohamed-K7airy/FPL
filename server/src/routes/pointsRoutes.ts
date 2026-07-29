@@ -37,8 +37,8 @@ router.get('/:gw', authenticateToken, async (req: AuthenticatedRequest, res: Res
       .eq('gw', gw)
       .single();
 
-    // Fetch user picks snapshot for this GW
-    const { data: picks } = await supabase
+    // Fetch user picks snapshot for this GW (or fallback to current squad for pre-season)
+    let { data: picks } = await supabase
       .from('gw_picks')
       .select('*, players(*, fpl_teams(name, short_name))')
       .eq('user_id', userId)
@@ -46,8 +46,18 @@ router.get('/:gw', authenticateToken, async (req: AuthenticatedRequest, res: Res
       .order('slot', { ascending: true });
 
     if (!picks || picks.length === 0) {
-      res.status(404).json({ error: { code: 'NO_PICKS_FOUND', message: `No team snapshot found for Gameweek ${gw}.` } });
-      return;
+      const { data: currentSquad } = await supabase
+        .from('squad')
+        .select('*, players(*, fpl_teams(name, short_name))')
+        .eq('user_id', userId)
+        .order('slot', { ascending: true });
+
+      picks = (currentSquad || []).map((s: any) => ({
+        ...s,
+        gw,
+        multiplier: s.is_captain ? 2 : 1,
+        auto_subbed: false,
+      }));
     }
 
     // Fetch player live stats for this GW

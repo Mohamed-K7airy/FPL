@@ -47,6 +47,60 @@ router.post('/recalculate/:gw', async (req: AuthenticatedRequest, res: Response)
   }
 });
 
+// POST /api/admin/demo-simulate/:gw (Generate realistic demo points for pre-season testing)
+router.post('/demo-simulate/:gw', async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  try {
+    const gw = parseInt(String(req.params.gw), 10);
+
+    const { data: players } = await supabase.from('players').select('id');
+    if (!players || players.length === 0) {
+      res.status(400).json({ error: { message: 'No players found in DB. Run Sync Bootstrap first.' } });
+      return;
+    }
+
+    const mockStats = players.map((p: any) => {
+      const mockPoints = Math.floor(Math.random() * 11) + 1; // 1 to 11 points
+      return {
+        gw,
+        player_id: p.id,
+        minutes: 90,
+        total_points: mockPoints,
+        played: true,
+        is_final: true,
+      };
+    });
+
+    await supabase.from('player_gw_stats').upsert(mockStats);
+
+    await ScoringService.snapshotPicks(gw);
+    const count = await ScoringService.calculateScores(gw, false);
+
+    res.status(200).json({
+      message: `تم تشغيل المحاكاة التجريبية للجولة ${gw} بنجاح! تم توليد نقاط تجريبية واحتساب الترتيب بين جميع التشكيلات المسجلة.`,
+      usersProcessed: count,
+    });
+  } catch (err) {
+    logger.error(err, 'Admin demo simulate failed');
+    res.status(500).json({ error: { code: 'SIMULATE_FAILED', message: (err as Error).message } });
+  }
+});
+
+// POST /api/admin/reset-demo (Clears all test scores and resets rankings to 0)
+router.post('/reset-demo', async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  try {
+    await supabase.from('gw_scores').delete().gte('gw', 1);
+    await supabase.from('gw_picks').delete().gte('gw', 1);
+    await supabase.from('player_gw_stats').delete().gte('gw', 1);
+
+    res.status(200).json({
+      message: 'تم تصفير وحذف جميع نقاط واختبارات الديمو بنجاح! عادت جميع الترتيبات والنقاط إلى 0 نقطة ونشيفة تماماً.',
+    });
+  } catch (err) {
+    logger.error(err, 'Admin reset demo failed');
+    res.status(500).json({ error: { code: 'RESET_FAILED', message: (err as Error).message } });
+  }
+});
+
 // POST /api/admin/finalize/:gw
 router.post('/finalize/:gw', async (req: AuthenticatedRequest, res: Response): Promise<void> => {
   try {

@@ -56,6 +56,29 @@ export const AdminPage: React.FC = () => {
     }
   };
 
+  const handleDemoSimulate = async () => {
+    setMessage(null);
+    try {
+      const data = await apiFetch<{ message: string }>(`/admin/demo-simulate/${gwInput}`, { method: 'POST' });
+      setMessage({ type: 'success', text: data.message });
+      fetchLogs();
+    } catch (err) {
+      setMessage({ type: 'error', text: (err as Error).message });
+    }
+  };
+
+  const handleResetDemo = async () => {
+    if (!window.confirm('هل أنت ممتأكد من تصفير وإلغاء جميع نقاط واختبارات الديمو؟')) return;
+    setMessage(null);
+    try {
+      const data = await apiFetch<{ message: string }>('/admin/reset-demo', { method: 'POST' });
+      setMessage({ type: 'success', text: data.message });
+      fetchLogs();
+    } catch (err) {
+      setMessage({ type: 'error', text: (err as Error).message });
+    }
+  };
+
   const handleFinalize = async () => {
     setMessage(null);
     try {
@@ -125,6 +148,21 @@ export const AdminPage: React.FC = () => {
             />
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <button
+              onClick={handleDemoSimulate}
+              style={{
+                background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                color: '#ffffff',
+                padding: '10px 14px',
+                borderRadius: '10px',
+                border: 'none',
+                fontWeight: 900,
+                fontSize: '0.85rem',
+                cursor: 'pointer',
+              }}
+            >
+              🎮 تشغيل محاكاة تجريبية للنقاط (Demo Simulation GW {gwInput})
+            </button>
             <button onClick={handleSyncLive} className="btn-secondary">
               Sync Live Stats (GW {gwInput})
             </button>
@@ -133,6 +171,22 @@ export const AdminPage: React.FC = () => {
             </button>
             <button onClick={handleFinalize} className="btn-danger">
               Finalize GW {gwInput} (Auto-Subs & Lock)
+            </button>
+            <button
+              onClick={handleResetDemo}
+              style={{
+                background: '#e11d48',
+                color: '#ffffff',
+                padding: '10px 14px',
+                borderRadius: '10px',
+                border: 'none',
+                fontWeight: 900,
+                fontSize: '0.85rem',
+                cursor: 'pointer',
+                marginTop: '4px',
+              }}
+            >
+              🗑️ تصفير وإلغاء نقاط الديمو (Reset Demo Data)
             </button>
           </div>
         </div>

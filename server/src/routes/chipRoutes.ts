@@ -25,26 +25,26 @@ router.post('/activate', authenticateToken, async (req: AuthenticatedRequest, re
 
     const { chip } = parseResult.data;
 
-    // Fetch current GW
+    // Fetch current GW (default to 1 if unseeded)
+    let gw = 1;
     const { data: currentGw } = await supabase
       .from('gameweeks')
       .select('*')
       .eq('is_current', true)
-      .single();
+      .limit(1);
 
-    if (!currentGw) {
-      res.status(400).json({ error: { code: 'NO_ACTIVE_GAMEWEEK', message: 'No active gameweek found.' } });
-      return;
+    if (currentGw && currentGw.length > 0) {
+      const activeGw = currentGw[0];
+      if (activeGw.deadline_time) {
+        const deadline = new Date(activeGw.deadline_time).getTime();
+        if (Date.now() >= deadline) {
+          res.status(403).json({ error: { code: 'GAMEWEEK_LOCKED', message: 'Gameweek deadline has passed.' } });
+          return;
+        }
+      }
+      gw = activeGw.id;
     }
 
-    // Deadline check
-    const deadline = new Date(currentGw.deadline_time).getTime();
-    if (Date.now() >= deadline) {
-      res.status(403).json({ error: { code: 'GAMEWEEK_LOCKED', message: 'Gameweek deadline has passed.' } });
-      return;
-    }
-
-    const gw = currentGw.id;
     const half = gw <= 19 ? 1 : 2;
 
     // Check if chip was already used in this season half
@@ -58,7 +58,7 @@ router.post('/activate', authenticateToken, async (req: AuthenticatedRequest, re
 
     if (existingChip) {
       res.status(400).json({
-        error: { code: 'CHIP_ALREADY_USED', message: `The ${chip} chip has already been used in this half of the season.` },
+        error: { code: 'CHIP_ALREADY_USED', message: 'تم استخدام هذه الخاصية من قبل في هذا النصف من الموسم.' },
       });
       return;
     }
@@ -73,7 +73,7 @@ router.post('/activate', authenticateToken, async (req: AuthenticatedRequest, re
 
     if (activeGwChip) {
       res.status(400).json({
-        error: { code: 'CHIP_CONFLICT', message: `You have already activated the ${activeGwChip.chip} chip for Gameweek ${gw}. Only one chip can be active per gameweek.` },
+        error: { code: 'CHIP_CONFLICT', message: `لديك خاصية مفعلة بالفعل للجولة ${gw}. يمكن تفعيل خاصية واحدة فقط في كل جولة.` },
       });
       return;
     }
@@ -100,6 +100,43 @@ router.post('/activate', authenticateToken, async (req: AuthenticatedRequest, re
   } catch (err) {
     logger.error(err, 'Error in POST /api/chips/activate');
     res.status(500).json({ error: { code: 'SERVER_ERROR', message: 'Failed to activate chip.' } });
+  }
+});
+
+// POST /api/chips/deactivate
+router.post('/deactivate', authenticateToken, async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  try {
+    const userId = req.user!.id;
+
+    const parseResult = ActivateChipSchema.safeParse(req.body);
+    if (!parseResult.success) {
+      res.status(400).json({
+        error: { code: 'INVALID_INPUT', details: parseResult.error.flatten() },
+      });
+      return;
+    }
+
+    const { chip } = parseResult.data;
+
+    const { error: deleteErr } = await supabase
+      .from('chips_used')
+      .delete()
+      .eq('user_id', userId)
+      .eq('chip', chip);
+
+    if (deleteErr) {
+      logger.error(deleteErr, 'Failed to deactivate chip');
+      res.status(500).json({ error: { code: 'DB_ERROR', message: 'فشل إلغاء تفعيل الخاصية.' } });
+      return;
+    }
+
+    res.status(200).json({
+      message: `تم إلغاء تفعيل خاصية ${chip} بنجاح.`,
+      chip,
+    });
+  } catch (err) {
+    logger.error(err, 'Error in POST /api/chips/deactivate');
+    res.status(500).json({ error: { code: 'SERVER_ERROR', message: 'حدث خطأ في السيرفر أثناء إلغاء التفعيل.' } });
   }
 });
 

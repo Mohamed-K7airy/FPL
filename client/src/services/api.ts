@@ -13,7 +13,7 @@ function getApiBaseUrl(): string {
 
   let clean = envUrl.endsWith('/') ? envUrl.slice(0, -1) : envUrl;
 
-  // Auto-fix if domain is missing '/api' prefix (e.g. https://fpl-production-fb03.up.railway.app -> https://fpl-production-fb03.up.railway.app/api)
+  // Auto-fix if domain is missing '/api' prefix
   if (clean.startsWith('http') && !clean.endsWith('/api') && !clean.includes('/api/')) {
     clean += '/api';
   }
@@ -21,9 +21,40 @@ function getApiBaseUrl(): string {
   return clean;
 }
 
+let isRefreshing = false;
+let refreshSubscribers: ((token: string) => void)[] = [];
+
+function onRefreshed(token: string) {
+  refreshSubscribers.forEach((cb) => cb(token));
+  refreshSubscribers = [];
+}
+
+async function refreshAccessToken(): Promise<string | null> {
+  try {
+    const baseUrl = getApiBaseUrl();
+    const res = await fetch(`${baseUrl}/auth/refresh`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+    });
+
+    if (!res.ok) return null;
+
+    const data = await res.json();
+    if (data?.accessToken) {
+      localStorage.setItem('accessToken', data.accessToken);
+      return data.accessToken;
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
 export async function apiFetch<T>(
   endpoint: string,
-  options: RequestInit = {}
+  options: RequestInit = {},
+  isRetry: boolean = false
 ): Promise<T> {
   const token = localStorage.getItem('accessToken');
 
@@ -38,13 +69,39 @@ export async function apiFetch<T>(
 
   const baseUrl = getApiBaseUrl();
   const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
-
   const url = `${baseUrl}${cleanEndpoint}`;
 
   const res = await fetch(url, {
     ...options,
+    credentials: 'include',
     headers,
   });
+
+  // Handle Token Expiry (HTTP 401 or 403 on JWT expired) automatically
+  if ((res.status === 401 || res.status === 403) && !isRetry && !endpoint.includes('/auth/login') && !endpoint.includes('/auth/register') && !endpoint.includes('/auth/refresh')) {
+    if (!isRefreshing) {
+      isRefreshing = true;
+      const newToken = await refreshAccessToken();
+      isRefreshing = false;
+
+      if (newToken) {
+        onRefreshed(newToken);
+        return apiFetch<T>(endpoint, options, true);
+      } else {
+        localStorage.removeItem('accessToken');
+      }
+    } else {
+      return new Promise<T>((resolve, reject) => {
+        refreshSubscribers.push((newToken: string) => {
+          options.headers = {
+            ...options.headers,
+            Authorization: `Bearer ${newToken}`,
+          };
+          apiFetch<T>(endpoint, options, true).then(resolve).catch(reject);
+        });
+      });
+    }
+  }
 
   let data: any;
   try {
@@ -57,7 +114,13 @@ export async function apiFetch<T>(
   }
 
   if (!res.ok) {
-    throw new Error(data?.error?.message || data?.message || 'An API error occurred.');
+    const errorDetails =
+      data?.error?.message ||
+      data?.message ||
+      (Array.isArray(data?.error?.messages) ? data.error.messages.join(' | ') : null) ||
+      (data?.error?.details ? JSON.stringify(data.error.details) : null) ||
+      'An API error occurred.';
+    throw new Error(errorDetails);
   }
 
   return data as T;

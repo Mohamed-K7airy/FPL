@@ -19,18 +19,19 @@ export interface ValidationResult {
 
 export class ValidationService {
   /**
-   * Validates a 15-player squad structure against all official FPL rules
+   * Validates a 5-player squad structure for Mini FPL
+   * Rule: 1 GKP (slot 1) + 4 Outfielders (DEF/MID/FWD in slots 2..5)
    */
   static validateSquad(
     picks: SquadItemInput[],
     playerMap: Map<number, PlayerRecord>,
-    bank: number = 1000
+    bank: number = 500
   ): ValidationResult {
     const errors: string[] = [];
 
-    // 1. Total players count check
-    if (picks.length !== 15) {
-      errors.push(`Squad must contain exactly 15 players. Provided: ${picks.length}`);
+    // 1. Total players count check (5 players)
+    if (picks.length !== 5) {
+      errors.push(`Squad must contain exactly 5 players. Provided: ${picks.length}`);
     }
 
     // 2. Unique player check
@@ -40,11 +41,11 @@ export class ValidationService {
       errors.push('Duplicate players are not allowed in the squad.');
     }
 
-    // 3. Unique slot check (1 to 15)
+    // 3. Unique slot check (1 to 5)
     const slots = picks.map((p) => p.slot);
     const uniqueSlots = new Set(slots);
-    if (uniqueSlots.size !== slots.length || Math.min(...slots) < 1 || Math.max(...slots) > 15) {
-      errors.push('Squad slots must be unique numbers from 1 to 15.');
+    if (uniqueSlots.size !== slots.length || Math.min(...slots) < 1 || Math.max(...slots) > 5) {
+      errors.push('Squad slots must be unique numbers from 1 to 5.');
     }
 
     // Accumulate positional counts, team counts, and total cost
@@ -64,11 +65,15 @@ export class ValidationService {
       teamCounts[player.team_id] = (teamCounts[player.team_id] || 0) + 1;
     }
 
-    // 4. Position quotas (2 GKP, 5 DEF, 5 MID, 3 FWD)
-    if (posCounts[1] !== 2) errors.push(`Squad must have exactly 2 Goalkeepers (GKP). Provided: ${posCounts[1]}`);
-    if (posCounts[2] !== 5) errors.push(`Squad must have exactly 5 Defenders (DEF). Provided: ${posCounts[2]}`);
-    if (posCounts[3] !== 5) errors.push(`Squad must have exactly 5 Midfielders (MID). Provided: ${posCounts[3]}`);
-    if (posCounts[4] !== 3) errors.push(`Squad must have exactly 3 Forwards (FWD). Provided: ${posCounts[4]}`);
+    // 4. Position quotas (1 GKP, 4 outfielders total across DEF, MID, FWD)
+    if (posCounts[1] !== 1) {
+      errors.push(`Squad must have exactly 1 Goalkeeper (GKP). Provided: ${posCounts[1]}`);
+    }
+
+    const totalOutfielders = posCounts[2] + posCounts[3] + posCounts[4];
+    if (totalOutfielders !== 4) {
+      errors.push(`Squad must have exactly 4 outfield players (DEF/MID/FWD). Provided: ${totalOutfielders}`);
+    }
 
     // 5. Budget constraint (Total cost <= bank)
     if (totalCost > bank) {
@@ -82,10 +87,10 @@ export class ValidationService {
       }
     }
 
-    // 7. Starting formation check (Slots 1..11)
-    const starters = picks.filter((p) => p.slot >= 1 && p.slot <= 11);
-    if (starters.length !== 11) {
-      errors.push(`Starting XI must contain exactly 11 players. Provided: ${starters.length}`);
+    // 7. Starting formation check (Slots 1..5)
+    const starters = picks.filter((p) => p.slot >= 1 && p.slot <= 5);
+    if (starters.length !== 5) {
+      errors.push(`Starting lineup must contain exactly 5 players. Provided: ${starters.length}`);
     } else {
       const starterPosCounts = { 1: 0, 2: 0, 3: 0, 4: 0 };
       for (const starter of starters) {
@@ -96,16 +101,7 @@ export class ValidationService {
       }
 
       if (starterPosCounts[1] !== 1) {
-        errors.push(`Starting XI must contain exactly 1 Goalkeeper. Provided: ${starterPosCounts[1]}`);
-      }
-      if (starterPosCounts[2] < 3) {
-        errors.push(`Starting XI must contain at least 3 Defenders. Provided: ${starterPosCounts[2]}`);
-      }
-      if (starterPosCounts[3] < 2) {
-        errors.push(`Starting XI must contain at least 2 Midfielders. Provided: ${starterPosCounts[3]}`);
-      }
-      if (starterPosCounts[4] < 1) {
-        errors.push(`Starting XI must contain at least 1 Forward. Provided: ${starterPosCounts[4]}`);
+        errors.push(`Starting lineup must contain exactly 1 Goalkeeper. Provided: ${starterPosCounts[1]}`);
       }
     }
 
@@ -124,11 +120,11 @@ export class ValidationService {
       if (captains[0].playerId === viceCaptains[0].playerId) {
         errors.push('Captain and Vice-Captain must be different players.');
       }
-      if (captains[0].slot > 11) {
-        errors.push('Captain must be in the starting XI (slots 1-11).');
+      if (captains[0].slot > 5) {
+        errors.push('Captain must be in slots 1-5.');
       }
-      if (viceCaptains[0].slot > 11) {
-        errors.push('Vice-Captain must be in the starting XI (slots 1-11).');
+      if (viceCaptains[0].slot > 5) {
+        errors.push('Vice-Captain must be in slots 1-5.');
       }
     }
 

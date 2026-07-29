@@ -9,17 +9,17 @@ const router = Router();
 
 const SquadItemSchema = z.object({
   playerId: z.number().int().positive(),
-  slot: z.number().int().min(1).max(15),
+  slot: z.number().int().min(1).max(5),
   isCaptain: z.boolean(),
   isVice: z.boolean(),
 });
 
 const CreateSquadSchema = z.object({
-  picks: z.array(SquadItemSchema).length(15),
+  picks: z.array(SquadItemSchema).length(5),
 });
 
 const UpdateLineupSchema = z.object({
-  picks: z.array(SquadItemSchema).length(15),
+  picks: z.array(SquadItemSchema).length(5),
 });
 
 // Helper: Check deadline enforcement
@@ -53,7 +53,7 @@ router.get('/', authenticateToken, async (req: AuthenticatedRequest, res: Respon
   try {
     const userId = req.user!.id;
 
-    const { data: squadItems, error } = await supabase
+    let { data: squadItems, error } = await supabase
       .from('squad')
       .select('*, players(*, fpl_teams(name, short_name))')
       .eq('user_id', userId)
@@ -65,17 +65,64 @@ router.get('/', authenticateToken, async (req: AuthenticatedRequest, res: Respon
       return;
     }
 
+    // Auto-migrate legacy squads (more than 5 players) down to 5 players
+    if (squadItems && squadItems.length > 5) {
+      logger.info({ userId, legacyCount: squadItems.length }, 'Migrating legacy squad to Mini FPL 5-player format');
+
+      const gkp = squadItems.find((s) => s.players?.position === 1) || squadItems[0];
+      const outfielders = squadItems.filter((s) => s.player_id !== gkp.player_id).slice(0, 4);
+
+      const new5Picks = [
+        { ...gkp, slot: 1, is_captain: true, is_vice: false },
+        ...outfielders.map((s, idx) => ({
+          ...s,
+          slot: idx + 2,
+          is_captain: false,
+          is_vice: idx === 0,
+        })),
+      ];
+
+      await supabase.from('squad').delete().eq('user_id', userId);
+      await supabase.from('squad').insert(
+        new5Picks.map((s) => ({
+          user_id: userId,
+          player_id: s.player_id,
+          slot: s.slot,
+          is_captain: s.is_captain,
+          is_vice: s.is_vice,
+          purchase_price: s.purchase_price,
+        }))
+      );
+
+      const { data: migrated } = await supabase
+        .from('squad')
+        .select('*, players(*, fpl_teams(name, short_name))')
+        .eq('user_id', userId)
+        .order('slot', { ascending: true });
+
+      squadItems = migrated || [];
+    }
+
     const { data: user } = await supabase
       .from('users')
       .select('bank, free_transfers, squad_complete')
       .eq('id', userId)
       .single();
 
+    let computedBank = user?.bank || 500;
+    if (squadItems && squadItems.length === 5) {
+      const squadCost = squadItems.reduce((acc, s) => acc + (s.players?.now_cost || 0), 0);
+      computedBank = 500 - squadCost;
+      if (user && user.bank !== computedBank) {
+        await supabase.from('users').update({ bank: computedBank, squad_complete: true }).eq('id', userId);
+      }
+    }
+
     res.status(200).json({
       squad: squadItems || [],
-      bank: user?.bank || 1000,
+      bank: computedBank,
       freeTransfers: user?.free_transfers || 1,
-      squadComplete: Boolean(user?.squad_complete),
+      squadComplete: Boolean(user?.squad_complete) && Boolean(squadItems && squadItems.length === 5),
     });
   } catch (err) {
     logger.error(err, 'Error in GET /api/squad');
@@ -83,7 +130,7 @@ router.get('/', authenticateToken, async (req: AuthenticatedRequest, res: Respon
   }
 });
 
-// POST /api/squad (Initial 15-player squad creation)
+// POST /api/squad (Initial squad creation or overwrite)
 router.post('/', authenticateToken, async (req: AuthenticatedRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user!.id;
@@ -105,10 +152,8 @@ router.post('/', authenticateToken, async (req: AuthenticatedRequest, res: Respo
       .eq('user_id', userId);
 
     if (existingSquad && existingSquad.length > 0) {
-      res.status(400).json({
-        error: { code: 'SQUAD_ALREADY_EXISTS', message: 'Initial squad already created. Use transfers endpoint for changes.' },
-      });
-      return;
+      // Clear previous squad to allow initial creation/reset
+      await supabase.from('squad').delete().eq('user_id', userId);
     }
 
     // Fetch player records
@@ -128,10 +173,10 @@ router.post('/', authenticateToken, async (req: AuthenticatedRequest, res: Respo
       });
     });
 
-    const validation = ValidationService.validateSquad(picks, playerMap, 1000);
+    const validation = ValidationService.validateSquad(picks, playerMap, 500);
     if (!validation.valid) {
       res.status(400).json({
-        error: { code: 'VALIDATION_FAILED', messages: validation.errors },
+        error: { code: 'VALIDATION_FAILED', message: validation.errors.join(' | '), messages: validation.errors },
       });
       return;
     }
@@ -142,7 +187,7 @@ router.post('/', authenticateToken, async (req: AuthenticatedRequest, res: Respo
       totalCost += playerMap.get(p.playerId)!.now_cost;
     });
 
-    const remainingBank = 1000 - totalCost;
+    const remainingBank = 500 - totalCost;
 
     // Insert squad records
     const squadRows = picks.map((p) => ({
@@ -207,7 +252,7 @@ router.put('/lineup', authenticateToken, async (req: AuthenticatedRequest, res: 
       .select('player_id, purchase_price')
       .eq('user_id', userId);
 
-    if (!existingSquad || existingSquad.length !== 15) {
+    if (!existingSquad || existingSquad.length !== 5) {
       res.status(400).json({
         error: { code: 'NO_SQUAD', message: 'Complete initial squad creation first.' },
       });
@@ -217,7 +262,7 @@ router.put('/lineup', authenticateToken, async (req: AuthenticatedRequest, res: 
     const existingPlayerIds = new Set(existingSquad.map((s: any) => s.player_id));
     const inputPlayerIds = new Set(picks.map((p) => p.playerId));
 
-    // Ensure user is only reordering their existing 15 players (no transfers allowed via lineup API)
+    // Ensure user is only reordering their existing 5 players (no transfers allowed via lineup API)
     for (const id of inputPlayerIds) {
       if (!existingPlayerIds.has(id)) {
         res.status(400).json({

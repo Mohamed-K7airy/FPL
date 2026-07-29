@@ -52,6 +52,11 @@ export const Navbar: React.FC = () => {
           <nav className="desktop-nav">
             <ul className="nav-links">
               <li>
+                <NavLink to="/points" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+                  {t('points')}
+                </NavLink>
+              </li>
+              <li>
                 <NavLink to="/squad" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
                   {t('mySquad')}
                 </NavLink>
@@ -59,11 +64,6 @@ export const Navbar: React.FC = () => {
               <li>
                 <NavLink to="/transfers" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
                   {t('transfers')}
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/points" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-                  {t('points')}
                 </NavLink>
               </li>
               <li>
@@ -142,6 +142,11 @@ export const Navbar: React.FC = () => {
       {/* Floating Mobile Bottom Navigation Dock Bar for Native App Feel */}
       {user && (
         <div className="mobile-bottom-dock">
+          <NavLink to="/points" className={({ isActive }) => `mobile-dock-item ${isActive ? 'active' : ''}`}>
+            <Trophy size={20} />
+            <span>{t('points')}</span>
+          </NavLink>
+
           <NavLink to="/squad" className={({ isActive }) => `mobile-dock-item ${isActive ? 'active' : ''}`}>
             <LayoutGrid size={20} />
             <span>{t('mySquad')}</span>
@@ -150,11 +155,6 @@ export const Navbar: React.FC = () => {
           <NavLink to="/transfers" className={({ isActive }) => `mobile-dock-item ${isActive ? 'active' : ''}`}>
             <Repeat size={20} />
             <span>{t('transfers')}</span>
-          </NavLink>
-
-          <NavLink to="/points" className={({ isActive }) => `mobile-dock-item ${isActive ? 'active' : ''}`}>
-            <Trophy size={20} />
-            <span>{t('points')}</span>
           </NavLink>
 
           <NavLink to="/leagues" className={({ isActive }) => `mobile-dock-item ${isActive ? 'active' : ''}`}>

@@ -43,7 +43,7 @@ export class TransferService {
       .select('*')
       .eq('user_id', userId);
 
-    if (squadErr || !squadItems || squadItems.length !== 15) {
+    if (squadErr || !squadItems || squadItems.length !== 5) {
       throw new Error('Current squad not found or incomplete.');
     }
 
@@ -71,7 +71,14 @@ export class TransferService {
       });
     });
 
-    let currentBank = user.bank;
+    // Compute current squad cost to accurately evaluate available bank (£50.0m total budget)
+    let currentSquadCost = 0;
+    workingSquad.forEach((s) => {
+      const p = playerMap.get(s.player_id);
+      if (p) currentSquadCost += p.now_cost;
+    });
+
+    let currentBank = 500 - currentSquadCost;
 
     // Process each transfer in working squad
     for (const transfer of transfers) {
@@ -87,8 +94,11 @@ export class TransferService {
         throw new Error('Invalid player IDs in transfer request.');
       }
 
-      if (outPlayer.position !== inPlayer.position) {
-        throw new Error(`Player IN position (${inPlayer.position}) must match Player OUT position (${outPlayer.position}).`);
+      if (outPlayer.position === 1 && inPlayer.position !== 1) {
+        throw new Error('Goalkeeper can only be replaced by another Goalkeeper.');
+      }
+      if (outPlayer.position !== 1 && inPlayer.position === 1) {
+        throw new Error('Outfield player cannot be replaced by a Goalkeeper.');
       }
 
       // Calculate sell price

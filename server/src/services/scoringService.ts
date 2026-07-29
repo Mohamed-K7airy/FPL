@@ -26,7 +26,7 @@ export class ScoringService {
       slot: s.slot,
       is_captain: Boolean(s.is_captain),
       is_vice: Boolean(s.is_vice),
-      multiplier: s.slot <= 11 ? (s.is_captain ? 2 : 1) : 0,
+      multiplier: s.slot <= 5 ? (s.is_captain ? 2 : 1) : 0,
       auto_subbed: false,
     }));
 

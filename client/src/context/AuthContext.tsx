@@ -9,6 +9,7 @@ export interface User {
   bank: number;
   free_transfers: number;
   squad_complete: boolean;
+  rank?: number;
 }
 
 interface AuthContextType {

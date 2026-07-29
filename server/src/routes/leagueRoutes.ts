@@ -23,14 +23,18 @@ function generateLeagueCode(): string {
   return code;
 }
 
-// GET /api/leagues/leaderboard (Global Overall Leaderboard)
+// GET /api/leagues/leaderboard (Global Overall, Weekly, or Monthly Leaderboard)
 router.get('/leaderboard', async (req: Request, res: Response): Promise<void> => {
   try {
+    const type = (req.query.type as string) || 'overall'; // 'overall' | 'weekly' | 'monthly'
+    const targetGw = req.query.gw ? parseInt(req.query.gw as string, 10) : 1;
+    const targetMonth = (req.query.month as string) || 'august';
+
     const page = parseInt(req.query.page as string || '1', 10);
     const limit = parseInt(req.query.limit as string || '50', 10);
     const offset = (page - 1) * limit;
 
-    // Fetch total accumulated points per user from gw_scores
+    // Fetch all users
     const { data: usersData, count, error } = await supabase
       .from('users')
       .select('id, team_name, email', { count: 'exact' });
@@ -40,9 +44,28 @@ router.get('/leaderboard', async (req: Request, res: Response): Promise<void> =>
       return;
     }
 
-    const { data: totalScores } = await supabase
-      .from('gw_scores')
-      .select('user_id, net_points');
+    let query = supabase.from('gw_scores').select('user_id, gw, net_points');
+
+    if (type === 'weekly') {
+      query = query.eq('gw', targetGw);
+    } else if (type === 'monthly') {
+      const monthGwMap: Record<string, [number, number]> = {
+        august: [1, 3],
+        september: [4, 6],
+        october: [7, 10],
+        november: [11, 13],
+        december: [14, 19],
+        january: [20, 24],
+        february: [25, 27],
+        march: [28, 30],
+        april: [31, 34],
+        may: [35, 38],
+      };
+      const [startGw, endGw] = monthGwMap[targetMonth.toLowerCase()] || [1, 38];
+      query = query.gte('gw', startGw).lte('gw', endGw);
+    }
+
+    const { data: totalScores } = await query;
 
     const scoreMap = new Map<number, number>();
     (totalScores || []).forEach((s: any) => {
