@@ -261,19 +261,19 @@ export const SquadPage: React.FC = () => {
           <div className="fpl-widget-card">
             <div className="widget-label">{isRtl ? 'خاصية الجولة (Chip)' : 'Gameweek Chip'}</div>
             {isTripleCaptainActive ? (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginTop: '6px', width: '100%' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginTop: '4px', width: '100%' }}>
                 <div
                   style={{
                     background: '#10b981',
                     color: '#ffffff',
-                    padding: '6px 10px',
-                    borderRadius: '8px',
+                    padding: '4px 6px',
+                    borderRadius: '6px',
                     fontWeight: 900,
-                    fontSize: '0.82rem',
+                    fontSize: '0.72rem',
                     textAlign: 'center',
                   }}
                 >
-                  {isRtl ? 'تريبل كابتن (مفعّلة x3)' : 'Triple Captain Active (x3)'}
+                  {isRtl ? 'تريبل كابتن (3x)' : 'Triple Captain (3x)'}
                 </div>
                 <button
                   onClick={handleDeactivateTripleCaptain}
@@ -282,15 +282,15 @@ export const SquadPage: React.FC = () => {
                     background: '#e11d48',
                     color: '#ffffff',
                     border: 'none',
-                    padding: '6px 10px',
-                    borderRadius: '8px',
-                    fontSize: '0.78rem',
+                    padding: '4px 6px',
+                    borderRadius: '6px',
+                    fontSize: '0.72rem',
                     fontWeight: 800,
                     cursor: 'pointer',
                     width: '100%',
                   }}
                 >
-                  {activatingChip ? (isRtl ? 'جاري الإلغاء...' : 'Cancelling...') : (isRtl ? 'إلغاء التفعيل' : 'Deactivate')}
+                  {activatingChip ? (isRtl ? 'جاري الإلغاء...' : 'Cancelling...') : (isRtl ? 'إلغاء' : 'Deactivate')}
                 </button>
               </div>
             ) : (
@@ -300,25 +300,20 @@ export const SquadPage: React.FC = () => {
                 style={{
                   background: 'linear-gradient(135deg, #0284c7 0%, #38bdf8 100%)',
                   color: '#ffffff',
-                  padding: '10px 14px',
-                  borderRadius: '12px',
+                  padding: '6px 8px',
+                  borderRadius: '8px',
                   fontWeight: 900,
                   border: 'none',
                   cursor: 'pointer',
                   width: '100%',
-                  marginTop: '6px',
-                  fontSize: '0.85rem',
-                  boxShadow: '0 4px 12px rgba(2, 132, 199, 0.4)',
+                  marginTop: '4px',
+                  fontSize: '0.75rem',
+                  boxShadow: '0 2px 8px rgba(2, 132, 199, 0.3)',
                 }}
               >
-                {activatingChip ? (isRtl ? 'جاري التفعيل...' : 'Activating...') : (isRtl ? 'تفعيل تريبل كابتن (3x)' : 'Play Triple Captain (3x)')}
+                {activatingChip ? (isRtl ? 'جاري التفعيل...' : 'Activating...') : (isRtl ? 'تريبل كابتن (3x)' : 'Triple Captain (3x)')}
               </button>
             )}
-            <div className="widget-sub-label" style={{ marginTop: '4px' }}>
-              {isTripleCaptainActive
-                ? (isRtl ? 'محفوظة ومفعلة للجولة' : 'Saved & Active for GW')
-                : (isRtl ? 'اضغط لتفعيل الخاصية' : 'Click to activate')}
-            </div>
           </div>
 
           {/* Card 2 (الوسط - Center Featured): قيمة التشكيلة */}
