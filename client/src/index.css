@@ -1287,3 +1287,66 @@ html[dir="rtl"] .fpl-action-badges-right-stacked {
     font-size: 0.4rem;
   }
 }
+
+/* ════════════════════════════════════════════════════════════════
+   CLEAN & ELEGANT MOBILE LAYOUT & SPACING FIXES
+   ════════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  main, .app-container {
+    padding-bottom: 90px !important;
+  }
+
+  .fpl-player-list {
+    max-height: 460px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .fpl-pitch-master-card {
+    padding: 10px 8px !important;
+    border-radius: 18px !important;
+  }
+
+  .fpl-top-widgets-row {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+    margin-bottom: 12px !important;
+    width: 100% !important;
+  }
+
+  .fpl-widget-card {
+    padding: 6px 4px !important;
+    border-radius: 10px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+  }
+
+  .fpl-widget-card .widget-label {
+    font-size: 0.62rem !important;
+    margin-bottom: 3px !important;
+    white-space: nowrap !important;
+  }
+
+  .fpl-widget-card .widget-num {
+    font-size: 1.1rem !important;
+  }
+
+  .fpl-widget-card .widget-badge.purple {
+    font-size: 0.95rem !important;
+    padding: 2px 8px !important;
+  }
+
+  .fpl-widget-card .widget-sub-label {
+    font-size: 0.58rem !important;
+  }
+
+  .fpl-nav-purple-btn, .fpl-nav-pink-btn {
+    padding: 5px 10px !important;
+    font-size: 0.75rem !important;
+  }
+
+  .fpl-gw-pill-badge {
+    padding: 4px 8px !important;
+    font-size: 0.75rem !important;
+  }
+}
