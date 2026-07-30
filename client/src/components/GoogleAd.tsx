@@ -10,5 +10,7 @@ interface GoogleAdProps {
 }
 
 export const GoogleAd: React.FC<GoogleAdProps> = ({ style, className = '' }) => {
-  return <AdsterraAd style={style} className={className} />;
+  // تم إيقاف إعلانات Adsterra مؤقتاً لضمان القبول المباشر من Google AdSense
+  return null;
+  // return <AdsterraAd style={style} className={className} />;
 };
