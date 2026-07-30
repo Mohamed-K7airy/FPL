@@ -36,23 +36,26 @@ export const Footer: React.FC = () => {
           {t('adDisclaimer')}
         </p>
 
-        <div style={{ display: 'flex', gap: '24px', fontWeight: 700, marginTop: '8px' }}>
-          <Link to="/squad" style={{ color: 'var(--fpl-purple)' }}>
-            {t('mySquad')}
+        <div style={{ display: 'flex', gap: '20px', fontWeight: 700, marginTop: '8px', flexWrap: 'wrap', justifyContent: 'center' }}>
+          <Link to="/" style={{ color: 'var(--fpl-purple)' }}>
+            {t('home')}
           </Link>
 
-          <Link to="/transfers" style={{ color: 'var(--fpl-purple)' }}>
-            {t('transfers')}
+          <Link to="/guides" style={{ color: 'var(--fpl-purple)' }}>
+            {t('guides')}
           </Link>
 
-          <Link to="/leagues" style={{ color: 'var(--fpl-purple)' }}>
-            {t('leagues')}
+          <Link to="/about" style={{ color: 'var(--fpl-purple)' }}>
+            {t('about')}
           </Link>
 
-          <Link to="/privacy" style={{ color: 'var(--fpl-cyan)', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+          <Link to="/terms" style={{ color: 'var(--fpl-purple)' }}>
+            {t('terms')}
+          </Link>
+
+          <Link to="/privacy" style={{ color: 'var(--fpl-purple)', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
             <ShieldCheck size={14} />
             <span>{t('privacyPolicy')}</span>
-            <ExternalLink size={12} />
           </Link>
         </div>
 

@@ -48,44 +48,56 @@ export const Navbar: React.FC = () => {
           </div>
         </div>
 
-        {user && (
-          <nav className="desktop-nav">
-            <ul className="nav-links">
-              <li>
-                <NavLink to="/points" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-                  {t('points')}
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/squad" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-                  {t('mySquad')}
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/transfers" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-                  {t('transfers')}
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/leagues" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-                  {t('leagues')}
-                </NavLink>
-              </li>
-              {user.role === 'admin' && (
+        <nav className="desktop-nav">
+          <ul className="nav-links">
+            <li>
+              <NavLink to="/" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`} end>
+                {t('home')}
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/guides" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+                {t('guides')}
+              </NavLink>
+            </li>
+            {user && (
+              <>
                 <li>
-                  <NavLink
-                    to="/admin"
-                    className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
-                    style={{ color: 'var(--fpl-magenta)', display: 'flex', alignItems: 'center', gap: '4px' }}
-                  >
-                    <Shield size={14} />
-                    <span>{t('adminPanel')}</span>
+                  <NavLink to="/points" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+                    {t('points')}
                   </NavLink>
                 </li>
-              )}
-            </ul>
-          </nav>
-        )}
+                <li>
+                  <NavLink to="/squad" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+                    {t('mySquad')}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/transfers" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+                    {t('transfers')}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/leagues" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+                    {t('leagues')}
+                  </NavLink>
+                </li>
+                {user.role === 'admin' && (
+                  <li>
+                    <NavLink
+                      to="/admin"
+                      className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+                      style={{ color: 'var(--fpl-magenta)', display: 'flex', alignItems: 'center', gap: '4px' }}
+                    >
+                      <Shield size={14} />
+                      <span>{t('adminPanel')}</span>
+                    </NavLink>
+                  </li>
+                )}
+              </>
+            )}
+          </ul>
+        </nav>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <button

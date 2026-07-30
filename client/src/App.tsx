@@ -12,6 +12,10 @@ import { PointsPage } from './pages/PointsPage';
 import { LeaguesPage } from './pages/LeaguesPage';
 import { AdminPage } from './pages/AdminPage';
 import { PrivacyPage } from './pages/PrivacyPage';
+import { HomePage } from './pages/HomePage';
+import { GuidesPage } from './pages/GuidesPage';
+import { TermsPage } from './pages/TermsPage';
+import { AboutPage } from './pages/AboutPage';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode; adminOnly?: boolean }> = ({ children, adminOnly }) => {
   const { user, loading } = useAuth();
@@ -38,7 +42,11 @@ export const AppContent: React.FC = () => {
       <Navbar />
       <main className="main-content">
         <Routes>
-          <Route path="/" element={<Navigate to="/squad" replace />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/guides" element={<GuidesPage />} />
+          <Route path="/rules" element={<GuidesPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/terms" element={<TermsPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />

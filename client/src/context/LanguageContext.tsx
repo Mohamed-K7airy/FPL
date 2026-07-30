@@ -6,6 +6,10 @@ const translations: Record<Language, Record<string, string>> = {
   ar: {
     // Brand & Nav
     appName: 'MINI FPL',
+    home: 'الرئيسية',
+    guides: 'الدليل والنصائح',
+    terms: 'شروط الاستخدام',
+    about: 'عن المنصة',
     mySquad: 'تشكيلتي',
     transfers: 'الانتقالات',
     points: 'نقاطي',
@@ -97,6 +101,10 @@ const translations: Record<Language, Record<string, string>> = {
   en: {
     // Brand & Nav
     appName: 'MINI FPL',
+    home: 'Home',
+    guides: 'Guides & Tips',
+    terms: 'Terms of Service',
+    about: 'About Us',
     mySquad: 'My Squad',
     transfers: 'Transfers',
     points: 'Points',
