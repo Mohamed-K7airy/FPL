@@ -45,6 +45,10 @@ export const Footer: React.FC = () => {
             {t('guides')}
           </Link>
 
+          <Link to="/tips" style={{ color: 'var(--fpl-purple)' }}>
+            {t('tips')}
+          </Link>
+
           <Link to="/about" style={{ color: 'var(--fpl-purple)' }}>
             {t('about')}
           </Link>

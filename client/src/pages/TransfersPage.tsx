@@ -610,10 +610,10 @@ export const TransfersPage: React.FC = () => {
                   {(gw === 1 || !hasExistingSquad)
                     ? (isRtl ? 'انتقالات غير محدودة قبل الجولة 1' : 'Unlimited before GW1')
                     : (isWildcardActive || isFreeHitActive)
-                    ? (isRtl ? 'خاصية مفعلة - بدون خصم نقاط' : 'Chip Active - 0 pts hit')
-                    : ((user?.free_transfers ?? 1) > 0)
-                    ? (isRtl ? 'نقلة مجانية متاحة للجولة' : 'Free transfer available')
-                    : (isRtl ? 'خصم 4 نقاط لكل نقلة إضافية' : '-4 pts hit per extra transfer')}
+                      ? (isRtl ? 'خاصية مفعلة - بدون خصم نقاط' : 'Chip Active - 0 pts hit')
+                      : ((user?.free_transfers ?? 1) > 0)
+                        ? (isRtl ? 'نقلة مجانية متاحة للجولة' : 'Free transfer available')
+                        : (isRtl ? 'خصم 4 نقاط لكل نقلة إضافية' : '-4 pts hit per extra transfer')}
                 </div>
               </div>
             </div>

@@ -1,48 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
-import { Globe, Clock, LogOut, Shield, Users, Trophy, Repeat, LayoutGrid } from 'lucide-react';
+import { Globe, Clock, LogOut, Shield, Users, Trophy, Repeat, LayoutGrid, Home, BookOpen, Lightbulb, Menu, X } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
   const { user, logout } = useAuth();
   const { t, lang, toggleLang } = useLanguage();
   const navigate = useNavigate();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
+    setMobileMenuOpen(false);
     navigate('/login');
   };
+
+  const closeMenu = () => setMobileMenuOpen(false);
 
   return (
     <>
       <div className="top-color-banner" />
 
       <header className="navbar">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <NavLink to="/" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div className="navbar-brand-container">
+          <NavLink to="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }} onClick={closeMenu}>
             <img
               src="/logo.png"
               alt="MINI FPL Logo"
-              style={{ height: '42px', objectFit: 'contain' }}
+              className="navbar-logo-img"
             />
           </NavLink>
 
-          <div
-            className="navbar-deadline-badge hide-mobile"
-            style={{
-              background: 'rgba(79, 70, 229, 0.08)',
-              border: '1px solid var(--border-color)',
-              padding: '6px 14px',
-              borderRadius: '20px',
-              fontSize: '0.78rem',
-              color: 'var(--fpl-purple)',
-              fontWeight: 800,
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-            }}
-          >
+          <div className="navbar-deadline-badge hide-tablet">
             <Clock size={14} style={{ color: 'var(--fpl-purple)' }} />
             <span>GW1 Deadline: 21 Aug, 20:30</span>
           </div>
@@ -52,44 +42,55 @@ export const Navbar: React.FC = () => {
           <ul className="nav-links">
             <li>
               <NavLink to="/" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`} end>
-                {t('home')}
+                <Home size={15} />
+                <span>{t('home')}</span>
               </NavLink>
             </li>
             <li>
               <NavLink to="/guides" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-                {t('guides')}
+                <BookOpen size={15} />
+                <span>{t('guides')}</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/tips" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+                <Lightbulb size={15} />
+                <span>{t('tips')}</span>
               </NavLink>
             </li>
             {user && (
               <>
                 <li>
                   <NavLink to="/points" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-                    {t('points')}
+                    <Trophy size={15} />
+                    <span>{t('points')}</span>
                   </NavLink>
                 </li>
                 <li>
                   <NavLink to="/squad" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-                    {t('mySquad')}
+                    <LayoutGrid size={15} />
+                    <span>{t('mySquad')}</span>
                   </NavLink>
                 </li>
                 <li>
                   <NavLink to="/transfers" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-                    {t('transfers')}
+                    <Repeat size={15} />
+                    <span>{t('transfers')}</span>
                   </NavLink>
                 </li>
                 <li>
                   <NavLink to="/leagues" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-                    {t('leagues')}
+                    <Users size={15} />
+                    <span>{t('leagues')}</span>
                   </NavLink>
                 </li>
                 {user.role === 'admin' && (
                   <li>
                     <NavLink
                       to="/admin"
-                      className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
-                      style={{ color: 'var(--fpl-magenta)', display: 'flex', alignItems: 'center', gap: '4px' }}
+                      className={({ isActive }) => `nav-link admin-nav-link ${isActive ? 'active' : ''}`}
                     >
-                      <Shield size={14} />
+                      <Shield size={15} />
                       <span>{t('adminPanel')}</span>
                     </NavLink>
                   </li>
@@ -99,82 +100,174 @@ export const Navbar: React.FC = () => {
           </ul>
         </nav>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <button
-            onClick={toggleLang}
-            style={{
-              background: '#f1f5f9',
-              border: '1px solid var(--border-color)',
-              color: 'var(--text-main)',
-              padding: '6px 10px',
-              borderRadius: '8px',
-              fontSize: '0.78rem',
-              fontWeight: 700,
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '4px',
-            }}
-          >
+        <div className="navbar-actions">
+          <button onClick={toggleLang} className="lang-toggle-btn">
             <Globe size={14} />
             <span>{lang === 'ar' ? 'English' : 'العربية'}</span>
           </button>
 
           {user ? (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <div className="user-team-pill" style={{ textAlign: lang === 'ar' ? 'left' : 'right' }}>
-                <div style={{ fontWeight: 800, fontSize: '0.82rem', color: 'var(--fpl-purple)' }}>{user.team_name}</div>
-                <div style={{ fontSize: '0.72rem', color: 'var(--fpl-green)', fontWeight: 800 }}>
+            <div className="user-profile-actions">
+              <div className="user-team-pill">
+                <div className="user-team-name">{user.team_name}</div>
+                <div className="user-team-stats">
                   £{(user.bank / 10).toFixed(1)}m | {user.free_transfers} FT
                 </div>
               </div>
               <button
                 onClick={handleLogout}
-                className="btn-secondary"
-                style={{ padding: '6px 10px', fontSize: '0.78rem', display: 'flex', alignItems: 'center', gap: '4px' }}
+                className="btn-logout hide-mobile"
                 title={t('logout')}
               >
                 <LogOut size={14} />
-                <span className="hide-mobile">{t('logout')}</span>
+                <span className="logout-text">{t('logout')}</span>
               </button>
             </div>
           ) : (
-            <div style={{ display: 'flex', gap: '6px' }}>
-              <NavLink to="/login" className="btn-secondary" style={{ padding: '6px 10px', fontSize: '0.78rem' }}>
+            <div className="auth-buttons hide-mobile">
+              <NavLink to="/login" className="btn-secondary nav-auth-btn">
                 {t('login')}
               </NavLink>
-              <NavLink to="/register" className="btn-primary" style={{ padding: '6px 10px', fontSize: '0.78rem' }}>
+              <NavLink to="/register" className="btn-primary nav-auth-btn">
                 {t('register')}
               </NavLink>
             </div>
           )}
+
+          {/* Mobile Hamburger Menu Button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="mobile-hamburger-btn"
+            aria-label="القائمة"
+          >
+            {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
         </div>
       </header>
 
-      {/* Floating Mobile Bottom Navigation Dock Bar for Native App Feel */}
-      {user && (
-        <div className="mobile-bottom-dock">
-          <NavLink to="/points" className={({ isActive }) => `mobile-dock-item ${isActive ? 'active' : ''}`}>
-            <Trophy size={20} />
-            <span>{t('points')}</span>
-          </NavLink>
+      {/* Slide-out Mobile Drawer Menu */}
+      {mobileMenuOpen && (
+        <div className="mobile-drawer-backdrop" onClick={closeMenu}>
+          <div className="mobile-drawer-content" onClick={(e) => e.stopPropagation()}>
+            <div className="mobile-drawer-header">
+              <div style={{ fontWeight: 900, color: 'var(--fpl-purple)', fontSize: '1.1rem' }}>
+                قائمة MINI FPL
+              </div>
+              <button onClick={closeMenu} className="mobile-drawer-close">
+                <X size={20} />
+              </button>
+            </div>
 
-          <NavLink to="/squad" className={({ isActive }) => `mobile-dock-item ${isActive ? 'active' : ''}`}>
-            <LayoutGrid size={20} />
-            <span>{t('mySquad')}</span>
-          </NavLink>
-
-          <NavLink to="/transfers" className={({ isActive }) => `mobile-dock-item ${isActive ? 'active' : ''}`}>
-            <Repeat size={20} />
-            <span>{t('transfers')}</span>
-          </NavLink>
-
-          <NavLink to="/leagues" className={({ isActive }) => `mobile-dock-item ${isActive ? 'active' : ''}`}>
-            <Users size={20} />
-            <span>{t('leagues')}</span>
-          </NavLink>
+            <nav className="mobile-drawer-nav">
+              <NavLink to="/" onClick={closeMenu} className="mobile-drawer-link">
+                <Home size={18} />
+                <span>{t('home')}</span>
+              </NavLink>
+              <NavLink to="/guides" onClick={closeMenu} className="mobile-drawer-link">
+                <BookOpen size={18} />
+                <span>{t('guides')}</span>
+              </NavLink>
+              <NavLink to="/tips" onClick={closeMenu} className="mobile-drawer-link">
+                <Lightbulb size={18} />
+                <span>{t('tips')}</span>
+              </NavLink>
+              {user ? (
+                <>
+                  <NavLink to="/points" onClick={closeMenu} className="mobile-drawer-link">
+                    <Trophy size={18} />
+                    <span>{t('points')}</span>
+                  </NavLink>
+                  <NavLink to="/squad" onClick={closeMenu} className="mobile-drawer-link">
+                    <LayoutGrid size={18} />
+                    <span>{t('mySquad')}</span>
+                  </NavLink>
+                  <NavLink to="/transfers" onClick={closeMenu} className="mobile-drawer-link">
+                    <Repeat size={18} />
+                    <span>{t('transfers')}</span>
+                  </NavLink>
+                  <NavLink to="/leagues" onClick={closeMenu} className="mobile-drawer-link">
+                    <Users size={18} />
+                    <span>{t('leagues')}</span>
+                  </NavLink>
+                  {user.role === 'admin' && (
+                    <NavLink to="/admin" onClick={closeMenu} className="mobile-drawer-link admin">
+                      <Shield size={18} />
+                      <span>{t('adminPanel')}</span>
+                    </NavLink>
+                  )}
+                  <button onClick={handleLogout} className="mobile-drawer-link logout">
+                    <LogOut size={18} />
+                    <span>{t('logout')}</span>
+                  </button>
+                </>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '16px' }}>
+                  <NavLink to="/login" onClick={closeMenu} className="btn-secondary" style={{ textAlign: 'center', padding: '10px' }}>
+                    {t('login')}
+                  </NavLink>
+                  <NavLink to="/register" onClick={closeMenu} className="btn-primary" style={{ textAlign: 'center', padding: '10px' }}>
+                    {t('register')}
+                  </NavLink>
+                </div>
+              )}
+            </nav>
+          </div>
         </div>
       )}
+
+      {/* Floating Mobile Bottom Navigation Dock Bar for Native App Feel */}
+      <div className="mobile-bottom-dock">
+        <NavLink to="/" className={({ isActive }) => `mobile-dock-item ${isActive ? 'active' : ''}`} end>
+          <Home size={18} />
+          <span>{t('home')}</span>
+        </NavLink>
+
+        {user ? (
+          <>
+            <NavLink to="/points" className={({ isActive }) => `mobile-dock-item ${isActive ? 'active' : ''}`}>
+              <Trophy size={18} />
+              <span>{t('points')}</span>
+            </NavLink>
+
+            <NavLink to="/squad" className={({ isActive }) => `mobile-dock-item ${isActive ? 'active' : ''}`}>
+              <LayoutGrid size={18} />
+              <span>{t('mySquad')}</span>
+            </NavLink>
+
+            <NavLink to="/transfers" className={({ isActive }) => `mobile-dock-item ${isActive ? 'active' : ''}`}>
+              <Repeat size={18} />
+              <span>{t('transfers')}</span>
+            </NavLink>
+
+            <NavLink to="/tips" className={({ isActive }) => `mobile-dock-item ${isActive ? 'active' : ''}`}>
+              <Lightbulb size={18} />
+              <span>{t('tips')}</span>
+            </NavLink>
+
+            <NavLink to="/leagues" className={({ isActive }) => `mobile-dock-item ${isActive ? 'active' : ''}`}>
+              <Users size={18} />
+              <span>{lang === 'ar' ? 'الدوريات' : t('leagues')}</span>
+            </NavLink>
+          </>
+        ) : (
+          <>
+            <NavLink to="/guides" className={({ isActive }) => `mobile-dock-item ${isActive ? 'active' : ''}`}>
+              <BookOpen size={18} />
+              <span>{t('guides')}</span>
+            </NavLink>
+
+            <NavLink to="/tips" className={({ isActive }) => `mobile-dock-item ${isActive ? 'active' : ''}`}>
+              <Lightbulb size={18} />
+              <span>{t('tips')}</span>
+            </NavLink>
+
+            <NavLink to="/login" className={({ isActive }) => `mobile-dock-item ${isActive ? 'active' : ''}`}>
+              <LogOut size={18} />
+              <span>{t('login')}</span>
+            </NavLink>
+          </>
+        )}
+      </div>
     </>
   );
 };

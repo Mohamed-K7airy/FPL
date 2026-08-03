@@ -297,8 +297,8 @@ export const LeaguesPage: React.FC = () => {
                     {rankingType === 'weekly'
                       ? (isRtl ? `نقاط الجولة ${selectedGw}` : `GW ${selectedGw} Points`)
                       : rankingType === 'monthly'
-                      ? (isRtl ? 'نقاط الشهر' : 'Monthly Points')
-                      : t('totalPoints')}
+                        ? (isRtl ? 'نقاط الشهر' : 'Monthly Points')
+                        : t('totalPoints')}
                   </th>
                 </tr>
               </thead>

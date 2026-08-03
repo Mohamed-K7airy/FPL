@@ -16,6 +16,8 @@ import { HomePage } from './pages/HomePage';
 import { GuidesPage } from './pages/GuidesPage';
 import { TermsPage } from './pages/TermsPage';
 import { AboutPage } from './pages/AboutPage';
+import { TipsPage } from './pages/TipsPage';
+import { ArticlePage } from './pages/ArticlePage';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode; adminOnly?: boolean }> = ({ children, adminOnly }) => {
   const { user, loading } = useAuth();
@@ -46,6 +48,8 @@ export const AppContent: React.FC = () => {
           <Route path="/guides" element={<GuidesPage />} />
           <Route path="/rules" element={<GuidesPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/tips" element={<TipsPage />} />
+          <Route path="/tips/:slug" element={<ArticlePage />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />

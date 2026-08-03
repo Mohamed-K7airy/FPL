@@ -241,7 +241,7 @@ export const PointsPage: React.FC = () => {
         <PitchView
           picks={formattedPicks}
           selectedSlot={null}
-          onSlotClick={() => {}}
+          onSlotClick={() => { }}
           onPlayerInfoClick={(pData) => setActivePlayerModal(pData)}
           readOnly={true}
           gw={gw}
