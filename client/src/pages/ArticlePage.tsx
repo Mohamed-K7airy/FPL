@@ -164,13 +164,86 @@ export const ArticlePage: React.FC = () => {
       {/* Article Header */}
       <header className="article-header">
         {article.coverImage && (
-          <div style={{ width: '100%', height: '260px', borderRadius: '16px', overflow: 'hidden', marginBottom: '20px' }}>
-            <img
-              src={article.coverImage}
-              alt={article.title}
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-            />
-          </div>
+          article.coverFit === 'auto' ? (
+            <div
+              style={{
+                width: '100%',
+                maxWidth: '650px',
+                margin: '0 auto 24px auto',
+                borderRadius: '20px',
+                overflow: 'hidden',
+                boxShadow: '0 12px 40px rgba(0, 0, 0, 0.35)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+              }}
+            >
+              <img
+                src={article.coverImage}
+                alt={article.title}
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  display: 'block',
+                  borderRadius: '20px',
+                  transform: article.coverZoom ? `scale(${article.coverZoom / 100})` : 'scale(1)',
+                  transformOrigin: article.coverPosition || 'center center',
+                  transition: 'transform 0.3s ease',
+                }}
+              />
+            </div>
+          ) : article.coverFit === 'contain' ? (
+            <div
+              style={{
+                width: '100%',
+                height: article.coverHeight ? `${article.coverHeight}px` : '420px',
+                borderRadius: '16px',
+                overflow: 'hidden',
+                marginBottom: '24px',
+                background: '#0d001f',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 8px 24px rgba(0, 0, 0, 0.25)',
+              }}
+            >
+              <img
+                src={article.coverImage}
+                alt={article.title}
+                style={{
+                  maxWidth: '100%',
+                  maxHeight: '100%',
+                  objectFit: 'contain',
+                  transform: article.coverZoom ? `scale(${article.coverZoom / 100})` : 'scale(1)',
+                  transformOrigin: article.coverPosition || 'center center',
+                }}
+              />
+            </div>
+          ) : (
+            <div
+              style={{
+                width: '100%',
+                height: article.coverHeight ? `${article.coverHeight}px` : '360px',
+                borderRadius: '16px',
+                overflow: 'hidden',
+                marginBottom: '24px',
+                boxShadow: '0 8px 24px rgba(0, 0, 0, 0.25)',
+                transition: 'all 0.3s ease',
+              }}
+            >
+              <img
+                src={article.coverImage}
+                alt={article.title}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  objectPosition: article.coverPosition || 'center center',
+                  transform: article.coverZoom ? `scale(${article.coverZoom / 100})` : 'scale(1)',
+                  transformOrigin: article.coverPosition || 'center center',
+                  transition: 'transform 0.3s ease',
+                }}
+              />
+            </div>
+          )
         )}
 
         <div className="article-category-pill" style={{ background: article.categoryColor }}>

@@ -1829,12 +1829,13 @@ html[dir="rtl"] .fpl-action-badges-right-stacked {
 }
 
 .tips-card-cover {
-  height: 140px;
+  height: 175px;
   background: linear-gradient(135deg, #37003c 0%, #4f46e5 50%, #0284c7 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  overflow: hidden;
 }
 
 .tips-card-cover-icon {

@@ -114,7 +114,15 @@ export const TipsPage: React.FC = () => {
                   <img
                     src={article.coverImage}
                     alt={article.title}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: article.coverFit === 'contain' ? 'contain' : 'cover',
+                      objectPosition: article.coverPosition || 'center top',
+                      transform: article.coverZoom ? `scale(${article.coverZoom / 100})` : 'scale(1)',
+                      transformOrigin: article.coverPosition || 'center top',
+                      transition: 'transform 0.3s ease',
+                    }}
                   />
                 ) : (
                   <div className="tips-card-cover-icon">

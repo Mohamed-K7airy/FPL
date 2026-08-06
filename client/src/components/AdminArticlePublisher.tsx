@@ -219,6 +219,10 @@ export const AdminArticlePublisher: React.FC<ArticlePublisherProps> = ({
   const [excerpt, setExcerpt] = useState('');
   const [coverIcon, setCoverIcon] = useState<'Shield' | 'Award' | 'TrendingUp' | 'BookOpen'>('Shield');
   const [coverImage, setCoverImage] = useState('');
+  const [coverPosition, setCoverPosition] = useState('center 50%');
+  const [coverHeight, setCoverHeight] = useState(360);
+  const [coverZoom, setCoverZoom] = useState(100);
+  const [coverFit, setCoverFit] = useState<'cover' | 'contain' | 'auto'>('auto');
   const [sections, setSections] = useState<ArticleSection[]>([
     { type: 'heading', text: 'عنوان الفقرة الأولى' },
     { type: 'paragraph', text: 'اكتب تفاصيل النصيحة هنا...' },
@@ -231,6 +235,10 @@ export const AdminArticlePublisher: React.FC<ArticlePublisherProps> = ({
     setTitle('');
     setExcerpt('');
     setCoverImage('');
+    setCoverPosition('center 50%');
+    setCoverHeight(360);
+    setCoverZoom(100);
+    setCoverFit('auto');
     setCategory('بناء التشكيلة');
     setReadTime('3 دقائق قراءة');
     setCoverIcon('Shield');
@@ -300,6 +308,10 @@ export const AdminArticlePublisher: React.FC<ArticlePublisherProps> = ({
     setExcerpt(art.excerpt);
     setCoverIcon(art.coverIcon || 'Shield');
     setCoverImage(art.coverImage || '');
+    setCoverPosition(art.coverPosition || 'center 50%');
+    setCoverHeight(art.coverHeight || 360);
+    setCoverZoom(art.coverZoom || 100);
+    setCoverFit(art.coverFit || 'auto');
     setSections(art.content || []);
     setShowForm(true);
 
@@ -340,6 +352,10 @@ export const AdminArticlePublisher: React.FC<ArticlePublisherProps> = ({
       readTimeEn: readTime,
       coverIcon,
       coverImage: coverImage.trim() || undefined,
+      coverPosition: coverImage.trim() ? coverPosition : undefined,
+      coverHeight: coverImage.trim() ? coverHeight : undefined,
+      coverZoom: coverImage.trim() ? coverZoom : undefined,
+      coverFit: coverImage.trim() ? coverFit : undefined,
       content: sections,
       contentEn: sections,
     };
@@ -531,19 +547,281 @@ export const AdminArticlePublisher: React.FC<ArticlePublisherProps> = ({
               </span>
 
               {coverImage && (
-                <div style={{ marginTop: '12px', borderRadius: '10px', overflow: 'hidden', height: '140px', width: '100%', border: '1px solid var(--border-color)', position: 'relative' }}>
-                  <img src={coverImage} alt="معاينة الغلاف" style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={(e) => (e.currentTarget.style.display = 'none')} />
-                  <div style={{ position: 'absolute', bottom: '8px', right: '8px', display: 'flex', gap: '6px' }}>
-                    <span style={{ background: 'rgba(0,0,0,0.75)', color: '#fff', padding: '3px 10px', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 700 }}>
-                      معاينة صورة الغلاف
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => setCoverImage('')}
-                      style={{ background: '#ef4444', color: '#fff', border: 'none', padding: '3px 8px', borderRadius: '6px', fontSize: '0.75rem', cursor: 'pointer' }}
-                    >
-                      إزالة الصورة
-                    </button>
+                <div style={{ marginTop: '14px', background: '#f8fafc', padding: '14px', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
+                  {/* COVER FIT MODE SELECTOR */}
+                  <div style={{ marginBottom: '14px', background: '#ffffff', padding: '12px', borderRadius: '10px', border: '1px solid var(--border-color)' }}>
+                    <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 800, color: 'var(--fpl-purple)', marginBottom: '8px' }}>
+                      📐 نمط عرض الصورة في المقال:
+                    </label>
+                    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                      <button
+                        type="button"
+                        onClick={() => setCoverFit('auto')}
+                        style={{
+                          padding: '8px 14px',
+                          borderRadius: '8px',
+                          border: coverFit === 'auto' ? '2px solid var(--fpl-purple)' : '1px solid #cbd5e1',
+                          background: coverFit === 'auto' ? 'var(--fpl-purple)' : '#ffffff',
+                          color: coverFit === 'auto' ? '#ffffff' : 'var(--text-main)',
+                          fontSize: '0.82rem',
+                          fontWeight: 800,
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                        }}
+                      >
+                        📱 بوستر كامل بدون قص (Original Poster)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setCoverFit('cover')}
+                        style={{
+                          padding: '8px 14px',
+                          borderRadius: '8px',
+                          border: coverFit === 'cover' ? '2px solid var(--fpl-purple)' : '1px solid #cbd5e1',
+                          background: coverFit === 'cover' ? 'var(--fpl-purple)' : '#ffffff',
+                          color: coverFit === 'cover' ? '#ffffff' : 'var(--text-main)',
+                          fontSize: '0.82rem',
+                          fontWeight: 800,
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                        }}
+                      >
+                        🖼️ هيدر عريض مقتص (Landscape Banner)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setCoverFit('contain')}
+                        style={{
+                          padding: '8px 14px',
+                          borderRadius: '8px',
+                          border: coverFit === 'contain' ? '2px solid var(--fpl-purple)' : '1px solid #cbd5e1',
+                          background: coverFit === 'contain' ? 'var(--fpl-purple)' : '#ffffff',
+                          color: coverFit === 'contain' ? '#ffffff' : 'var(--text-main)',
+                          fontSize: '0.82rem',
+                          fontWeight: 800,
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                        }}
+                      >
+                        📦 إطار احتوايي (Contain)
+                      </button>
+                    </div>
+                  </div>
+
+                  {coverFit !== 'auto' && (
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '14px', marginBottom: '14px' }}>
+                      <div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                          <label style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--fpl-purple)' }}>
+                            📏 الارتفاع:
+                          </label>
+                          <span style={{ fontSize: '0.8rem', fontWeight: 900, color: '#10b981' }}>
+                            {coverHeight}px
+                          </span>
+                        </div>
+                        <input
+                          type="range"
+                          min={240}
+                          max={550}
+                          step={10}
+                          value={coverHeight}
+                          onChange={(e) => setCoverHeight(parseInt(e.target.value, 10))}
+                          style={{ width: '100%', cursor: 'pointer' }}
+                        />
+                        <div style={{ display: 'flex', gap: '4px', marginTop: '6px' }}>
+                          {[260, 360, 450].map((h) => (
+                            <button
+                              key={h}
+                              type="button"
+                              onClick={() => setCoverHeight(h)}
+                              style={{
+                                padding: '2px 6px',
+                                borderRadius: '4px',
+                                border: coverHeight === h ? '1px solid var(--fpl-purple)' : '1px solid #cbd5e1',
+                                background: coverHeight === h ? 'var(--fpl-purple)' : '#fff',
+                                color: coverHeight === h ? '#fff' : '#334155',
+                                fontSize: '0.7rem',
+                                fontWeight: 700,
+                                cursor: 'pointer',
+                              }}
+                            >
+                              {h}px
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                          <label style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--fpl-purple)' }}>
+                            🎯 المحاذاة:
+                          </label>
+                          <span style={{ fontSize: '0.8rem', fontWeight: 900, color: '#10b981' }}>
+                            {(() => {
+                              if (coverPosition.includes('top') || coverPosition === 'center 0%') return '0%';
+                              if (coverPosition.includes('bottom') || coverPosition === 'center 100%') return '100%';
+                              const match = coverPosition.match(/(\d+)%/);
+                              return match ? `${match[1]}%` : '50%';
+                            })()}
+                          </span>
+                        </div>
+                        <input
+                          type="range"
+                          min={0}
+                          max={100}
+                          step={5}
+                          value={(() => {
+                            if (coverPosition.includes('top')) return 0;
+                            if (coverPosition.includes('bottom')) return 100;
+                            const match = coverPosition.match(/(\d+)%/);
+                            return match ? parseInt(match[1], 10) : 50;
+                          })()}
+                          onChange={(e) => setCoverPosition(`center ${e.target.value}%`)}
+                          style={{ width: '100%', cursor: 'pointer' }}
+                        />
+                        <div style={{ display: 'flex', gap: '4px', marginTop: '6px' }}>
+                          <button
+                            type="button"
+                            onClick={() => setCoverPosition('center 0%')}
+                            style={{
+                              padding: '2px 6px',
+                              borderRadius: '4px',
+                              border: '1px solid #cbd5e1',
+                              background: coverPosition.includes('0%') || coverPosition.includes('top') ? 'var(--fpl-purple)' : '#fff',
+                              color: coverPosition.includes('0%') || coverPosition.includes('top') ? '#fff' : '#334155',
+                              fontSize: '0.7rem',
+                              fontWeight: 700,
+                              cursor: 'pointer',
+                            }}
+                          >
+                            أعلى
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setCoverPosition('center 50%')}
+                            style={{
+                              padding: '2px 6px',
+                              borderRadius: '4px',
+                              border: '1px solid #cbd5e1',
+                              background: coverPosition.includes('50%') ? 'var(--fpl-purple)' : '#fff',
+                              color: coverPosition.includes('50%') ? '#fff' : '#334155',
+                              fontSize: '0.7rem',
+                              fontWeight: 700,
+                              cursor: 'pointer',
+                            }}
+                          >
+                            وسط
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setCoverPosition('center 100%')}
+                            style={{
+                              padding: '2px 6px',
+                              borderRadius: '4px',
+                              border: '1px solid #cbd5e1',
+                              background: coverPosition.includes('100%') || coverPosition.includes('bottom') ? 'var(--fpl-purple)' : '#fff',
+                              color: coverPosition.includes('100%') || coverPosition.includes('bottom') ? '#fff' : '#334155',
+                              fontSize: '0.7rem',
+                              fontWeight: 700,
+                              cursor: 'pointer',
+                            }}
+                          >
+                            أسفل
+                          </button>
+                        </div>
+                      </div>
+
+                      <div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                          <label style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--fpl-purple)' }}>
+                            🔍 الزوم (Zoom):
+                          </label>
+                          <span style={{ fontSize: '0.8rem', fontWeight: 900, color: '#10b981' }}>
+                            {coverZoom}%
+                          </span>
+                        </div>
+                        <input
+                          type="range"
+                          min={60}
+                          max={250}
+                          step={5}
+                          value={coverZoom}
+                          onChange={(e) => setCoverZoom(parseInt(e.target.value, 10))}
+                          style={{ width: '100%', cursor: 'pointer' }}
+                        />
+                        <div style={{ display: 'flex', gap: '4px', marginTop: '6px' }}>
+                          {[100, 125, 150, 180, 220].map((z) => (
+                            <button
+                              key={z}
+                              type="button"
+                              onClick={() => setCoverZoom(z)}
+                              style={{
+                                padding: '2px 6px',
+                                borderRadius: '4px',
+                                border: coverZoom === z ? '1px solid var(--fpl-purple)' : '1px solid #cbd5e1',
+                                background: coverZoom === z ? 'var(--fpl-purple)' : '#fff',
+                                color: coverZoom === z ? '#fff' : '#334155',
+                                fontSize: '0.7rem',
+                                fontWeight: 700,
+                                cursor: 'pointer',
+                              }}
+                            >
+                              {z}%
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* PREVIEW CONTAINER */}
+                  <div
+                    style={{
+                      borderRadius: '12px',
+                      overflow: 'hidden',
+                      height: coverFit === 'auto' ? 'auto' : `${Math.min(coverHeight, 260)}px`,
+                      maxHeight: coverFit === 'auto' ? '380px' : undefined,
+                      maxWidth: coverFit === 'auto' ? '340px' : '100%',
+                      margin: coverFit === 'auto' ? '0 auto' : '0',
+                      border: '1px solid var(--border-color)',
+                      position: 'relative',
+                      boxShadow: '0 6px 20px rgba(0,0,0,0.12)',
+                      background: coverFit === 'contain' ? '#0d001f' : '#f8fafc',
+                    }}
+                  >
+                    <img
+                      src={coverImage}
+                      alt="معاينة الغلاف"
+                      style={{
+                        width: '100%',
+                        height: coverFit === 'auto' ? 'auto' : '100%',
+                        display: 'block',
+                        objectFit: coverFit === 'contain' ? 'contain' : coverFit === 'auto' ? 'contain' : 'cover',
+                        objectPosition: coverPosition,
+                        transform: `scale(${coverZoom / 100})`,
+                        transformOrigin: coverPosition,
+                        transition: 'transform 0.2s ease',
+                      }}
+                      onError={(e) => (e.currentTarget.style.display = 'none')}
+                    />
+                    <div style={{ position: 'absolute', bottom: '8px', right: '8px', display: 'flex', gap: '6px' }}>
+                      <span style={{ background: 'rgba(0,0,0,0.75)', color: '#fff', padding: '3px 10px', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 700 }}>
+                        {coverFit === 'auto' ? 'معاينة بوستر كامل بدون قص' : coverFit === 'contain' ? 'معاينة إطار احتوايي' : 'معاينة هيدر عريض'}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setCoverImage('')}
+                        style={{ background: '#ef4444', color: '#fff', border: 'none', padding: '3px 8px', borderRadius: '6px', fontSize: '0.75rem', cursor: 'pointer' }}
+                      >
+                        إزالة الصورة
+                      </button>
+                    </div>
                   </div>
                 </div>
               )}

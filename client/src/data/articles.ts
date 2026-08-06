@@ -16,6 +16,10 @@ export interface Article {
   readTimeEn: string;
   coverIcon: 'Shield' | 'Award' | 'TrendingUp' | 'BookOpen';
   coverImage?: string;
+  coverPosition?: string;
+  coverHeight?: number;
+  coverZoom?: number;
+  coverFit?: 'cover' | 'contain' | 'auto';
   content: ArticleSection[];
   contentEn: ArticleSection[];
   isCustom?: boolean;
