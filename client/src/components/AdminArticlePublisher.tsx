@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Article, ArticleSection } from '../data/articles';
 import { saveArticle, deleteArticle } from '../services/articleService';
-import { FileText, Plus, Trash2 } from 'lucide-react';
+import { FileText, Plus, Trash2, Edit3, Upload, Image as ImageIcon, X } from 'lucide-react';
 
 interface SectionEditorProps {
   sec: ArticleSection;
@@ -12,9 +12,22 @@ interface SectionEditorProps {
 
 const SectionEditorItem: React.FC<SectionEditorProps> = ({ sec, idx, onUpdate, onRemove }) => {
   const itemsText = (sec.items || []).join('\n');
+  const playerFileInputRef = useRef<HTMLInputElement>(null);
 
   const handleItemsChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     onUpdate(idx, { items: e.target.value.split('\n') });
+  };
+
+  const handlePlayerFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      if (event.target?.result) {
+        onUpdate(idx, { playerImage: event.target.result as string });
+      }
+    };
+    reader.readAsDataURL(file);
   };
 
   return (
@@ -110,13 +123,68 @@ const SectionEditorItem: React.FC<SectionEditorProps> = ({ sec, idx, onUpdate, o
             onChange={(e) => onUpdate(idx, { tier: e.target.value })}
             style={{ padding: '8px', borderRadius: '6px', border: '1px solid var(--border-color)' }}
           />
-          <input
-            type="text"
-            placeholder="رابط صورة اللاعب (مثال: /players/Arsenal/b22b5eee4eb2-1-david-raya.png)"
-            value={sec.playerImage || ''}
-            onChange={(e) => onUpdate(idx, { playerImage: e.target.value })}
-            style={{ gridColumn: '1 / -1', padding: '8px', borderRadius: '6px', border: '1px solid var(--border-color)' }}
-          />
+
+          {/* Player Image Section with Link OR Upload */}
+          <div style={{ gridColumn: '1 / -1', background: '#f8fafc', padding: '10px', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
+            <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, marginBottom: '6px', color: 'var(--fpl-purple)' }}>
+              🖼️ صورة اللاعب (رابط أونلاين أو رفع من الجهاز)
+            </label>
+            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+              <input
+                type="text"
+                placeholder="أدخل رابط الصورة أو ارفع ملف..."
+                value={sec.playerImage || ''}
+                onChange={(e) => onUpdate(idx, { playerImage: e.target.value })}
+                style={{ flex: 1, padding: '8px', borderRadius: '6px', border: '1px solid var(--border-color)', fontSize: '0.85rem' }}
+              />
+
+              <input
+                type="file"
+                accept="image/*"
+                ref={playerFileInputRef}
+                onChange={handlePlayerFileUpload}
+                style={{ display: 'none' }}
+              />
+              <button
+                type="button"
+                onClick={() => playerFileInputRef.current?.click()}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  background: 'var(--fpl-purple)',
+                  color: '#ffffff',
+                  border: 'none',
+                  borderRadius: '6px',
+                  padding: '8px 12px',
+                  fontSize: '0.8rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                <Upload size={14} />
+                <span>رفع صورة</span>
+              </button>
+            </div>
+
+            {sec.playerImage && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '8px' }}>
+                <div style={{ width: '42px', height: '42px', borderRadius: '8px', overflow: 'hidden', border: '1px solid #cbd5e1', background: '#fff' }}>
+                  <img src={sec.playerImage} alt="Player preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                </div>
+                <span style={{ fontSize: '0.75rem', color: '#10b981', fontWeight: 700 }}>تم اختيار صورة اللاعب</span>
+                <button
+                  type="button"
+                  onClick={() => onUpdate(idx, { playerImage: '' })}
+                  style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: '0.75rem', padding: '2px 6px' }}
+                >
+                  <X size={14} />
+                </button>
+              </div>
+            )}
+          </div>
+
           <textarea
             placeholder="مميزات اللاعب (ميزة في كل سطر)"
             value={itemsText}
@@ -142,6 +210,9 @@ export const AdminArticlePublisher: React.FC<ArticlePublisherProps> = ({
   onArticleDeleted,
 }) => {
   const [showForm, setShowForm] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editingDate, setEditingDate] = useState<string | undefined>(undefined);
+
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('بناء التشكيلة');
   const [readTime, setReadTime] = useState('3 دقائق قراءة');
@@ -152,6 +223,36 @@ export const AdminArticlePublisher: React.FC<ArticlePublisherProps> = ({
     { type: 'heading', text: 'عنوان الفقرة الأولى' },
     { type: 'paragraph', text: 'اكتب تفاصيل النصيحة هنا...' },
   ]);
+
+  const formRef = useRef<HTMLFormElement>(null);
+  const coverFileInputRef = useRef<HTMLInputElement>(null);
+
+  const resetForm = () => {
+    setTitle('');
+    setExcerpt('');
+    setCoverImage('');
+    setCategory('بناء التشكيلة');
+    setReadTime('3 دقائق قراءة');
+    setCoverIcon('Shield');
+    setEditingId(null);
+    setEditingDate(undefined);
+    setSections([
+      { type: 'heading', text: 'عنوان الفقرة الأولى' },
+      { type: 'paragraph', text: 'اكتب تفاصيل النصيحة هنا...' },
+    ]);
+  };
+
+  const handleCoverFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      if (event.target?.result) {
+        setCoverImage(event.target.result as string);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
 
   const addSection = (type: ArticleSection['type']) => {
     if (type === 'heading') {
@@ -190,6 +291,23 @@ export const AdminArticlePublisher: React.FC<ArticlePublisherProps> = ({
     setSections(sections.filter((_, i) => i !== index));
   };
 
+  const handleEditArticle = (art: Article) => {
+    setEditingId(art.id);
+    setEditingDate(art.date);
+    setTitle(art.title);
+    setCategory(art.category);
+    setReadTime(art.readTime);
+    setExcerpt(art.excerpt);
+    setCoverIcon(art.coverIcon || 'Shield');
+    setCoverImage(art.coverImage || '');
+    setSections(art.content || []);
+    setShowForm(true);
+
+    setTimeout(() => {
+      formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  };
+
   const handlePublish = (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim() || !excerpt.trim()) {
@@ -205,13 +323,15 @@ export const AdminArticlePublisher: React.FC<ArticlePublisherProps> = ({
       .replace(/^-+|-+$/g, '') || `article-${Date.now()}`;
 
     const newArticleData = {
+      id: editingId || undefined,
+      date: editingDate || undefined,
       slug,
       title,
       titleEn: title,
       excerpt,
       excerptEn: excerpt,
       category,
-      categoryEn: category === 'بناء التشكيلة' ? 'Squad Building' : 'Transfers',
+      categoryEn: category === 'بناء التشكيلة' ? 'Squad Building' : category === 'الانتقالات والتغييرات' ? 'Transfers' : category,
       categoryColor: '#10b981',
       author: 'مدير المنصة',
       authorRank: 'المركز ~9,000 عالمياً 24/25',
@@ -225,13 +345,7 @@ export const AdminArticlePublisher: React.FC<ArticlePublisherProps> = ({
     };
 
     saveArticle(newArticleData);
-    setTitle('');
-    setExcerpt('');
-    setCoverImage('');
-    setSections([
-      { type: 'heading', text: 'عنوان الفقرة' },
-      { type: 'paragraph', text: 'تفاصيل الفقرة...' },
-    ]);
+    resetForm();
     setShowForm(false);
     onArticleAdded();
   };
@@ -239,6 +353,10 @@ export const AdminArticlePublisher: React.FC<ArticlePublisherProps> = ({
   const handleDelete = (id: string) => {
     if (window.confirm('هل أنت متأكد من حذف هذا المقال؟')) {
       deleteArticle(id);
+      if (editingId === id) {
+        resetForm();
+        setShowForm(false);
+      }
       onArticleDeleted();
     }
   };
@@ -261,34 +379,47 @@ export const AdminArticlePublisher: React.FC<ArticlePublisherProps> = ({
             <span>نظام إدارة ونشر المقالات والنصائح</span>
           </h3>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginTop: '4px' }}>
-            أضف مقالات تحليليلة جديدة تظهر في صفحة المقالات للمستخدمين بكل سهولة
+            أضف وعدّل المقالات التحليليلة التي تظهر للمستخدمين بكل سهولة
           </p>
         </div>
 
         <button
-          onClick={() => setShowForm(!showForm)}
+          onClick={() => {
+            if (showForm && editingId) {
+              resetForm();
+            }
+            setShowForm(!showForm);
+          }}
           className="btn-primary"
           style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 20px' }}
         >
-          <Plus size={18} />
-          <span>{showForm ? 'إغلاق النموذج' : 'كتابة مقال جديد'}</span>
+          {editingId ? <Edit3 size={18} /> : <Plus size={18} />}
+          <span>{showForm ? (editingId ? 'إلغاء التعديل' : 'إغلاق النموذج') : 'كتابة مقال جديد'}</span>
         </button>
       </div>
 
       {showForm && (
         <form
+          ref={formRef}
           onSubmit={handlePublish}
           style={{
             background: '#f8fafc',
-            border: '1px solid var(--border-color)',
+            border: '2px solid var(--fpl-purple)',
             borderRadius: '16px',
             padding: '24px',
             marginBottom: '28px',
           }}
         >
-          <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--fpl-purple)', marginBottom: '16px' }}>
-            نموذج إنشاء مقال تكتيكي
-          </h4>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+            <h4 style={{ fontSize: '1.15rem', fontWeight: 900, color: 'var(--fpl-purple)' }}>
+              {editingId ? '✏️ تعديل المقال المحدد' : '➕ نموذج إنشاء مقال تكتيكي جديد'}
+            </h4>
+            {editingId && (
+              <span style={{ fontSize: '0.78rem', background: '#dbeafe', color: '#1e40af', padding: '4px 10px', borderRadius: '20px', fontWeight: 800 }}>
+                جاري التعديل على مقال حالي
+              </span>
+            )}
+          </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
             <div>
@@ -350,26 +481,70 @@ export const AdminArticlePublisher: React.FC<ArticlePublisherProps> = ({
               </select>
             </div>
 
-            <div style={{ gridColumn: '1 / -1' }}>
-              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, marginBottom: '6px', color: 'var(--fpl-purple)' }}>
-                🖼️ رابط صورة الغلاف الخاصة بالمقال (اختياري)
+            {/* Article Cover Image with Link or Direct File Upload */}
+            <div style={{ gridColumn: '1 / -1', background: '#ffffff', padding: '14px', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
+              <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, marginBottom: '8px', color: 'var(--fpl-purple)' }}>
+                🖼️ صورة الغلاف الخاصة بالمقال (رابط أونلاين أو رفع مباشر من الجهاز)
               </label>
-              <input
-                type="text"
-                placeholder="أدخل رابط صورة (مثال: https://images.unsplash.com/... أو /players/...)"
-                value={coverImage}
-                onChange={(e) => setCoverImage(e.target.value)}
-                style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid var(--border-color)', fontSize: '0.9rem' }}
-              />
-              <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '4px', display: 'block' }}>
+
+              <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '8px' }}>
+                <input
+                  type="text"
+                  placeholder="أدخل رابط صورة أونلاين أو اختر ملفاً من الجهاز..."
+                  value={coverImage}
+                  onChange={(e) => setCoverImage(e.target.value)}
+                  style={{ flex: 1, padding: '10px 14px', borderRadius: '10px', border: '1px solid var(--border-color)', fontSize: '0.9rem' }}
+                />
+
+                <input
+                  type="file"
+                  accept="image/*"
+                  ref={coverFileInputRef}
+                  onChange={handleCoverFileUpload}
+                  style={{ display: 'none' }}
+                />
+                <button
+                  type="button"
+                  onClick={() => coverFileInputRef.current?.click()}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    background: 'var(--fpl-purple)',
+                    color: '#ffffff',
+                    border: 'none',
+                    borderRadius: '10px',
+                    padding: '10px 16px',
+                    fontSize: '0.88rem',
+                    fontWeight: 800,
+                    cursor: 'pointer',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  <Upload size={16} />
+                  <span>رفع صورة الغلاف</span>
+                </button>
+              </div>
+
+              <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block' }}>
                 إذا تركت هذا الحقل فارغاً، سيتم عرض تصميم الأيقونة الملونة الافتراضي كغلاف للمقال.
               </span>
+
               {coverImage && (
-                <div style={{ marginTop: '10px', borderRadius: '10px', overflow: 'hidden', height: '120px', width: '100%', border: '1px solid var(--border-color)', position: 'relative' }}>
+                <div style={{ marginTop: '12px', borderRadius: '10px', overflow: 'hidden', height: '140px', width: '100%', border: '1px solid var(--border-color)', position: 'relative' }}>
                   <img src={coverImage} alt="معاينة الغلاف" style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={(e) => (e.currentTarget.style.display = 'none')} />
-                  <span style={{ position: 'absolute', bottom: '8px', right: '8px', background: 'rgba(0,0,0,0.7)', color: '#fff', padding: '2px 8px', borderRadius: '4px', fontSize: '0.72rem' }}>
-                    معاينة صورة الغلاف
-                  </span>
+                  <div style={{ position: 'absolute', bottom: '8px', right: '8px', display: 'flex', gap: '6px' }}>
+                    <span style={{ background: 'rgba(0,0,0,0.75)', color: '#fff', padding: '3px 10px', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 700 }}>
+                      معاينة صورة الغلاف
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setCoverImage('')}
+                      style={{ background: '#ef4444', color: '#fff', border: 'none', padding: '3px 8px', borderRadius: '6px', fontSize: '0.75rem', cursor: 'pointer' }}
+                    >
+                      إزالة الصورة
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
@@ -427,9 +602,24 @@ export const AdminArticlePublisher: React.FC<ArticlePublisherProps> = ({
             </div>
           </div>
 
-          <button type="submit" className="btn-primary" style={{ width: '100%', padding: '12px', fontSize: '1rem' }}>
-            نشر المقال الآن
-          </button>
+          <div style={{ display: 'flex', gap: '12px' }}>
+            <button type="submit" className="btn-primary" style={{ flex: 1, padding: '12px', fontSize: '1rem', fontWeight: 800 }}>
+              {editingId ? 'حفظ التعديلات على المقال' : 'نشر المقال الآن'}
+            </button>
+            {editingId && (
+              <button
+                type="button"
+                onClick={() => {
+                  resetForm();
+                  setShowForm(false);
+                }}
+                className="btn-secondary"
+                style={{ padding: '12px 20px', fontSize: '0.9rem' }}
+              >
+                إلغاء
+              </button>
+            )}
+          </div>
         </form>
       )}
 
@@ -447,7 +637,7 @@ export const AdminArticlePublisher: React.FC<ArticlePublisherProps> = ({
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 background: '#f8fafc',
-                border: '1px solid var(--border-color)',
+                border: editingId === art.id ? '2px solid var(--fpl-purple)' : '1px solid var(--border-color)',
                 borderRadius: '12px',
                 padding: '14px 18px',
               }}
@@ -456,37 +646,60 @@ export const AdminArticlePublisher: React.FC<ArticlePublisherProps> = ({
                 <div style={{ fontWeight: 800, fontSize: '0.95rem', color: 'var(--fpl-purple)' }}>
                   {art.title}
                 </div>
-                <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '2px', display: 'flex', gap: '12px' }}>
+                <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '2px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
                   <span>{'التصنيف: ' + art.category}</span>
                   <span>{'التاريخ: ' + art.date}</span>
                   <span>{art.readTime}</span>
-                  {art.isCustom && <span style={{ color: '#10b981', fontWeight: 800 }}>{' (تم إنشاؤه بواسطة الإدارة)'}</span>}
+                  {art.isCustom ? (
+                    <span style={{ color: '#10b981', fontWeight: 800 }}>{' (تم إنشاؤه بواسطة الإدارة)'}</span>
+                  ) : (
+                    <span style={{ color: '#6366f1', fontWeight: 700 }}>{' (افتراضي)'}</span>
+                  )}
                 </div>
               </div>
 
               <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                {art.isCustom && (
-                  <button
-                    type="button"
-                    onClick={() => handleDelete(art.id)}
-                    style={{
-                      background: 'rgba(239, 68, 68, 0.1)',
-                      color: '#ef4444',
-                      border: '1px solid rgba(239, 68, 68, 0.3)',
-                      padding: '6px 12px',
-                      borderRadius: '8px',
-                      fontSize: '0.8rem',
-                      fontWeight: 700,
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '4px',
-                    }}
-                  >
-                    <Trash2 size={14} />
-                    <span>حذف</span>
-                  </button>
-                )}
+                <button
+                  type="button"
+                  onClick={() => handleEditArticle(art)}
+                  style={{
+                    background: 'rgba(79, 70, 229, 0.1)',
+                    color: 'var(--fpl-purple)',
+                    border: '1px solid rgba(79, 70, 229, 0.3)',
+                    padding: '6px 12px',
+                    borderRadius: '8px',
+                    fontSize: '0.8rem',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                  }}
+                >
+                  <Edit3 size={14} />
+                  <span>تعديل</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => handleDelete(art.id)}
+                  style={{
+                    background: 'rgba(239, 68, 68, 0.1)',
+                    color: '#ef4444',
+                    border: '1px solid rgba(239, 68, 68, 0.3)',
+                    padding: '6px 12px',
+                    borderRadius: '8px',
+                    fontSize: '0.8rem',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                  }}
+                >
+                  <Trash2 size={14} />
+                  <span>حذف</span>
+                </button>
               </div>
             </div>
           ))}
