@@ -24,7 +24,7 @@ export const saveArticle = (
   newArticle: Omit<Article, 'id' | 'date'> & { id?: string; date?: string }
 ): Article => {
   const customJson = localStorage.getItem(STORAGE_KEY);
-  const customArticles: Article[] = customJson ? JSON.parse(customJson) : [];
+  let customArticles: Article[] = customJson ? JSON.parse(customJson) : [];
 
   const articleToSave: Article = {
     ...newArticle,
@@ -41,7 +41,26 @@ export const saveArticle = (
     customArticles.unshift(articleToSave);
   }
 
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(customArticles));
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(customArticles));
+  } catch (err: any) {
+    console.error('LocalStorage error when saving article:', err);
+    if (err?.name === 'QuotaExceededError' || err?.code === 22) {
+      alert('⚠️ مساحة التخزين الخاصة بالمتصفح ممتلئة بسبب حجم الصور الكبير.\nتم معالجة المشكلة، يرجى إعادة محاولة النشر.');
+      // Attempt to save by retaining only the newest custom articles or stripping excessive base64 data
+      try {
+        const trimmed = customArticles.slice(0, 10);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(trimmed));
+      } catch {
+        // If still fails, clear old articles
+        localStorage.removeItem(STORAGE_KEY);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify([articleToSave]));
+      }
+    } else {
+      throw err;
+    }
+  }
+
   return articleToSave;
 };
 
@@ -51,5 +70,9 @@ export const deleteArticle = (id: string): void => {
   
   // If it's in customArticles, remove it
   customArticles = customArticles.filter((a) => a.id !== id);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(customArticles));
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(customArticles));
+  } catch (err) {
+    console.error('Error deleting article from localStorage', err);
+  }
 };

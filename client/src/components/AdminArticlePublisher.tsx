@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Article, ArticleSection } from '../data/articles';
 import { saveArticle, deleteArticle } from '../services/articleService';
+import { compressImageFile, compressBase64String } from '../utils/imageCompressor';
 import { FileText, Plus, Trash2, Edit3, Upload, Image as ImageIcon, X } from 'lucide-react';
 
 interface SectionEditorProps {
@@ -18,16 +19,15 @@ const SectionEditorItem: React.FC<SectionEditorProps> = ({ sec, idx, onUpdate, o
     onUpdate(idx, { items: e.target.value.split('\n') });
   };
 
-  const handlePlayerFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePlayerFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      if (event.target?.result) {
-        onUpdate(idx, { playerImage: event.target.result as string });
-      }
-    };
-    reader.readAsDataURL(file);
+    try {
+      const compressedBase64 = await compressImageFile(file, 400, 400, 0.85);
+      onUpdate(idx, { playerImage: compressedBase64 });
+    } catch (err) {
+      console.error('Error compressing player image:', err);
+    }
   };
 
   return (
@@ -250,16 +250,15 @@ export const AdminArticlePublisher: React.FC<ArticlePublisherProps> = ({
     ]);
   };
 
-  const handleCoverFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCoverFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      if (event.target?.result) {
-        setCoverImage(event.target.result as string);
-      }
-    };
-    reader.readAsDataURL(file);
+    try {
+      const compressedBase64 = await compressImageFile(file, 1200, 1200, 0.75);
+      setCoverImage(compressedBase64);
+    } catch (err) {
+      console.error('Error compressing cover image:', err);
+    }
   };
 
   const addSection = (type: ArticleSection['type']) => {
@@ -320,7 +319,7 @@ export const AdminArticlePublisher: React.FC<ArticlePublisherProps> = ({
     }, 100);
   };
 
-  const handlePublish = (e: React.FormEvent) => {
+  const handlePublish = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim() || !excerpt.trim()) {
       alert('يرجى ملء عنوان المقال والملخص على الأقل.');
@@ -333,6 +332,12 @@ export const AdminArticlePublisher: React.FC<ArticlePublisherProps> = ({
       .replace(/[^\w\s-]/g, '')
       .replace(/[\s_-]+/g, '-')
       .replace(/^-+|-+$/g, '') || `article-${Date.now()}`;
+
+    // Compress cover image if it's a large Base64
+    let finalCoverImage = coverImage.trim();
+    if (finalCoverImage.startsWith('data:image/')) {
+      finalCoverImage = await compressBase64String(finalCoverImage, 1200, 1200, 0.75);
+    }
 
     const newArticleData = {
       id: editingId || undefined,
@@ -351,11 +356,11 @@ export const AdminArticlePublisher: React.FC<ArticlePublisherProps> = ({
       readTime,
       readTimeEn: readTime,
       coverIcon,
-      coverImage: coverImage.trim() || undefined,
-      coverPosition: coverImage.trim() ? coverPosition : undefined,
-      coverHeight: coverImage.trim() ? coverHeight : undefined,
-      coverZoom: coverImage.trim() ? coverZoom : undefined,
-      coverFit: coverImage.trim() ? coverFit : undefined,
+      coverImage: finalCoverImage || undefined,
+      coverPosition: finalCoverImage ? coverPosition : undefined,
+      coverHeight: finalCoverImage ? coverHeight : undefined,
+      coverZoom: finalCoverImage ? coverZoom : undefined,
+      coverFit: finalCoverImage ? coverFit : undefined,
       content: sections,
       contentEn: sections,
     };
