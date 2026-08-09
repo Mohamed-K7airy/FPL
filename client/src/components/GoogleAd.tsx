@@ -1,5 +1,5 @@
 import React from 'react';
-import { AdsterraAd } from './AdsterraAd';
+import { AdBanner } from './AdBanner';
 
 interface GoogleAdProps {
   adSlot?: string;
@@ -9,8 +9,6 @@ interface GoogleAdProps {
   className?: string;
 }
 
-export const GoogleAd: React.FC<GoogleAdProps> = ({ style, className = '' }) => {
-  // تم إيقاف إعلانات Adsterra مؤقتاً لضمان القبول المباشر من Google AdSense
-  return null;
-  // return <AdsterraAd style={style} className={className} />;
+export const GoogleAd: React.FC<GoogleAdProps> = ({ adSlot, adFormat = 'auto', fullWidthResponsive = true, style }) => {
+  return <AdBanner slotId={adSlot} format={adFormat} responsive={fullWidthResponsive} style={style} />;
 };

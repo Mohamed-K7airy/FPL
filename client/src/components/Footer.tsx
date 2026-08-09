@@ -4,7 +4,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { ShieldCheck, ExternalLink } from 'lucide-react';
 
 export const Footer: React.FC = () => {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
 
   return (
     <footer
@@ -60,6 +60,10 @@ export const Footer: React.FC = () => {
           <Link to="/privacy" style={{ color: 'var(--fpl-purple)', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
             <ShieldCheck size={14} />
             <span>{t('privacyPolicy')}</span>
+          </Link>
+
+          <Link to="/contact" style={{ color: 'var(--fpl-purple)' }}>
+            {lang === 'ar' ? 'اتصل بنا' : 'Contact Us'}
           </Link>
         </div>
 
