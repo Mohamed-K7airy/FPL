@@ -61,6 +61,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           });
           localStorage.setItem('accessToken', data.accessToken);
           setUser(data.user);
+
+          const target = sessionStorage.getItem('auth_return_url');
+          if (target && !target.includes('/login') && !target.includes('/register')) {
+            sessionStorage.removeItem('auth_return_url');
+            if (window.location.pathname === '/login' || window.location.pathname === '/register') {
+              window.location.href = target;
+            }
+          }
         } catch {
           try {
             const teamName = session.user.user_metadata?.full_name || sbEmail.split('@')[0] + ' FC';
@@ -70,6 +78,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             });
             localStorage.setItem('accessToken', regData.accessToken);
             setUser(regData.user);
+
+            const target = sessionStorage.getItem('auth_return_url');
+            if (target && !target.includes('/login') && !target.includes('/register')) {
+              sessionStorage.removeItem('auth_return_url');
+              if (window.location.pathname === '/login' || window.location.pathname === '/register') {
+                window.location.href = target;
+              }
+            }
           } catch (err) {
             console.error('Supabase OAuth sync error:', err);
           }

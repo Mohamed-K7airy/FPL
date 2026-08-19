@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 import { Globe, Clock, LogOut, Shield, Users, Trophy, Repeat, LayoutGrid, Home, BookOpen, Lightbulb, Menu, X } from 'lucide-react';
@@ -8,6 +8,7 @@ export const Navbar: React.FC = () => {
   const { user, logout } = useAuth();
   const { t, lang, toggleLang } = useLanguage();
   const navigate = useNavigate();
+  const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
@@ -119,10 +120,10 @@ export const Navbar: React.FC = () => {
             </div>
           ) : (
             <div className="auth-buttons hide-mobile">
-              <NavLink to="/login" className="btn-secondary nav-auth-btn">
+              <NavLink to="/login" state={{ from: location }} className="btn-secondary nav-auth-btn">
                 {t('login')}
               </NavLink>
-              <NavLink to="/register" className="btn-primary nav-auth-btn">
+              <NavLink to="/register" state={{ from: location }} className="btn-primary nav-auth-btn">
                 {t('register')}
               </NavLink>
             </div>
@@ -196,10 +197,10 @@ export const Navbar: React.FC = () => {
                 </>
               ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '16px' }}>
-                  <NavLink to="/login" onClick={closeMenu} className="btn-secondary" style={{ textAlign: 'center', padding: '10px' }}>
+                  <NavLink to="/login" state={{ from: location }} onClick={closeMenu} className="btn-secondary" style={{ textAlign: 'center', padding: '10px' }}>
                     {t('login')}
                   </NavLink>
-                  <NavLink to="/register" onClick={closeMenu} className="btn-primary" style={{ textAlign: 'center', padding: '10px' }}>
+                  <NavLink to="/register" state={{ from: location }} onClick={closeMenu} className="btn-primary" style={{ textAlign: 'center', padding: '10px' }}>
                     {t('register')}
                   </NavLink>
                 </div>
@@ -255,7 +256,7 @@ export const Navbar: React.FC = () => {
               <span>{t('tips')}</span>
             </NavLink>
 
-            <NavLink to="/login" className={({ isActive }) => `mobile-dock-item ${isActive ? 'active' : ''}`}>
+            <NavLink to="/login" state={{ from: location }} className={({ isActive }) => `mobile-dock-item ${isActive ? 'active' : ''}`}>
               <LogOut size={18} />
               <span>{t('login')}</span>
             </NavLink>

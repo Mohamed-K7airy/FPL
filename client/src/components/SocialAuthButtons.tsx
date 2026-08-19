@@ -1,25 +1,56 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 
 interface SocialAuthButtonsProps {
   mode?: 'login' | 'register';
+  returnUrl?: string;
 }
 
-export const SocialAuthButtons: React.FC<SocialAuthButtonsProps> = ({ mode = 'login' }) => {
+export const SocialAuthButtons: React.FC<SocialAuthButtonsProps> = ({ mode = 'login', returnUrl: propReturnUrl }) => {
   const { isRtl } = useLanguage();
   const navigate = useNavigate();
+  const location = useLocation();
   const [loadingProvider, setLoadingProvider] = useState<string | null>(null);
+
+  const getTargetUrl = () => {
+    if (propReturnUrl && !propReturnUrl.includes('/login') && !propReturnUrl.includes('/register')) {
+      return propReturnUrl;
+    }
+    const fromPath = (location.state as any)?.from?.pathname;
+    const urlParam = new URLSearchParams(location.search).get('redirect');
+    const stored = sessionStorage.getItem('auth_return_url');
+    const candidate = fromPath || urlParam || stored || '/squad';
+    return (candidate.includes('/login') || candidate.includes('/register')) ? '/squad' : candidate;
+  };
 
   const handleSocialAuth = async (provider: 'google' | 'facebook') => {
     setLoadingProvider(provider);
     try {
-      // 1. Fetch OAuth URL from Supabase with skipBrowserRedirect enabled
+      const targetUrl = getTargetUrl();
+      sessionStorage.setItem('auth_return_url', targetUrl);
+
+      const isMobile = window.innerWidth <= 768 || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+      // On Mobile devices, do full browser redirect with target URL
+      if (isMobile) {
+        const { error } = await supabase.auth.signInWithOAuth({
+          provider: provider,
+          options: {
+            redirectTo: `${window.location.origin}${targetUrl}`,
+            skipBrowserRedirect: false,
+          },
+        });
+        if (error) throw error;
+        return;
+      }
+
+      // Desktop: Open popup window
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: provider,
         options: {
-          redirectTo: `${window.location.origin}/squad`,
+          redirectTo: `${window.location.origin}${targetUrl}`,
           skipBrowserRedirect: true,
         },
       });
@@ -29,20 +60,17 @@ export const SocialAuthButtons: React.FC<SocialAuthButtonsProps> = ({ mode = 'lo
       }
 
       if (data?.url) {
-        // Calculate center position for popup window
         const width = 540;
         const height = 650;
         const left = window.screenX + (window.outerWidth - width) / 2;
         const top = window.screenY + (window.outerHeight - height) / 2;
 
-        // Open OAuth in Popup Window instead of main browser page
         const popup = window.open(
           data.url,
           `supabase_oauth_${provider}`,
           `width=${width},height=${height},left=${left},top=${top},scrollbars=yes,status=yes`
         );
 
-        // Check for popup closure / completion
         if (popup) {
           const timer = setInterval(async () => {
             if (popup.closed) {
@@ -50,11 +78,16 @@ export const SocialAuthButtons: React.FC<SocialAuthButtonsProps> = ({ mode = 'lo
               setLoadingProvider(null);
               const { data: sessionData } = await supabase.auth.getSession();
               if (sessionData?.session) {
-                navigate('/squad');
+                const finalUrl = sessionStorage.getItem('auth_return_url') || targetUrl;
+                sessionStorage.removeItem('auth_return_url');
+                navigate(finalUrl, { replace: true });
               }
             }
           }, 600);
           return;
+        } else {
+          // If popup is blocked by browser, fallback to standard redirect
+          window.location.href = data.url;
         }
       }
     } catch (err: any) {

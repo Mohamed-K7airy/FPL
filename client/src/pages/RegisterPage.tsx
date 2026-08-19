@@ -1,14 +1,22 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 import { SocialAuthButtons } from '../components/SocialAuthButtons';
 import { Shield, Mail, Lock, Eye, EyeOff, UserCheck } from 'lucide-react';
 
 export const RegisterPage: React.FC = () => {
-  const { register } = useAuth();
+  const { user, register } = useAuth();
   const { t, isRtl } = useLanguage();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const fromState = (location.state as any)?.from?.pathname;
+  const searchParams = new URLSearchParams(location.search);
+  const redirectParam = searchParams.get('redirect');
+  const storedUrl = sessionStorage.getItem('auth_return_url');
+
+  const returnUrl = fromState || redirectParam || (storedUrl && !storedUrl.includes('/login') && !storedUrl.includes('/register') ? storedUrl : '/transfers');
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -17,6 +25,20 @@ export const RegisterPage: React.FC = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    if (returnUrl && !returnUrl.includes('/login') && !returnUrl.includes('/register')) {
+      sessionStorage.setItem('auth_return_url', returnUrl);
+    }
+  }, [returnUrl]);
+
+  useEffect(() => {
+    if (user) {
+      const target = sessionStorage.getItem('auth_return_url') || returnUrl;
+      sessionStorage.removeItem('auth_return_url');
+      navigate(target, { replace: true });
+    }
+  }, [user, navigate, returnUrl]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -24,7 +46,9 @@ export const RegisterPage: React.FC = () => {
 
     try {
       await register(email, password, teamName);
-      navigate('/transfers');
+      const target = sessionStorage.getItem('auth_return_url') || returnUrl;
+      sessionStorage.removeItem('auth_return_url');
+      navigate(target, { replace: true });
     } catch (err) {
       setError((err as Error).message);
     } finally {

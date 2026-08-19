@@ -1,20 +1,45 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 import { SocialAuthButtons } from '../components/SocialAuthButtons';
 import { LogIn, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {
-  const { login } = useAuth();
+  const { user, login } = useAuth();
   const { t, isRtl } = useLanguage();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Determine return URL
+  const fromState = (location.state as any)?.from?.pathname;
+  const searchParams = new URLSearchParams(location.search);
+  const redirectParam = searchParams.get('redirect');
+  const storedUrl = sessionStorage.getItem('auth_return_url');
+  
+  const returnUrl = fromState || redirectParam || (storedUrl && !storedUrl.includes('/login') && !storedUrl.includes('/register') ? storedUrl : '/squad');
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  // Save returnUrl in sessionStorage for OAuth
+  useEffect(() => {
+    if (returnUrl && !returnUrl.includes('/login') && !returnUrl.includes('/register')) {
+      sessionStorage.setItem('auth_return_url', returnUrl);
+    }
+  }, [returnUrl]);
+
+  // If user is already authenticated or becomes authenticated via OAuth
+  useEffect(() => {
+    if (user) {
+      const target = sessionStorage.getItem('auth_return_url') || returnUrl;
+      sessionStorage.removeItem('auth_return_url');
+      navigate(target, { replace: true });
+    }
+  }, [user, navigate, returnUrl]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,7 +48,9 @@ export const LoginPage: React.FC = () => {
 
     try {
       await login(email, password);
-      navigate('/squad');
+      const target = sessionStorage.getItem('auth_return_url') || returnUrl;
+      sessionStorage.removeItem('auth_return_url');
+      navigate(target, { replace: true });
     } catch (err) {
       setError((err as Error).message);
     } finally {
