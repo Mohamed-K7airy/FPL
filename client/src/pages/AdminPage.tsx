@@ -78,7 +78,7 @@ export const AdminPage: React.FC = () => {
   };
 
   const handleResetDemo = async () => {
-    if (!window.confirm('هل أنت تأكد من تصفير وإلغاء جميع نقاط واختبارات الديمو؟')) return;
+    if (!window.confirm('هل أنت متأكد من تصفير وإلغاء جميع نقاط واختبارات الديمو؟')) return;
     setMessage(null);
     try {
       const data = await apiFetch<{ message: string }>('/admin/reset-demo', { method: 'POST' });

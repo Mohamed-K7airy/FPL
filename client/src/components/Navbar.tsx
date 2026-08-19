@@ -108,12 +108,6 @@ export const Navbar: React.FC = () => {
 
           {user ? (
             <div className="user-profile-actions">
-              <div className="user-team-pill">
-                <div className="user-team-name">{user.team_name}</div>
-                <div className="user-team-stats">
-                  £{(user.bank / 10).toFixed(1)}m | {user.free_transfers} FT
-                </div>
-              </div>
               <button
                 onClick={handleLogout}
                 className="btn-logout hide-mobile"
@@ -151,7 +145,7 @@ export const Navbar: React.FC = () => {
           <div className="mobile-drawer-content" onClick={(e) => e.stopPropagation()}>
             <div className="mobile-drawer-header">
               <div style={{ fontWeight: 900, color: 'var(--fpl-purple)', fontSize: '1.1rem' }}>
-                قائمة MINI FPL
+                {lang === 'ar' ? 'قائمة MINI FPL' : 'MINI FPL Menu'}
               </div>
               <button onClick={closeMenu} className="mobile-drawer-close">
                 <X size={20} />

@@ -15,6 +15,12 @@ export const ContactPage: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    // Send form data via mailto link as fallback
+    const subject = encodeURIComponent(formData.subject);
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`
+    );
+    window.open(`mailto:support@sphinxcs.online?subject=${subject}&body=${body}`, '_blank');
     setSubmitted(true);
   };
 

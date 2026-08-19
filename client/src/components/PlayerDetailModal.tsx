@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { Trophy, Activity, Award, ShieldAlert, CheckCircle2, Calendar, X, AlertCircle } from 'lucide-react';
+import { getTeamUpcomingFixtures } from './PitchView';
 
 export interface PlayerDetailData {
   id: number;
@@ -37,13 +38,9 @@ export const PlayerDetailModal: React.FC<PlayerDetailModalProps> = ({ player, on
   const posLabel = player.position === 1 ? t('gkp') : player.position === 2 ? t('def') : player.position === 3 ? t('mid') : t('fwd');
   const posBadgeColor = player.position === 1 ? '#eab308' : player.position === 2 ? '#2563eb' : player.position === 3 ? '#dc2626' : '#0284c7';
 
-  const defaultFixtures = [
-    { opponent: 'MUN', isHome: true, difficulty: 4 },
-    { opponent: 'ARS', isHome: false, difficulty: 5 },
-    { opponent: 'SOU', isHome: true, difficulty: 2 },
-  ];
-
-  const fixturesToDisplay = player.fixtures && player.fixtures.length > 0 ? player.fixtures : defaultFixtures;
+  const fixturesToDisplay = player.fixtures && player.fixtures.length > 0
+    ? player.fixtures
+    : getTeamUpcomingFixtures(player.teamShort || player.teamName, 1, 3);
 
   return (
     <div

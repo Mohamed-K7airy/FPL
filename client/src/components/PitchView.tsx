@@ -96,6 +96,26 @@ export const getTeamFixtureForGw = (teamCode?: string, targetGw: number = 1): st
   return `${f.opp} (${f.isHome ? 'H' : 'A'})`;
 };
 
+export const getTeamUpcomingFixtures = (teamCode?: string, startGw: number = 1, count: number = 3) => {
+  const raw = teamCode?.toUpperCase().trim() || 'ARS';
+  const code = TEAM_NAME_TO_SHORT[raw] || raw;
+  const list = TEAM_SCHEDULES[code] || TEAM_SCHEDULES['ARS'];
+  const startIdx = Math.max(0, startGw - 1) % list.length;
+  const topTeams = ['MCI', 'ARS', 'LIV', 'CHE', 'MUN', 'TOT', 'NEW', 'AVL'];
+  
+  const result = [];
+  for (let i = 0; i < count; i++) {
+    const f = list[(startIdx + i) % list.length];
+    const difficulty = topTeams.includes(f.opp) ? (f.isHome ? 4 : 5) : (f.isHome ? 2 : 3);
+    result.push({
+      opponent: f.opp,
+      isHome: f.isHome,
+      difficulty,
+    });
+  }
+  return result;
+};
+
 /* Ultra-Realistic 3D Team Jersey Component Fallback */
 const RealisticTeamJersey: React.FC<{ position: number; teamShort?: string; isEmpty?: boolean }> = ({ position, teamShort, isEmpty }) => {
   if (isEmpty) {
@@ -324,8 +344,7 @@ export const PitchView: React.FC<PitchViewProps> = ({
     }
 
     const upcomingFix = p.fixtureInfo || getTeamFixtureForGw(p.teamShortName, gw || 1);
-    const pointsText = p.points !== undefined && (gw || 1) === 1 ? `${p.points} ${t('pts')}` : '';
-    const fixtureText = pointsText ? `${pointsText} • ${upcomingFix}` : upcomingFix;
+    const fixtureText = p.points !== undefined ? `${p.points} ${t('pts')}` : upcomingFix;
     const costText = p.nowCost ? `£${(p.nowCost / 10).toFixed(1)}m` : '£5.0m';
     const playerNameText = p.webName || p.fullData?.web_name || 'Player';
 
@@ -395,7 +414,9 @@ export const PitchView: React.FC<PitchViewProps> = ({
           <div className="fpl-official-card-white-box">
             <div className="fpl-official-card-name">{playerNameText}</div>
             {!hideFixtures && (
-              <div className="fpl-official-card-fixture">{fixtureText}</div>
+              <div className={`fpl-official-card-fixture ${p.points !== undefined ? 'is-points' : ''}`}>
+                {fixtureText}
+              </div>
             )}
           </div>
 

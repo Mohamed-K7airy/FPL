@@ -40,453 +40,3785 @@ export interface ArticleSection {
 
 export const defaultArticles: Article[] = [
   {
-    id: 'gk-tips-25-26',
-    slug: 'goalkeeper-tips-25-26',
-    title: 'نصائح حراسة المرمى - كيف تختار حارسك صح في FPL 25/26؟',
-    titleEn: 'Goalkeeper Tips - How to Pick the Right GK in FPL 25/26',
-    excerpt: 'دليل تفصيلي شامل لاختيار حارس المرمى الأمثل لفريقك في موسم 25/26. كيفية استغلال نقاط التصديات وتوزيع الميزانية التنافسية.',
-    excerptEn: 'An exhaustive in-depth guide to picking the best goalkeeper for your FPL 25/26 team with save point algorithms and budget allocations.',
-    category: 'بناء التشكيلة',
-    categoryEn: 'Squad Building',
-    categoryColor: '#10b981',
-    author: 'MINI FPL Editorial',
-    authorRank: 'المركز ~9,000 عالمياً',
-    authorRankEn: 'Top ~9,000 globally',
-    date: '2026-08-03',
-    readTime: '7 دقائق قراءة',
-    readTimeEn: '7 min read',
-    coverIcon: 'Shield',
-    content: [
-      { type: 'heading', text: 'القاعدة الذهبية: تجنب الإسراف المالي في مركز حراسة المرمى' },
-      { type: 'paragraph', text: 'أول وأهم خطوة في بناء تشكيلة منافسة في فانتازي الدوري الإنجليزي الممتاز هي حوكمة الميزانية. الكثير من المدربين الجدد يرتكبون خطأً فادحاً بصرف 10.5M أو 11M على حارسي مرمى من أندية القمة. هذا الإنفاق يخصم ميزانية ضخمة محتاجة بشدة في خط الوسط والهجوم، حيث يصنع الفارق الحقيقي في النقاط والمقاعد الأساسية.' },
-      { type: 'paragraph', text: 'الميزانية المثالية لمركز الحراسة ككل يجب ألا تتجاوز 8.5M إلى 9.0M كحد أقصى (مثلاً: حارس أساسي بـ 4.5M وحارس بديل بـ 4.0M، أو حارس ممتاز بـ 5.0M وحارس بديل بـ 4.0M).' },
-      { type: 'warning', text: 'تنبيه استراتيجي: لا تخصص أكثر من 9.0M لحراسة المرمى مجتمعين. وفر الملايين الإضافية لنجوم الوسط والهجوم!' },
-      { type: 'divider' },
-      { type: 'heading', text: 'فهم خوارزمية نقاط التصديات (Save Points System)' },
-      { type: 'paragraph', text: 'في نظام FPL الرسمي، يحصل حارس المرمى على 4 نقاط للشباك النظيفة (Clean Sheet)، بالإضافة إلى نقطة إضافية لكل 3 تصديات حاسمة (Saves). هذا يعني أن حارس المرمى في أندية منتصف الجدول التي تستقبل تصديدات متعددة (مثل إيفرتون أو برينتفورد) قد يجمع نقاطاً أعلى من حارس الفرق الكبرى بفضل نقاط التصديات والبونص (BPS).' },
-      { type: 'player-card', playerName: 'دافيد رايا', playerTeam: 'أرسنال', playerPrice: '6.0M', playerImage: '/players/Arsenal/b22b5eee4eb2-1-david-raya.png', tier: 'فئة الـ 6.0M (خيارات القمة)', highlight: true, items: ['أقوى خط دفاع في الدوري الإنجليزي', 'نسبة شباك نظيفة مرتفعة طوال الموسم', 'مناسب لمن يفضل استراتيجية حارس ثنائي دائم (Set & Forget)'] },
-      { type: 'player-card', playerName: 'جوردان بيكفورد', playerTeam: 'إيفرتون', playerPrice: '5.5M', playerImage: '/players/Everton/49593e00-79cc-11f0-91cc-258e0b00204a.webp', tier: 'فئة الـ 5.5M (ملك التصديات)', highlight: false, items: ['معدل تصديات عالي جداً في كل مباراة', 'تحقيق نقاط بونص متكررة في مباريات الـ 0-0 والـ 1-0', 'ثبات مشاركة 90 دقيقة دون مخاطرة المداورة'] },
-      { type: 'player-card', playerName: 'أنتونين كينسكي', playerTeam: 'توتنهام', playerPrice: '4.5M', playerImage: '/players/TOT/firstteam_profiles_202526_antoninkinsky.webp', tier: 'فئة الـ 4.5M (الخيار الاقتصادي الموصى به)', highlight: true, items: ['سعر منخفض يحرر الميزانية للهجوم', 'جدول مباريات افتتاحية سهل', 'الخيار الأفضل للبدء بـ 8.5M إجمالي'] },
-      { type: 'divider' },
-      { type: 'tip-card', text: 'خلاصة التوصية: ابدأ الموسم بحارس بـ 4.5M مع حارس دكة بـ 4.0M. هذا يمنحك 1.5M زيادة لتطوير خط وسطك وصناعة الفارق في دوريات الأصدقاء.' },
+    "id": "gk-tips-25-26",
+    "slug": "goalkeeper-tips-25-26",
+    "title": "دليل حراسة المرمى الشامل - كيف تختار حارسك صح في FPL وتحصد أعلى نقاط التصديات؟",
+    "titleEn": "Ultimate Goalkeeper Blueprint - Save Points & Budget Allocation in FPL",
+    "excerpt": "دليل تفصيلي شامل لاختيار حارس المرمى الأمثل لفريقك في موسم 25/26. كيفية استغلال نقاط التصديات وتوزيع الميزانية التنافسية وتجنب الإسراف المالي.",
+    "excerptEn": "An exhaustive in-depth guide to picking the best goalkeeper for your FPL 25/26 team with save point algorithms and budget allocations.",
+    "category": "بناء التشكيلة",
+    "categoryEn": "Squad Building",
+    "categoryColor": "#10b981",
+    "author": "MINI FPL Editorial",
+    "authorRank": "المركز ~9,000 عالمياً",
+    "authorRankEn": "Top ~9,000 globally",
+    "date": "2026-08-03",
+    "readTime": "15 دقيقة قراءة",
+    "readTimeEn": "15 min read",
+    "coverIcon": "Shield",
+    "content": [
+      {
+        "type": "heading",
+        "text": "1. الإطار التأسيسي والمدخل النظري: دليل حراسة المرمى الشامل - كيف تختار حارسك صح في FPL وتحصد أعلى نقاط التصديات؟"
+      },
+      {
+        "type": "paragraph",
+        "text": "يُعتبر مركز حراسة المرمى في لعبة فانتازي الدوري الإنجليزي الممتاز (Fantasy Premier League) حجر الزاوية في بناء أي هيكل مالي متوازن. الخطأ الأكبر الذي يقع فيه المدربون هو التعامل مع حارس المرمى كعنصر ترفيهي أو صرف مبالغ طائلة (11.0M+) على حارسي مرمى من أندية القمة، مما يحرم خطي الوسط والهجوم من ملايين ضرورية لحصد النقاط الكبرى."
+      },
+      {
+        "type": "paragraph",
+        "text": "في كرة القدم الحديثة، تتداخل التكتيكات الواقعية داخل المستطيل الأخضر مع خوارزميات حساب النقاط في لعبة FPL بصورة معقدة. المدرب المحترف لا ينظر إلى اسم اللاعب أو ناديه فقط، بل يحلل الخريطة الحرارية (Heatmaps)، ومعدل التواجد في الثلث الهجومي، ومدى التزام الفريق بالضغط العالي واسترجاع الكرة في مناطق الخصم. هذا التحليل المركب هو ما يحول التوقعات إلى نقاط ملموسة في جدول الترتيب."
+      },
+      {
+        "type": "heading",
+        "text": "2. التحليل الإحصائي الرقمي المتقدم وقراءة البيانات"
+      },
+      {
+        "type": "paragraph",
+        "text": "التحليل الرياضي والإحصائي يؤكد أن حراس المرمى في أندية منتصف الجدول (بسعر 4.5M) يواجهون عدداً كبيراً من التسديدات المتوسطة والبعيدة، مما يمنحهم نقاط تصديات (+1 لكل 3 تصديات) وفرصة كبرى لاقتناص النقاط الإضافية الثلاث الكاملة (3 BPS Bonus) في المباريات التي تنتهي بنتائج 0-0 أو 1-0. بينما حارس الفريق الكبير يكتفي بنقاط الشباك النظيفة دون تصديات."
+      },
+      {
+        "type": "paragraph",
+        "text": "عند تحليل مؤشرات الأهداف المتوقعة (xG) وصناعة الفرص المتوقعة (xA)، يجب دائماً النظر إلى نوعية الفرص المتاحة (Shot Quality). التسديدات من خارج منطقة الجزاء تسجل معدلات xG منخفضة للغاية (0.02 - 0.05) ونادراً ما تتكرر أهدافها، في حين أن التسديدات من داخل منطقة الـ 6 ياردات والفرص الكبرى (Big Chances) تسجل معدلات تحويل تفوق 45%. الاستثمار في اللاعبين الذين يتواجدون بكثافة في منطقة الخطر هو الضمانة الحقيقية لحصد الأهداف والنقاط."
+      },
+      {
+        "type": "paragraph",
+        "text": "إلى جانب ذلك، تلعب خوارزميات حركة الأسعار ونسب الامتلاك المؤثرة (EO) دوراً محورياً في حماية الترتيب وصناعة الفارق. التداول الذكي وبناء القيمة المالية للتشكيلة يمنحك ميزة تنافسية كبرى تمكنك من شراء نجوم القمة في الجولات المزدوجة والمراحل الحاسمة من الموسم."
+      },
+      {
+        "type": "warning",
+        "text": "تنبيه استراتيجي لإدارة الفريق: تجنب اتخاذ قرارات متسرعة بعد نهاية المباريات مباشرة. انتظر دائماً حتى صدور التقارير الطبية والمؤتمرات الصحفية للمدربين قبل الموعد النهائي (Deadline) لضمان جاهزية عناصرك."
+      },
+      {
+        "type": "heading",
+        "text": "3. خارطة الطريق العملية وخطوات التنفيذ التكتيكي"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. اعتمد استراتيجية الحارس الأساسي الثابت (Set & Forget) بسعر 4.5M مع حارس دكة بـ 4.0M.\n2. راقب إحصائيات الأهداف المستقبلة المتوقعة (xGA) وجودة التنظيم الدفاعي للفرق.\n3. ركز على الحراس الذين يتميزون بنسبة تصدٍ مرتفعة من داخل منطقة الجزاء وسجل ممتاز في ركلات الجزاء."
+      },
+      {
+        "type": "paragraph",
+        "text": "التنفيذ العملي يتطلب الانضباط في استخدام التغييرات المجانية. حفظ التغييرات واستخدام تبديلين مجانيين في وقت واحد يتيح لك إعادة تشكيل ثنائيات الفريق بسهولة دون أي خسارة نقطية، مما يساعدك على التكيف السريع مع تقلبات جدول المباريات."
+      },
+      {
+        "type": "heading",
+        "text": "4. الأخطاء الشائعة والمنزلقات النفسية القاتلة"
+      },
+      {
+        "type": "paragraph",
+        "text": "إجراء تبديلات متكررة في مركز الحراسة وخصم نقاط (-4)، وشراء حارسين غاليين في نفس الوقت مما يجمد السيولة المالية على مقاعد البدلاء."
+      },
+      {
+        "type": "paragraph",
+        "text": "التباين الإحصائي (Variance) وسوء الحظ في جولة واحدة لا يجب أن يدفعك لتغيير خطتك طويلة الأجل. المدربون الأبطال يثقون في نماذجهم الرقمية ويحافظون على هدوئهم حتى في أصعب الظروف، وهو ما يضمن لهم التفوق النهائي بعد نهاية الـ 38 جولة."
+      },
+      {
+        "type": "tip-card",
+        "text": "وفر 1.5M إلى 2.0M في مركز الحراسة واستثمرها في نجوم خط الوسط وصناع اللعب لصناعة الفارق الحقيقي في دورياتك."
+      }
     ],
-    contentEn: [
-      { type: 'heading', text: 'The Golden Rule: Do Not Overspend on Goalkeepers' },
-      { type: 'paragraph', text: 'Never allocate more than 9.0M combined on goalkeepers. The ideal setup is a 4.5M starter with a 4.0M bench keeper.' },
-      { type: 'paragraph', text: 'Every 3 saves awards 1 extra point. Keepers from mid-table clubs facing volume shots often outscore premium keepers through save points and BPS bonuses.' },
-      { type: 'tip-card', text: 'Recommended Setup: 4.5M starter + 4.0M bench = 8.5M total budget investment.' },
-    ],
+    "contentEn": [
+      {
+        "type": "heading",
+        "text": "1. Foundations & Strategic Context: Ultimate Goalkeeper Blueprint - Save Points & Budget Allocation in FPL"
+      },
+      {
+        "type": "paragraph",
+        "text": "Goalkeeper selection is foundational to squad budget efficiency. Spending premium capital (5.5M - 6.0M) on elite shot-stoppers starves attacking slots of essential funds where true captaincy leverage exists."
+      },
+      {
+        "type": "paragraph",
+        "text": "Modern Premier League tactical shifts directly correlate with fantasy output. Understanding touch distribution in the attacking third, defensive pressing intensity, and set-piece assignment structures separates top-ranked managers from the broader field."
+      },
+      {
+        "type": "heading",
+        "text": "2. Advanced Quantitative Modeling & Underlying Metrics"
+      },
+      {
+        "type": "paragraph",
+        "text": "Mid-table 4.5M goalkeepers facing steady volume shots reliably generate baseline save points and dominate the Bonus Points System (BPS) in tight 1-0 and 0-0 matches, frequently matching or exceeding premium keeper totals across 38 weeks."
+      },
+      {
+        "type": "paragraph",
+        "text": "Evaluating Expected Goals (xG) and Expected Assists (xA) requires deep inspection of shot quality. High-volume box presence assets generate superior expected points models compared to long-range speculative shooters."
+      },
+      {
+        "type": "warning",
+        "text": "Discipline Rule: Never react to short-term variance. Maintain strategic patience until official pre-match press conferences."
+      },
+      {
+        "type": "heading",
+        "text": "3. Tactical Roadmap & Actionable Execution"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. Lock in a reliable 4.5M starter with an easy opening schedule.\n2. Pair with a 4.0M non-playing bench keeper to preserve 8.5M total allocation.\n3. Target keepers with proven penalty-saving pedigree."
+      },
+      {
+        "type": "paragraph",
+        "text": "Wasting free transfers on sideways goalkeeper moves and burning points hits (-4) on shot-stoppers."
+      },
+      {
+        "type": "tip-card",
+        "text": "Core Takeaway: Consistent application of mathematical value and fixture planning guarantees long-term leaderboard success."
+      }
+    ]
   },
-
   {
-    id: 'defenders-strategy-25-26',
-    slug: 'defenders-guide-25-26',
-    title: 'استراتيجية المدافعين - كيف تختار الأظهيرة الهجومية وتحقق أعلى شباك نظيفة؟',
-    titleEn: 'Defenders Strategy - Picking Attacking Fullbacks & Clean Sheets',
-    excerpt: 'دليل تحليلي شامل لبناء خط الدفاع المثالي في FPL. التوازن بين الأظهيرة التي تصنع الأهداف والمدافعين أصحاب الرأسيات والشباك النظيفة.',
-    excerptEn: 'Mastering the defense setup in FPL with structural balance between goal-scoring fullbacks and set-piece aerial threats.',
-    category: 'التكتيك والتخطيط',
-    categoryEn: 'Tactics & Planning',
-    categoryColor: '#3b82f6',
-    author: 'MINI FPL Editorial',
-    authorRank: 'تحليلات موسم 25/26',
-    authorRankEn: 'FPL Analytics 25/26',
-    date: '2026-08-05',
-    readTime: '8 دقائق قراءة',
-    readTimeEn: '8 min read',
-    coverIcon: 'Award',
-    content: [
-      { type: 'heading', text: 'تطور دور الأظهيرة الهجومية (Attacking Wing-Backs) في الفانتازي' },
-      { type: 'paragraph', text: 'في نظام حساب النقاط، يمثل خط الدفاع مصدراً كبيراً للنقاط إذا تم اختياره بعناية. المدافع يحصل على 4 نقاط للشباك النظيفة، و6 نقاط لكل هدف، و3 نقاط للتمريرة الحاسمة. الأظهيرة الهجومية التي تتقدم لمنطقة جزاء الخصم تمنحك فرصة مزدوجة لجمع نقاط الشباك النظيفة وصناعة الأهداف والبونص.' },
-      { type: 'paragraph', text: 'تجنب الاعتماد الكلي على قلب الدفاع الثابت (Center-Back) إلا إذا كان متميزاً في الكرات الرأسية الثابتة من الضربات الركنية (مثل مدافعي أرسنال ليفربول)، حيث إن الأظهيرة تتفوق دائماً في معدل العرضيات وصناعة الفرص المحققة (xA).' },
-      { type: 'heading', text: 'هيكلة الميزانية الدفاعية المثالية (5 Defenders Structure)' },
-      { type: 'paragraph', text: 'توزيع الميزانية في خط دفاعك يجب أن يتبع خطة تضمن المداورة والسعر المناسب:' },
-      { type: 'paragraph', text: '1. مدافع سوبر بـ 6.0M من فريق قمة دفاعي (أرسنال أو مانشستر سيتي).\n2. مدافع ظهير هجومي بـ 5.0M - 5.5M يشارك بكثافة هجومية.\n3. مدافع أساسي بـ 4.5M من فريق صاحب جدول مباريات سهل.\n4. اثنان من المدافعين الاقتصاديين بـ 4.0M لدعم دكة البدلاء.' },
-      { type: 'warning', text: 'تحذير تكتيكي: احرص أن يكون المدافع الاقتصادي بـ 4.0M يشارك بانتظام في فريقه وتأكد من عدم وجوده على دكة الاحتياط الدائمة.' },
-      { type: 'tip-card', text: 'نصيحة المدير: تحقق دائماً من إحصائية التمريرات العرضية والتمريرات الحاسمة المتوقعة (xA) للمدافعين قبل الشراء.' },
+    "id": "defenders-strategy-25-26",
+    "slug": "defenders-guide-25-26",
+    "title": "استراتيجية المدافعين الشاملة - كيف تختار الأظهرة الهجومية وتحقق أعلى شباك نظيفة؟",
+    "titleEn": "Defenders Strategy Masterclass - Picking Attacking Fullbacks & Clean Sheets",
+    "excerpt": "دليل تحليلي شامل لبناء خط الدفاع المثالي في FPL. التوازن بين الأظهرة التي تصنع الأهداف والمدافعين أصحاب الرأسيات والشباك النظيفة.",
+    "excerptEn": "Mastering the defense setup in FPL with structural balance between goal-scoring fullbacks and set-piece aerial threats.",
+    "category": "التكتيك والتخطيط",
+    "categoryEn": "Tactics & Planning",
+    "categoryColor": "#3b82f6",
+    "author": "MINI FPL Editorial",
+    "authorRank": "تحليلات موسم 25/26",
+    "authorRankEn": "FPL Analytics 25/26",
+    "date": "2026-08-05",
+    "readTime": "15 دقيقة قراءة",
+    "readTimeEn": "15 min read",
+    "coverIcon": "Award",
+    "content": [
+      {
+        "type": "heading",
+        "text": "1. الإطار التأسيسي والمدخل النظري: استراتيجية المدافعين الشاملة - كيف تختار الأظهرة الهجومية وتحقق أعلى شباك نظيفة؟"
+      },
+      {
+        "type": "paragraph",
+        "text": "يمثل خط الدفاع أحد أهم مصادر النقاط ذات السقف المرتفع (High Ceiling) في لعبة FPL. المدافع يحصل على 4 نقاط للشباك النظيفة، و6 نقاط كاملة عن كل هدف يسجله (أكثر من المهاجم بنقطتين)، و3 نقاط عن كل تمريرة حاسمة، مما يجعل الأظهرة الهجومية بمثابة أجنحة إضافية في تشكيلتك."
+      },
+      {
+        "type": "paragraph",
+        "text": "في كرة القدم الحديثة، تتداخل التكتيكات الواقعية داخل المستطيل الأخضر مع خوارزميات حساب النقاط في لعبة FPL بصورة معقدة. المدرب المحترف لا ينظر إلى اسم اللاعب أو ناديه فقط، بل يحلل الخريطة الحرارية (Heatmaps)، ومعدل التواجد في الثلث الهجومي، ومدى التزام الفريق بالضغط العالي واسترجاع الكرة في مناطق الخصم. هذا التحليل المركب هو ما يحول التوقعات إلى نقاط ملموسة في جدول الترتيب."
+      },
+      {
+        "type": "heading",
+        "text": "2. التحليل الإحصائي الرقمي المتقدم وقراءة البيانات"
+      },
+      {
+        "type": "paragraph",
+        "text": "الأرقام تبرهن أن الأظهرة التي تتحرك في الثلث الهجومي وترسل عرضيات وتمريرات مفتاحية داخل منطقة الجزاء تمتلك معدل أهداف متوقعة وتمريرات حاسمة (xG + xA) يتفوق على العديد من لاعبي الوسط الاقتصاديين، مع ميزة إضافية تتمثل في نقاط الشباك النظيفة."
+      },
+      {
+        "type": "paragraph",
+        "text": "عند تحليل مؤشرات الأهداف المتوقعة (xG) وصناعة الفرص المتوقعة (xA)، يجب دائماً النظر إلى نوعية الفرص المتاحة (Shot Quality). التسديدات من خارج منطقة الجزاء تسجل معدلات xG منخفضة للغاية (0.02 - 0.05) ونادراً ما تتكرر أهدافها، في حين أن التسديدات من داخل منطقة الـ 6 ياردات والفرص الكبرى (Big Chances) تسجل معدلات تحويل تفوق 45%. الاستثمار في اللاعبين الذين يتواجدون بكثافة في منطقة الخطر هو الضمانة الحقيقية لحصد الأهداف والنقاط."
+      },
+      {
+        "type": "paragraph",
+        "text": "إلى جانب ذلك، تلعب خوارزميات حركة الأسعار ونسب الامتلاك المؤثرة (EO) دوراً محورياً في حماية الترتيب وصناعة الفارق. التداول الذكي وبناء القيمة المالية للتشكيلة يمنحك ميزة تنافسية كبرى تمكنك من شراء نجوم القمة في الجولات المزدوجة والمراحل الحاسمة من الموسم."
+      },
+      {
+        "type": "warning",
+        "text": "تنبيه استراتيجي لإدارة الفريق: تجنب اتخاذ قرارات متسرعة بعد نهاية المباريات مباشرة. انتظر دائماً حتى صدور التقارير الطبية والمؤتمرات الصحفية للمدربين قبل الموعد النهائي (Deadline) لضمان جاهزية عناصرك."
+      },
+      {
+        "type": "heading",
+        "text": "3. خارطة الطريق العملية وخطوات التنفيذ التكتيكي"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. هيكل دفاعك: مدافع سوبر بـ 6.0M، ومدافع هجومي بـ 5.0M-5.5M، ومدافع أساسي بـ 4.5M، واثنان بـ 4.0M للدكة.\n2. تابع إحصائية التمريرات العرضية الدقيقة والفرص المصنوعة من الأطراف.\n3. راقب جدول المباريات الدفاعية وسلسلة المواجهات السهلة على الأرض."
+      },
+      {
+        "type": "paragraph",
+        "text": "التنفيذ العملي يتطلب الانضباط في استخدام التغييرات المجانية. حفظ التغييرات واستخدام تبديلين مجانيين في وقت واحد يتيح لك إعادة تشكيل ثنائيات الفريق بسهولة دون أي خسارة نقطية، مما يساعدك على التكيف السريع مع تقلبات جدول المباريات."
+      },
+      {
+        "type": "heading",
+        "text": "4. الأخطاء الشائعة والمنزلقات النفسية القاتلة"
+      },
+      {
+        "type": "paragraph",
+        "text": "الاعتماد على قلوب الدفاع الذين لا يتقدمون في الركنيات، وتجاهل إحصائيات الأهداف المستقبلة المتوقعة (xGA)."
+      },
+      {
+        "type": "paragraph",
+        "text": "التباين الإحصائي (Variance) وسوء الحظ في جولة واحدة لا يجب أن يدفعك لتغيير خطتك طويلة الأجل. المدربون الأبطال يثقون في نماذجهم الرقمية ويحافظون على هدوئهم حتى في أصعب الظروف، وهو ما يضمن لهم التفوق النهائي بعد نهاية الـ 38 جولة."
+      },
+      {
+        "type": "tip-card",
+        "text": "اختر الأظهرة الهجومية من الفرق المنظمة دفاعياً لتجمع بين أمان الشباك النظيفة وانفجار المساهمات الهجومية."
+      }
     ],
-    contentEn: [
-      { type: 'heading', text: 'The Role of Modern Attacking Fullbacks' },
-      { type: 'paragraph', text: 'Fullbacks offer multiple avenues of points: clean sheets (4 pts), goals (6 pts), assists (3 pts), and BPS awards.' },
-      { type: 'paragraph', text: 'Optimal Defense Budgeting: 1 Premium (6.0M), 1 Mid-range (5.0M-5.5M), 1 Rotational (4.5M), and 2 Budget (4.0M).' },
-    ],
+    "contentEn": [
+      {
+        "type": "heading",
+        "text": "1. Foundations & Strategic Context: Defenders Strategy Masterclass - Picking Attacking Fullbacks & Clean Sheets"
+      },
+      {
+        "type": "paragraph",
+        "text": "Defenders provide massive point leverage: 4 points per clean sheet, 6 per goal, and 3 per assist. Elite attacking fullbacks operate as auxiliary wingers."
+      },
+      {
+        "type": "paragraph",
+        "text": "Modern Premier League tactical shifts directly correlate with fantasy output. Understanding touch distribution in the attacking third, defensive pressing intensity, and set-piece assignment structures separates top-ranked managers from the broader field."
+      },
+      {
+        "type": "heading",
+        "text": "2. Advanced Quantitative Modeling & Underlying Metrics"
+      },
+      {
+        "type": "paragraph",
+        "text": "Underlying data demonstrates that high-cross fullbacks generating consistent Expected Assists (xA) offer dual-threat hauls that propel mini-league rank climbs."
+      },
+      {
+        "type": "paragraph",
+        "text": "Evaluating Expected Goals (xG) and Expected Assists (xA) requires deep inspection of shot quality. High-volume box presence assets generate superior expected points models compared to long-range speculative shooters."
+      },
+      {
+        "type": "warning",
+        "text": "Discipline Rule: Never react to short-term variance. Maintain strategic patience until official pre-match press conferences."
+      },
+      {
+        "type": "heading",
+        "text": "3. Tactical Roadmap & Actionable Execution"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. Adopt a balanced 1 Premium (6.0M), 1 Mid-tier attacking threat (5.0M-5.5M), 1 Rotational starter (4.5M), and 2 Budget enablers (4.0M).\n2. Target teams with league-lowest big chances conceded."
+      },
+      {
+        "type": "paragraph",
+        "text": "Backing non-attacking center backs without set-piece aerial threat."
+      },
+      {
+        "type": "tip-card",
+        "text": "Core Takeaway: Consistent application of mathematical value and fixture planning guarantees long-term leaderboard success."
+      }
+    ]
   },
-
   {
-    id: 'midfielders-captain-guide-25-26',
-    slug: 'midfielders-captain-guide-25-26',
-    title: 'استراتيجية خط الوسط واختيار الكابتن - أسرار مضاعفة النقاط الجولة تلو الجولة',
-    titleEn: 'Midfielders & Captaincy Masterclass - Maximizing Returns Every GW',
-    excerpt: 'خط الوسط هو قلب تشكيلتك النابض والمحرك الرئيسي للنقاط. كيف تختار شارة الكابتن وتفاضل بين النجوم أصحاب العائد المرتفع.',
-    excerptEn: 'Midfielders are the core engine of any top FPL squad. Learn how to pick your captain wisely every single week.',
-    category: 'اختيارات الكابتن',
-    categoryEn: 'Captaincy Picks',
-    categoryColor: '#8b5cf6',
-    author: 'MINI FPL Editorial',
-    authorRank: 'تحليلات موسم 25/26',
-    authorRankEn: 'FPL Analytics 25/26',
-    date: '2026-08-07',
-    readTime: '9 دقائق قراءة',
-    readTimeEn: '9 min read',
-    coverIcon: 'TrendingUp',
-    content: [
-      { type: 'heading', text: 'لماذا يُعتبر خط الوسط أهم مركز في لعبة FPL؟' },
-      { type: 'paragraph', text: 'لاعبو خط الوسط يحصلون على 5 نقاط عن كل هدف يسجلونه (مقارنة بـ 4 نقاط للمهاجم)، بالإضافة إلى نقطة واحدة للشباك النظيفة عند المشاركة 60 دقيقة. علاوة على ذلك، فإن معظم لاعبي الوسط الهجوميين والأطراف (Wingers) ينفذون ركلات الجزاء والضربات الثابتة، مما يجعلهم أعلى لاعبي اللعبة حصداً للنقاط طوال الموسم.' },
-      { type: 'heading', text: 'معادلة اختيار الكابتن الأسبوعي (Captaincy Selection Strategy)' },
-      { type: 'paragraph', text: 'شارة الكابتن تضاعف نقاط لاعبك مرتين (x2). اتخاذ القرار الصحيح أسبوعياً يمثل الفرق بين التأخر في دوريات الأصدقاء والوصول للقمة. إليك المعايير الأربعة الأساسية لتقييم كابتن الجولة:' },
-      { type: 'paragraph', text: '1. **المكان وحالة الفريق:** هل المباراة على ملعب فريقك (Home)؟ الأرقام تؤكد أن الكابتن على ملعبه يحقق عائداً أعلى بنسبة 35%.\n2. **معدل الأهداف المتوقعة (xG + xA):** متوسط الفرص المحققة للاعب في آخر 4 جولات.\n3. **ضعف المنافس الدفاعي:** عدد الأهداف والفرص التي استقبلها الفريق الخصم في مبارياته الأخيرة خارج ملعبه.\n4. **نسبة الملكية المؤثرة (Effective Ownership - EO):** إذا كانت ملكية نجم مثل صلاح أو هالاند تجاوزت 150%، فإن عدم تكبيتنه يمثل مخاطرة كبيرة على ترتيبك الكلي.' },
-      { type: 'warning', text: 'تنبيه هائم: لا تغامر بكابتن ديفرنشال (نسبة ملكيته أقل من 5%) إلا إذا كنت متأخراً بفارق كبير في الترتيب وتحتاج للتعويض.' },
-      { type: 'tip-card', text: 'قاعدة الكابتن الثابتة: اختر دائماً اللاعب الأجهز صاحب ركلات الجزاء والذي يلعب على ملعبه ضد دفاع يعاني من استقبال العرضيات.' },
+    "id": "midfielders-captain-guide-25-26",
+    "slug": "midfielders-captain-guide-25-26",
+    "title": "استراتيجية خط الوسط واختيار الكابتن - أسرار مضاعفة النقاط الجولة تلو الجولة",
+    "titleEn": "Midfielders & Captaincy Masterclass - Maximizing Returns Every GW",
+    "excerpt": "خط الوسط هو قلب تشكيلتك النابض والمحرك الرئيسي للنقاط. كيف تختار شارة الكابتن وتفاضل بين النجوم أصحاب العائد المرتفع.",
+    "excerptEn": "Midfielders are the core engine of any top FPL squad. Learn how to pick your captain wisely every single week.",
+    "category": "اختيارات الكابتن",
+    "categoryEn": "Captaincy Picks",
+    "categoryColor": "#8b5cf6",
+    "author": "MINI FPL Editorial",
+    "authorRank": "تحليلات موسم 25/26",
+    "authorRankEn": "FPL Analytics 25/26",
+    "date": "2026-08-07",
+    "readTime": "16 دقيقة قراءة",
+    "readTimeEn": "16 min read",
+    "coverIcon": "TrendingUp",
+    "content": [
+      {
+        "type": "heading",
+        "text": "1. الإطار التأسيسي والمدخل النظري: استراتيجية خط الوسط واختيار الكابتن - أسرار مضاعفة النقاط الجولة تلو الجولة"
+      },
+      {
+        "type": "paragraph",
+        "text": "خط الوسط هو المحرك الأساسي لأي تشكيلة بطلة في فانتازي البريميرليج. لاعبو الوسط ينالون 5 نقاط عن كل هدف، ونقطة للشباك النظيفة، و3 نقاط للتمريرة الحاسمة، ومعظم نجوم الأجنحة في الدوري مصنفون كلاعبي وسط، مما يجعلهم الخيار المفضل لشارة الكابتن الأسبوعية."
+      },
+      {
+        "type": "paragraph",
+        "text": "في كرة القدم الحديثة، تتداخل التكتيكات الواقعية داخل المستطيل الأخضر مع خوارزميات حساب النقاط في لعبة FPL بصورة معقدة. المدرب المحترف لا ينظر إلى اسم اللاعب أو ناديه فقط، بل يحلل الخريطة الحرارية (Heatmaps)، ومعدل التواجد في الثلث الهجومي، ومدى التزام الفريق بالضغط العالي واسترجاع الكرة في مناطق الخصم. هذا التحليل المركب هو ما يحول التوقعات إلى نقاط ملموسة في جدول الترتيب."
+      },
+      {
+        "type": "heading",
+        "text": "2. التحليل الإحصائي الرقمي المتقدم وقراءة البيانات"
+      },
+      {
+        "type": "paragraph",
+        "text": "معادلة اختيار الكابتن تعتمد على 4 ركائز: خوض المباراة على الملعب (Home)، معدل الأهداف والتمريرات المتوقعة (xG + xA) في آخر 4 جولات، ضعف دفاع الخصم واستقباله للفرص الكبرى، ونسبة الامتلاك المؤثرة (EO) لتأمين الترتيب."
+      },
+      {
+        "type": "paragraph",
+        "text": "عند تحليل مؤشرات الأهداف المتوقعة (xG) وصناعة الفرص المتوقعة (xA)، يجب دائماً النظر إلى نوعية الفرص المتاحة (Shot Quality). التسديدات من خارج منطقة الجزاء تسجل معدلات xG منخفضة للغاية (0.02 - 0.05) ونادراً ما تتكرر أهدافها، في حين أن التسديدات من داخل منطقة الـ 6 ياردات والفرص الكبرى (Big Chances) تسجل معدلات تحويل تفوق 45%. الاستثمار في اللاعبين الذين يتواجدون بكثافة في منطقة الخطر هو الضمانة الحقيقية لحصد الأهداف والنقاط."
+      },
+      {
+        "type": "paragraph",
+        "text": "إلى جانب ذلك، تلعب خوارزميات حركة الأسعار ونسب الامتلاك المؤثرة (EO) دوراً محورياً في حماية الترتيب وصناعة الفارق. التداول الذكي وبناء القيمة المالية للتشكيلة يمنحك ميزة تنافسية كبرى تمكنك من شراء نجوم القمة في الجولات المزدوجة والمراحل الحاسمة من الموسم."
+      },
+      {
+        "type": "warning",
+        "text": "تنبيه استراتيجي لإدارة الفريق: تجنب اتخاذ قرارات متسرعة بعد نهاية المباريات مباشرة. انتظر دائماً حتى صدور التقارير الطبية والمؤتمرات الصحفية للمدربين قبل الموعد النهائي (Deadline) لضمان جاهزية عناصرك."
+      },
+      {
+        "type": "heading",
+        "text": "3. خارطة الطريق العملية وخطوات التنفيذ التكتيكي"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. خصص 38M إلى 42M لخط الوسط لضم نجمين سوبر ولاعبين متوسطين متألقين.\n2. اختر الكابتن دائماً من النجوم الذين يسددون ركلات الجزاء والضربات الثابتة.\n3. عند حماية الصدارة، طابق كابتن النخبة صاحب أعلى نسبة امتلاك."
+      },
+      {
+        "type": "paragraph",
+        "text": "التنفيذ العملي يتطلب الانضباط في استخدام التغييرات المجانية. حفظ التغييرات واستخدام تبديلين مجانيين في وقت واحد يتيح لك إعادة تشكيل ثنائيات الفريق بسهولة دون أي خسارة نقطية، مما يساعدك على التكيف السريع مع تقلبات جدول المباريات."
+      },
+      {
+        "type": "heading",
+        "text": "4. الأخطاء الشائعة والمنزلقات النفسية القاتلة"
+      },
+      {
+        "type": "paragraph",
+        "text": "المغامرة بكابتن ديفرنشال منخفض الامتلاك دون مبرر إحصائي قوي، وتجاهل المؤشرات الرقمية لصالح العواطف."
+      },
+      {
+        "type": "paragraph",
+        "text": "التباين الإحصائي (Variance) وسوء الحظ في جولة واحدة لا يجب أن يدفعك لتغيير خطتك طويلة الأجل. المدربون الأبطال يثقون في نماذجهم الرقمية ويحافظون على هدوئهم حتى في أصعب الظروف، وهو ما يضمن لهم التفوق النهائي بعد نهاية الـ 38 جولة."
+      },
+      {
+        "type": "tip-card",
+        "text": "خط الوسط هو منجم النقاط الأكبر؛ استثمر فيه بسخاء واجعل شارة الكابتن فيه دائماً لمضاعفة العوائد."
+      }
     ],
-    contentEn: [
-      { type: 'heading', text: 'Why Midfielders Dominate FPL Scores' },
-      { type: 'paragraph', text: 'Midfielders earn 5 pts for goals, 1 pt for clean sheets, and 3 pts for assists while benefiting from penalty duties.' },
-      { type: 'paragraph', text: 'Captaincy evaluation factors: Home vs Away form, xG+xA stats, opponent xGA, and Effective Ownership (EO).' },
-    ],
+    "contentEn": [
+      {
+        "type": "heading",
+        "text": "1. Foundations & Strategic Context: Midfielders & Captaincy Masterclass - Maximizing Returns Every GW"
+      },
+      {
+        "type": "paragraph",
+        "text": "Midfielders dominate fantasy scoring with 5 points per goal and 1 point clean sheet bonuses. Elite wingers categorized as midfielders are prime captaincy engines."
+      },
+      {
+        "type": "paragraph",
+        "text": "Modern Premier League tactical shifts directly correlate with fantasy output. Understanding touch distribution in the attacking third, defensive pressing intensity, and set-piece assignment structures separates top-ranked managers from the broader field."
+      },
+      {
+        "type": "heading",
+        "text": "2. Advanced Quantitative Modeling & Underlying Metrics"
+      },
+      {
+        "type": "paragraph",
+        "text": "Captaincy modeling relies on 4 pillars: Home ground advantage, rolling 4-game xG+xA metrics, opponent defensive frailties, and Effective Ownership (EO) exposure."
+      },
+      {
+        "type": "paragraph",
+        "text": "Evaluating Expected Goals (xG) and Expected Assists (xA) requires deep inspection of shot quality. High-volume box presence assets generate superior expected points models compared to long-range speculative shooters."
+      },
+      {
+        "type": "warning",
+        "text": "Discipline Rule: Never react to short-term variance. Maintain strategic patience until official pre-match press conferences."
+      },
+      {
+        "type": "heading",
+        "text": "3. Tactical Roadmap & Actionable Execution"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. Allocate 40% of total team budget to midfield firepower.\n2. Prioritize primary penalty-taking wingers.\n3. Use EO analysis to safeguard competitive leads."
+      },
+      {
+        "type": "paragraph",
+        "text": "Punting on speculative differential captains when holding an overall rank advantage."
+      },
+      {
+        "type": "tip-card",
+        "text": "Core Takeaway: Consistent application of mathematical value and fixture planning guarantees long-term leaderboard success."
+      }
+    ]
   },
-
   {
-    id: 'wildcard-master-strategy',
-    slug: 'wildcard-master-strategy',
-    title: 'دليل تفعيل كرت الوايلد كارد (Wildcard) - التوقيت والتنفيذ بدون أخطاء',
-    titleEn: 'Wildcard Masterclass - Timing, Execution & Squad Restructuring',
-    excerpt: 'استراتيجية شاملة لتفعيل كرت الوايلد كارد لتعديل الفريق بالكامل. المتى وكيف تستغل تغير الأسعار لبناء تشكيلة فائقة القوة.',
-    excerptEn: 'When and how to deploy your Wildcard chip for maximum team value and fixture swing optimization.',
-    category: 'إدارة الخواص',
-    categoryEn: 'Chips Strategy',
-    categoryColor: '#ec4899',
-    author: 'MINI FPL Editorial',
-    authorRank: 'تحليلات تكتيكية',
-    authorRankEn: 'Tactical Analysis',
-    date: '2026-08-08',
-    readTime: '8 دقائق قراءة',
-    readTimeEn: '8 min read',
-    coverIcon: 'BookOpen',
-    content: [
-      { type: 'heading', text: 'ما هو كرت الوايلد كارد وكيف يعمل؟' },
-      { type: 'paragraph', text: 'يمنحك كرت الوايلد كارد (Wildcard) القدرة على إجراء انتقالات مجانية غير محدودة وتغيير جميع لاعبي تشكيلتك الـ 15 دون أي خصم نقاط (-4). يتوفر لك كرت في النصف الأول من الموسم (قبل الجولة 19) وكرت آخر في النصف الثاني.' },
-      { type: 'heading', text: 'متى يجب تفعيل الوايلد كارد؟' },
-      { type: 'paragraph', text: 'أهم التوقيتات الاستراتيجية لتفعيل الوايلد كارد تشمل:' },
-      { type: 'paragraph', text: '1. **فترة التوقف الدولي (International Break):** يمنحك التفعيل المبكر أسبوعين كاملين للاستفادة من ارتفاع أسعار اللاعبين المتألقين وتجنب هبوط أسعار المصابين.\n2. **تغير جدول المباريات (Fixture Swings):** عندما تتغير مواجهات الفرق الكبرى من مواجهات صعبة إلى سلسلة مباريات سهلة متتالية.\n3. **علاج الإصابات الهيكلية:** عند تعرض 3 إلى 4 لاعبين أساسيين للإصابة أو الإيقاف في نفس الوقت.' },
-      { type: 'warning', text: 'تنبيه: لا تفعل الوايلد كارد بسبب جولة واحدة سيئة! استعمله فقط عندما يحتاج فريقك لتغيير جذري يشمل 5 لاعبين على الأقل.' },
-      { type: 'tip-card', text: 'نصيحة القيمة: قُم بطلب اللاعبين الذين يرتفع سعرهم يومياً خلال أسبوع الوايلد كارد لبناء ميزانية ضخمة لتشكيلتك.' },
+    "id": "wildcard-master-strategy",
+    "slug": "wildcard-master-strategy",
+    "title": "دليل تفعيل كرت الوايلد كارد (Wildcard) - التوقيت والتنفيذ وبناء القيمة المالية",
+    "titleEn": "Wildcard Masterclass - Timing, Execution & Squad Restructuring",
+    "excerpt": "استراتيجية شاملة لتفعيل كرت الوايلد كارد لتعديل الفريق بالكامل. متى وكيف تستغل تغير الأسعار لبناء تشكيلة فائقة القوة.",
+    "excerptEn": "When and how to deploy your Wildcard chip for maximum team value and fixture swing optimization.",
+    "category": "إدارة الخواص",
+    "categoryEn": "Chips Strategy",
+    "categoryColor": "#ec4899",
+    "author": "MINI FPL Editorial",
+    "authorRank": "تحليلات تكتيكية",
+    "authorRankEn": "Tactical Analysis",
+    "date": "2026-08-08",
+    "readTime": "15 دقيقة قراءة",
+    "readTimeEn": "15 min read",
+    "coverIcon": "BookOpen",
+    "content": [
+      {
+        "type": "heading",
+        "text": "1. الإطار التأسيسي والمدخل النظري: دليل تفعيل كرت الوايلد كارد (Wildcard) - التوقيت والتنفيذ وبناء القيمة المالية"
+      },
+      {
+        "type": "paragraph",
+        "text": "كرت الوايلد كارد (Wildcard) هو أقوى أداة تكتيكية في ترسانة مدرب الفانتازي. يتيح لك إجراء تغييرات مجانية غير محدودة وتعديل جميع لاعبي الفريق الـ 15 دون أي خصم نقاط، ويتوفر لك كرت في النصف الأول من الموسم وآخر في النصف الثاني."
+      },
+      {
+        "type": "paragraph",
+        "text": "في كرة القدم الحديثة، تتداخل التكتيكات الواقعية داخل المستطيل الأخضر مع خوارزميات حساب النقاط في لعبة FPL بصورة معقدة. المدرب المحترف لا ينظر إلى اسم اللاعب أو ناديه فقط، بل يحلل الخريطة الحرارية (Heatmaps)، ومعدل التواجد في الثلث الهجومي، ومدى التزام الفريق بالضغط العالي واسترجاع الكرة في مناطق الخصم. هذا التحليل المركب هو ما يحول التوقعات إلى نقاط ملموسة في جدول الترتيب."
+      },
+      {
+        "type": "heading",
+        "text": "2. التحليل الإحصائي الرقمي المتقدم وقراءة البيانات"
+      },
+      {
+        "type": "paragraph",
+        "text": "الاستخدام الذكي للوايلد كارد يتجاوز مجرد تبديل اللاعبين المصابين؛ إنه فرصة استثمارية ذهبية لتوليد سيولة مالية إضافية بالتداول اليومي على اللاعبين المتوقع ارتفاع أسعارهم خلال أسبوع التفعيل، مما يرفع القيمة الشرائية لتشكيلتك لمستويات قياسية."
+      },
+      {
+        "type": "paragraph",
+        "text": "عند تحليل مؤشرات الأهداف المتوقعة (xG) وصناعة الفرص المتوقعة (xA)، يجب دائماً النظر إلى نوعية الفرص المتاحة (Shot Quality). التسديدات من خارج منطقة الجزاء تسجل معدلات xG منخفضة للغاية (0.02 - 0.05) ونادراً ما تتكرر أهدافها، في حين أن التسديدات من داخل منطقة الـ 6 ياردات والفرص الكبرى (Big Chances) تسجل معدلات تحويل تفوق 45%. الاستثمار في اللاعبين الذين يتواجدون بكثافة في منطقة الخطر هو الضمانة الحقيقية لحصد الأهداف والنقاط."
+      },
+      {
+        "type": "paragraph",
+        "text": "إلى جانب ذلك، تلعب خوارزميات حركة الأسعار ونسب الامتلاك المؤثرة (EO) دوراً محورياً في حماية الترتيب وصناعة الفارق. التداول الذكي وبناء القيمة المالية للتشكيلة يمنحك ميزة تنافسية كبرى تمكنك من شراء نجوم القمة في الجولات المزدوجة والمراحل الحاسمة من الموسم."
+      },
+      {
+        "type": "warning",
+        "text": "تنبيه استراتيجي لإدارة الفريق: تجنب اتخاذ قرارات متسرعة بعد نهاية المباريات مباشرة. انتظر دائماً حتى صدور التقارير الطبية والمؤتمرات الصحفية للمدربين قبل الموعد النهائي (Deadline) لضمان جاهزية عناصرك."
+      },
+      {
+        "type": "heading",
+        "text": "3. خارطة الطريق العملية وخطوات التنفيذ التكتيكي"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. فعل الوايلد كارد بالتزامن مع فترات التوقف الدولي أو الانقلاب الكبير في جداول المباريات.\n2. اشترِ اللاعبين الصاعدين مبكراً في الأسبوع لتحقيق أرباح سعرية.\n3. خطط لتشكيلة تخدمك لـ 6 إلى 8 جولات قادمة على الأقل."
+      },
+      {
+        "type": "paragraph",
+        "text": "التنفيذ العملي يتطلب الانضباط في استخدام التغييرات المجانية. حفظ التغييرات واستخدام تبديلين مجانيين في وقت واحد يتيح لك إعادة تشكيل ثنائيات الفريق بسهولة دون أي خسارة نقطية، مما يساعدك على التكيف السريع مع تقلبات جدول المباريات."
+      },
+      {
+        "type": "heading",
+        "text": "4. الأخطاء الشائعة والمنزلقات النفسية القاتلة"
+      },
+      {
+        "type": "paragraph",
+        "text": "تفعيل الوايلد كارد بانفعال بعد جولة واحدة سيئة دون وجود حاجة لتغيير 5 لاعبين أساسيين على الأقل."
+      },
+      {
+        "type": "paragraph",
+        "text": "التباين الإحصائي (Variance) وسوء الحظ في جولة واحدة لا يجب أن يدفعك لتغيير خطتك طويلة الأجل. المدربون الأبطال يثقون في نماذجهم الرقمية ويحافظون على هدوئهم حتى في أصعب الظروف، وهو ما يضمن لهم التفوق النهائي بعد نهاية الـ 38 جولة."
+      },
+      {
+        "type": "tip-card",
+        "text": "الوايلد كارد هو نقطة التحول الكبرى في موسمك؛ خطط له بهدوء واستغله لإعادة هيكلة تشكيلتك وبناء ميزانية حديدية."
+      }
     ],
-    contentEn: [
-      { type: 'heading', text: 'Wildcard Execution Strategy' },
-      { type: 'paragraph', text: 'Wildcards reset your 15-man squad without points deduction. Target International Breaks or major Fixture Swings.' },
-    ],
+    "contentEn": [
+      {
+        "type": "heading",
+        "text": "1. Foundations & Strategic Context: Wildcard Masterclass - Timing, Execution & Squad Restructuring"
+      },
+      {
+        "type": "paragraph",
+        "text": "The Wildcard chip is the ultimate tactical asset, permitting unlimited free transfers without point penalties across 2 distinct seasonal windows."
+      },
+      {
+        "type": "paragraph",
+        "text": "Modern Premier League tactical shifts directly correlate with fantasy output. Understanding touch distribution in the attacking third, defensive pressing intensity, and set-piece assignment structures separates top-ranked managers from the broader field."
+      },
+      {
+        "type": "heading",
+        "text": "2. Advanced Quantitative Modeling & Underlying Metrics"
+      },
+      {
+        "type": "paragraph",
+        "text": "Beyond squad repairs, an early active Wildcard facilitates daily price trend speculation, extracting lasting budget value ahead of the deadline."
+      },
+      {
+        "type": "paragraph",
+        "text": "Evaluating Expected Goals (xG) and Expected Assists (xA) requires deep inspection of shot quality. High-volume box presence assets generate superior expected points models compared to long-range speculative shooters."
+      },
+      {
+        "type": "warning",
+        "text": "Discipline Rule: Never react to short-term variance. Maintain strategic patience until official pre-match press conferences."
+      },
+      {
+        "type": "heading",
+        "text": "3. Tactical Roadmap & Actionable Execution"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. Deploy around international breaks or major multi-team fixture swings.\n2. Trade daily risers to lock in sell-on profits.\n3. Build for a 6-to-8 gameweek horizon."
+      },
+      {
+        "type": "paragraph",
+        "text": "Panic-triggering after a single unlucky week with only 2 structural issues."
+      },
+      {
+        "type": "tip-card",
+        "text": "Core Takeaway: Consistent application of mathematical value and fixture planning guarantees long-term leaderboard success."
+      }
+    ]
   },
-
   {
-    id: 'budget-gems-differentials',
-    slug: 'budget-gems-differentials',
-    title: 'الأسماء الاقتصادية واللاعبين الديفرنشال (Differentials) لموسم 25/26',
-    titleEn: 'Budget Gems & Differential Picks for FPL 25/26',
-    excerpt: 'دليل استكشاف النجوم أصحاب الأسعار المنخفضة ونسبة الامتلاك الضئيلة (<10%) لصنع الفارق وصدارة الدوريات الخاصة.',
-    excerptEn: 'Discover low-ownership differential gems and high-value budget enablers to climb overall rankings.',
-    category: 'اكتشاف المواهب',
-    categoryEn: 'Budget & Differentials',
-    categoryColor: '#f59e0b',
-    author: 'MINI FPL Editorial',
-    authorRank: 'تحليلات إحصائية',
-    authorRankEn: 'Statistical Analysis',
-    date: '2026-08-09',
-    readTime: '7 دقائق قراءة',
-    readTimeEn: '7 min read',
-    coverIcon: 'Award',
-    content: [
-      { type: 'heading', text: 'تعريف اللاعب الديفرنشال وأهميته التنافسية' },
-      { type: 'paragraph', text: 'اللاعب الديفرنشال (Differential) هو كل لاعب تقل نسبة ملكيته الإجمالية بين مدربي الفانتازي عن 10%. عندما يتألق هذا اللاعب ويسجل أهدافاً، فإن نقاطه تعود بالنفع المباشر عليك وحدك دون بقية المنافسين، مما يمنحك قفزة هائلة في ترتيبك العالمي وفي جدول دوري أصدقائك.' },
-      { type: 'heading', text: 'كيف تختار ديفرنشال ناجح بدلاً من المخاطرة الضارة؟' },
-      { type: 'paragraph', text: 'ليس كل لاعب منخفض الملكية يعتبر ديفرنشال جيد. اختر اللاعب الذي ينطبق عليه المعايير التالية:' },
-      { type: 'paragraph', text: '1. مشارك أساسي بضمان 80+ دقيقة في المباراة.\n2. ينفذ جزءاً من الكرات الثابتة أو الركنيات.\n3. يلعب في مركز هجومي أعلى من مركزه المسجل في اللعبة (Out of Position).' },
-      { type: 'tip-card', text: 'التوازن الذهبي: لا تضع أكثر من 2 إلى 3 ديفرنشالات في تشكيلتك، وحافظ على النواة الأساسية من نجوم اللعبة الـ Template.' },
+    "id": "budget-gems-differentials",
+    "slug": "budget-gems-differentials",
+    "title": "الأسماء الاقتصادية واللاعبين الديفرنشال (Differentials) - أسرار صعود الترتيب",
+    "titleEn": "Budget Gems & Differential Picks - Climbing the Overall Rank",
+    "excerpt": "دليل استكشاف النجوم أصحاب الأسعار المنخفضة ونسبة الامتلاك الضئيلة (<10%) لصنع الفارق وصدارة الدوريات الخاصة.",
+    "excerptEn": "Discover low-ownership differential gems and high-value budget enablers to climb overall rankings.",
+    "category": "اكتشاف المواهب",
+    "categoryEn": "Budget & Differentials",
+    "categoryColor": "#f59e0b",
+    "author": "MINI FPL Editorial",
+    "authorRank": "تحليلات إحصائية",
+    "authorRankEn": "Statistical Analysis",
+    "date": "2026-08-09",
+    "readTime": "14 دقيقة قراءة",
+    "readTimeEn": "14 min read",
+    "coverIcon": "Award",
+    "content": [
+      {
+        "type": "heading",
+        "text": "1. الإطار التأسيسي والمدخل النظري: الأسماء الاقتصادية واللاعبين الديفرنشال (Differentials) - أسرار صعود الترتيب"
+      },
+      {
+        "type": "paragraph",
+        "text": "اللاعب الديفرنشال (Differential) هو النجم الذي يمتلكه أقل من 10% من إجمالي مدربي اللعبة. عندما يتألق هذا اللاعب ويسجل أهدافاً، فإن نقاطه تعود بالنفع المباشر عليك وحدك، مما يقفز بترتيبك آلاف المراكز إلى الأمام ويحسم صدارة دوريات الأصدقاء."
+      },
+      {
+        "type": "paragraph",
+        "text": "في كرة القدم الحديثة، تتداخل التكتيكات الواقعية داخل المستطيل الأخضر مع خوارزميات حساب النقاط في لعبة FPL بصورة معقدة. المدرب المحترف لا ينظر إلى اسم اللاعب أو ناديه فقط، بل يحلل الخريطة الحرارية (Heatmaps)، ومعدل التواجد في الثلث الهجومي، ومدى التزام الفريق بالضغط العالي واسترجاع الكرة في مناطق الخصم. هذا التحليل المركب هو ما يحول التوقعات إلى نقاط ملموسة في جدول الترتيب."
+      },
+      {
+        "type": "heading",
+        "text": "2. التحليل الإحصائي الرقمي المتقدم وقراءة البيانات"
+      },
+      {
+        "type": "paragraph",
+        "text": "الديفرنشال الناجح ليس مجرد لاعب مغمور، بل هو لاعب تنطبق عليه 3 شروط ذهبية: مشاركة أساسية بضمان 80+ دقيقة، مسؤولية عن الكرات الثابتة أو ركلات الجزاء، أو اللعب في مركز هجومي متقدم (Out of Position - OOP) مقارنة بتصنيفه في اللعبة."
+      },
+      {
+        "type": "paragraph",
+        "text": "عند تحليل مؤشرات الأهداف المتوقعة (xG) وصناعة الفرص المتوقعة (xA)، يجب دائماً النظر إلى نوعية الفرص المتاحة (Shot Quality). التسديدات من خارج منطقة الجزاء تسجل معدلات xG منخفضة للغاية (0.02 - 0.05) ونادراً ما تتكرر أهدافها، في حين أن التسديدات من داخل منطقة الـ 6 ياردات والفرص الكبرى (Big Chances) تسجل معدلات تحويل تفوق 45%. الاستثمار في اللاعبين الذين يتواجدون بكثافة في منطقة الخطر هو الضمانة الحقيقية لحصد الأهداف والنقاط."
+      },
+      {
+        "type": "paragraph",
+        "text": "إلى جانب ذلك، تلعب خوارزميات حركة الأسعار ونسب الامتلاك المؤثرة (EO) دوراً محورياً في حماية الترتيب وصناعة الفارق. التداول الذكي وبناء القيمة المالية للتشكيلة يمنحك ميزة تنافسية كبرى تمكنك من شراء نجوم القمة في الجولات المزدوجة والمراحل الحاسمة من الموسم."
+      },
+      {
+        "type": "warning",
+        "text": "تنبيه استراتيجي لإدارة الفريق: تجنب اتخاذ قرارات متسرعة بعد نهاية المباريات مباشرة. انتظر دائماً حتى صدور التقارير الطبية والمؤتمرات الصحفية للمدربين قبل الموعد النهائي (Deadline) لضمان جاهزية عناصرك."
+      },
+      {
+        "type": "heading",
+        "text": "3. خارطة الطريق العملية وخطوات التنفيذ التكتيكي"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. حدد مقعدين أو ثلاثة فقط للاعبين الديفرنشال في تشكيلتك.\n2. حافظ على النواة الأساسية من نجوم الـ Template لحماية استقرار النقاط.\n3. تابع إحصائيات صناعة الفرص والتسديدات داخل الصندوق للفرق الصاعدة والمتوسطة."
+      },
+      {
+        "type": "paragraph",
+        "text": "التنفيذ العملي يتطلب الانضباط في استخدام التغييرات المجانية. حفظ التغييرات واستخدام تبديلين مجانيين في وقت واحد يتيح لك إعادة تشكيل ثنائيات الفريق بسهولة دون أي خسارة نقطية، مما يساعدك على التكيف السريع مع تقلبات جدول المباريات."
+      },
+      {
+        "type": "heading",
+        "text": "4. الأخطاء الشائعة والمنزلقات النفسية القاتلة"
+      },
+      {
+        "type": "paragraph",
+        "text": "حشو التشكيلة بالكامل بلاعبين ديفرنشال مما يدمر استقرار الفريق ويزيد من مخاطر التراجع في الترتيب."
+      },
+      {
+        "type": "paragraph",
+        "text": "التباين الإحصائي (Variance) وسوء الحظ في جولة واحدة لا يجب أن يدفعك لتغيير خطتك طويلة الأجل. المدربون الأبطال يثقون في نماذجهم الرقمية ويحافظون على هدوئهم حتى في أصعب الظروف، وهو ما يضمن لهم التفوق النهائي بعد نهاية الـ 38 جولة."
+      },
+      {
+        "type": "tip-card",
+        "text": "التوازن الذهبي يكمن في امتلاك نواة قوية من نجوم القمة، مع تطعيم الفريق باثنين من الأسماء الاقتصادية الديفرنشال لصناعة الفارق."
+      }
     ],
-    contentEn: [
-      { type: 'heading', text: 'Selecting Effective Differentials' },
-      { type: 'paragraph', text: 'Target low-ownership assets (<10% owned) who play 80+ guaranteed minutes and take set-pieces.' },
-    ],
+    "contentEn": [
+      {
+        "type": "heading",
+        "text": "1. Foundations & Strategic Context: Budget Gems & Differential Picks - Climbing the Overall Rank"
+      },
+      {
+        "type": "paragraph",
+        "text": "Differentials (<10% ownership) are the primary vehicle for explosive rank leaps. When a differential hauls, you capture exclusive upside over your rivals."
+      },
+      {
+        "type": "paragraph",
+        "text": "Modern Premier League tactical shifts directly correlate with fantasy output. Understanding touch distribution in the attacking third, defensive pressing intensity, and set-piece assignment structures separates top-ranked managers from the broader field."
+      },
+      {
+        "type": "heading",
+        "text": "2. Advanced Quantitative Modeling & Underlying Metrics"
+      },
+      {
+        "type": "paragraph",
+        "text": "Elite differentials possess guaranteed 80+ minute security, set-piece involvement, and Out-of-Position (OOP) forward roles with favorable underlying stats."
+      },
+      {
+        "type": "paragraph",
+        "text": "Evaluating Expected Goals (xG) and Expected Assists (xA) requires deep inspection of shot quality. High-volume box presence assets generate superior expected points models compared to long-range speculative shooters."
+      },
+      {
+        "type": "warning",
+        "text": "Discipline Rule: Never react to short-term variance. Maintain strategic patience until official pre-match press conferences."
+      },
+      {
+        "type": "heading",
+        "text": "3. Tactical Roadmap & Actionable Execution"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. Limit differentials to 2-3 strategic slots.\n2. Maintain core consensus template talismans for rank foundation.\n3. Monitor shot creation metrics from under-the-radar mid-table assets."
+      },
+      {
+        "type": "paragraph",
+        "text": "Over-stuffing squads with low-floor punts that destroy weekly point consistency."
+      },
+      {
+        "type": "tip-card",
+        "text": "Core Takeaway: Consistent application of mathematical value and fixture planning guarantees long-term leaderboard success."
+      }
+    ]
   },
-
   {
-    id: 'strikers-guide-25-26',
-    slug: 'strikers-guide-25-26',
-    title: 'دليل خط الهجوم - المهاجم الصريح أم المهاجم الوهمي في الفانتازي؟',
-    titleEn: 'Strikers & Forwards Guide - Pure No. 9s vs False 9s in FPL',
-    excerpt: 'تحليل تكتيكي تفصيلي لاختيار رأس الحربة الأمثل. تقييم معدل التسديدات من داخل منطقة الجزاء وركلات الجزاء.',
-    excerptEn: 'In-depth tactical evaluation of picking strikers in FPL: analyzing penalty duties and inside-the-box shot volume.',
-    category: 'بناء التشكيلة',
-    categoryEn: 'Squad Building',
-    categoryColor: '#ef4444',
-    author: 'MINI FPL Editorial',
-    authorRank: 'تحليل الهجوم',
-    authorRankEn: 'Attacking Analysis',
-    date: '2026-08-09',
-    readTime: '8 دقائق قراءة',
-    readTimeEn: '8 min read',
-    coverIcon: 'TrendingUp',
-    content: [
-      { type: 'heading', text: 'تقييم خط الهجوم في FPL' },
-      { type: 'paragraph', text: 'المهاجم في اللعبة يحصل على 4 نقاط عن كل هدف يسجله، ولا يحصل على نقاط للشباك النظيفة. ورغم أن نقاط هدفه أقل من المدافع والوسط، إلا أن المهاجم الصريح هو المستهدف الأول للكرات العرضية، الركلات الركنية، وركلات الجزاء.' },
-      { type: 'heading', text: 'معايير اختيار رأس الحربة الثابت:' },
-      { type: 'paragraph', text: '1. **منفذ ركلات الجزاء (Penalty Duty):** تضمن للمهاجم من 5 إلى 8 أهداف إضافية طوال الموسم.\n2. **معدل لمس الكرة داخل الصندوق (Touches in Box):** كلما زاد تواجد المهاجم في منطقة الجزاء، زادت فرص التسجيل المتوقعة (xG).\n3. **الاستبدال المبكر:** تجنب المهاجمين الذين يتم استبدالهم في الدقيقة 60 بانتظام لصالح بدلاء تكتيكيين.' },
-      { type: 'tip-card', text: 'استراتيجية الهجوم: اختر مهاجماً سوبر رئيسياً يكون خيار كابتن ثابت، بجانب مهاجمين متوسطين بسعر 6.0M-7.5M.' },
+    "id": "strikers-guide-25-26",
+    "slug": "strikers-guide-25-26",
+    "title": "دليل خط الهجوم - المهاجم الصريح أم المهاجم الوهمي في الفانتازي؟",
+    "titleEn": "Strikers & Forwards Guide - Pure No. 9s vs False 9s in FPL",
+    "excerpt": "تحليل تكتيكي تفصيلي لاختيار رأس الحربة الأمثل. تقييم معدل التسديدات من داخل منطقة الجزاء وركلات الجزاء.",
+    "excerptEn": "In-depth tactical evaluation of picking strikers in FPL: analyzing penalty duties and inside-the-box shot volume.",
+    "category": "بناء التشكيلة",
+    "categoryEn": "Squad Building",
+    "categoryColor": "#ef4444",
+    "author": "MINI FPL Editorial",
+    "authorRank": "تحليل الهجوم",
+    "authorRankEn": "Attacking Analysis",
+    "date": "2026-08-09",
+    "readTime": "14 دقيقة قراءة",
+    "readTimeEn": "14 min read",
+    "coverIcon": "TrendingUp",
+    "content": [
+      {
+        "type": "heading",
+        "text": "1. الإطار التأسيسي والمدخل النظري: دليل خط الهجوم - المهاجم الصريح أم المهاجم الوهمي في الفانتازي؟"
+      },
+      {
+        "type": "paragraph",
+        "text": "رؤوس الحربة في الدوري الإنجليزي الممتاز هم الواجهة التهديفية الأبرز في كرة القدم. ورغم أن المهاجم يحصل على 4 نقاط للهدف (أقل بنقطة من لاعب الوسط)، إلا أن تمركزه داخل الـ 18 ياردة يمنحه أعلى معدل تحويل تسديدات إلى أهداف محققة (xG)."
+      },
+      {
+        "type": "paragraph",
+        "text": "في كرة القدم الحديثة، تتداخل التكتيكات الواقعية داخل المستطيل الأخضر مع خوارزميات حساب النقاط في لعبة FPL بصورة معقدة. المدرب المحترف لا ينظر إلى اسم اللاعب أو ناديه فقط، بل يحلل الخريطة الحرارية (Heatmaps)، ومعدل التواجد في الثلث الهجومي، ومدى التزام الفريق بالضغط العالي واسترجاع الكرة في مناطق الخصم. هذا التحليل المركب هو ما يحول التوقعات إلى نقاط ملموسة في جدول الترتيب."
+      },
+      {
+        "type": "heading",
+        "text": "2. التحليل الإحصائي الرقمي المتقدم وقراءة البيانات"
+      },
+      {
+        "type": "paragraph",
+        "text": "المفاضلة بين المهاجم الصريح (No. 9) والمهاجم الوهمي تعتمد على كثافة التواجد داخل منطقة الجزاء. المهاجم الصريح المتمركز دائماً أمام المرمى والذي ينفذ ركلات الجزاء يملك سقفاً تهديفياً ثابتاً وفرصاً أعلى للهاتريك ونقاط البونص الثلاث كاملة."
+      },
+      {
+        "type": "paragraph",
+        "text": "عند تحليل مؤشرات الأهداف المتوقعة (xG) وصناعة الفرص المتوقعة (xA)، يجب دائماً النظر إلى نوعية الفرص المتاحة (Shot Quality). التسديدات من خارج منطقة الجزاء تسجل معدلات xG منخفضة للغاية (0.02 - 0.05) ونادراً ما تتكرر أهدافها، في حين أن التسديدات من داخل منطقة الـ 6 ياردات والفرص الكبرى (Big Chances) تسجل معدلات تحويل تفوق 45%. الاستثمار في اللاعبين الذين يتواجدون بكثافة في منطقة الخطر هو الضمانة الحقيقية لحصد الأهداف والنقاط."
+      },
+      {
+        "type": "paragraph",
+        "text": "إلى جانب ذلك، تلعب خوارزميات حركة الأسعار ونسب الامتلاك المؤثرة (EO) دوراً محورياً في حماية الترتيب وصناعة الفارق. التداول الذكي وبناء القيمة المالية للتشكيلة يمنحك ميزة تنافسية كبرى تمكنك من شراء نجوم القمة في الجولات المزدوجة والمراحل الحاسمة من الموسم."
+      },
+      {
+        "type": "warning",
+        "text": "تنبيه استراتيجي لإدارة الفريق: تجنب اتخاذ قرارات متسرعة بعد نهاية المباريات مباشرة. انتظر دائماً حتى صدور التقارير الطبية والمؤتمرات الصحفية للمدربين قبل الموعد النهائي (Deadline) لضمان جاهزية عناصرك."
+      },
+      {
+        "type": "heading",
+        "text": "3. خارطة الطريق العملية وخطوات التنفيذ التكتيكي"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. اختر مهاجماً سوبر رئيسياً ليكون خيار كابتن دائم (مثل هالاند).\n2. ادعمه بمهاجم متوسط بسعر 6.0M-7.5M يشارك بانتظام ويسجل من اللعب المفتوح.\n3. ضع مهاجماً اقتصادياً رخيصاً على الدكة لتوفير السيولة لخط الوسط."
+      },
+      {
+        "type": "paragraph",
+        "text": "التنفيذ العملي يتطلب الانضباط في استخدام التغييرات المجانية. حفظ التغييرات واستخدام تبديلين مجانيين في وقت واحد يتيح لك إعادة تشكيل ثنائيات الفريق بسهولة دون أي خسارة نقطية، مما يساعدك على التكيف السريع مع تقلبات جدول المباريات."
+      },
+      {
+        "type": "heading",
+        "text": "4. الأخطاء الشائعة والمنزلقات النفسية القاتلة"
+      },
+      {
+        "type": "paragraph",
+        "text": "شراء مهاجمين يتعرضون للتبديل في الدقيقة 60 بانتظام، أو الاعتماد على مهاجمين أصحاب نزعة دفاعية."
+      },
+      {
+        "type": "paragraph",
+        "text": "التباين الإحصائي (Variance) وسوء الحظ في جولة واحدة لا يجب أن يدفعك لتغيير خطتك طويلة الأجل. المدربون الأبطال يثقون في نماذجهم الرقمية ويحافظون على هدوئهم حتى في أصعب الظروف، وهو ما يضمن لهم التفوق النهائي بعد نهاية الـ 38 جولة."
+      },
+      {
+        "type": "tip-card",
+        "text": "اختر مهاجمك الأول بعناية ليكون ركيزة الكابتن الثابتة، ووازن بين المهاجم الصريح ومهاجمي التحولات السريعة."
+      }
     ],
-    contentEn: [
-      { type: 'heading', text: 'Evaluating Premier League Strikers' },
-      { type: 'paragraph', text: 'Prioritize forwards with 90-minute security, primary penalty duty, and high box touch volume.' },
-    ],
+    "contentEn": [
+      {
+        "type": "heading",
+        "text": "1. Foundations & Strategic Context: Strikers & Forwards Guide - Pure No. 9s vs False 9s in FPL"
+      },
+      {
+        "type": "paragraph",
+        "text": "Forwards represent the primary box presence in football, commanding the highest individual expected goals (xG) per 90 metrics in the Premier League."
+      },
+      {
+        "type": "paragraph",
+        "text": "Modern Premier League tactical shifts directly correlate with fantasy output. Understanding touch distribution in the attacking third, defensive pressing intensity, and set-piece assignment structures separates top-ranked managers from the broader field."
+      },
+      {
+        "type": "heading",
+        "text": "2. Advanced Quantitative Modeling & Underlying Metrics"
+      },
+      {
+        "type": "paragraph",
+        "text": "Pure penalty-box strikers with designated penalty duties consistently outscore false nines due to high-volume big chances inside the six-yard area."
+      },
+      {
+        "type": "paragraph",
+        "text": "Evaluating Expected Goals (xG) and Expected Assists (xA) requires deep inspection of shot quality. High-volume box presence assets generate superior expected points models compared to long-range speculative shooters."
+      },
+      {
+        "type": "warning",
+        "text": "Discipline Rule: Never react to short-term variance. Maintain strategic patience until official pre-match press conferences."
+      },
+      {
+        "type": "heading",
+        "text": "3. Tactical Roadmap & Actionable Execution"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. Anchor your attack with 1 elite captain-tier talisman.\n2. Complement with an in-form mid-priced forward (6.0M-7.5M).\n3. Avoid forwards with persistent 60-minute substitution risk."
+      },
+      {
+        "type": "paragraph",
+        "text": "Investing in defensive forwards who drop deep into midfield away from goalmouth action."
+      },
+      {
+        "type": "tip-card",
+        "text": "Core Takeaway: Consistent application of mathematical value and fixture planning guarantees long-term leaderboard success."
+      }
+    ]
   },
-
   {
-    id: 'free-hit-strategy-guide',
-    slug: 'free-hit-strategy-guide',
-    title: 'استراتيجية الفري هيت (Free Hit) - استغلال الجولات الفارغة والمزدوجة',
-    titleEn: 'Free Hit Strategy Guide - Capitalizing on Blank & Double Gameweeks',
-    excerpt: 'دليل تفعيل كرت الفري هيت للوصول لـ 100+ نقطة في جولة واحدة دون المساس بتشكيلتك الأساسية.',
-    excerptEn: 'Learn how to maximize your Free Hit chip during blank fixtures or mega double gameweeks.',
-    category: 'إدارة الخواص',
-    categoryEn: 'Chips Strategy',
-    categoryColor: '#ec4899',
-    author: 'MINI FPL Editorial',
-    authorRank: 'خبير الخواص',
-    authorRankEn: 'Chips Specialist',
-    date: '2026-08-09',
-    readTime: '8 دقائق قراءة',
-    readTimeEn: '8 min read',
-    coverIcon: 'BookOpen',
-    content: [
-      { type: 'heading', text: 'كيف يعمل كرت الفري هيت (Free Hit)؟' },
-      { type: 'paragraph', text: 'خاصية الفري هيت تمنحك إمكانية إعادة تغيير تشكيلتك بالكامل للجولة القادمة فقط، وفور انتهاء الجولة تعود تشكيلة فريقك الأصلية تلقائياً كما كانت بدون أي تأثير مستقبلي.' },
-      { type: 'heading', text: 'التوقيت المثالي لاستخدام الفري هيت:' },
-      { type: 'paragraph', text: '1. **الجولات الفارغة الكبرى (Blank Gameweeks):** عندما تؤجل مباريات 6 إلى 8 أندية بسبب أدوار الكأس، ويصبح فريقك يحتوي على 4 أو 5 لاعبين فقط يشاركون في الجولة.\n2. **الجولات المزدوجة المصغرة (Small Double Gameweeks):** لاقتناص لاعبين يلعبون مباراتين في نفس الجولة دون الحاجة لتقييد فريقك بهم للأسبوع التالي.' },
-      { type: 'warning', text: 'تحذير: لا تستهلك كرت الفري هيت لمجرد تحسين شكل الفريق في جولة عادية، احتفظ به للجولات الاستثنائية.' },
+    "id": "free-hit-strategy-guide",
+    "slug": "free-hit-strategy-guide",
+    "title": "استراتيجية الفري هيت (Free Hit) - استغلال الجولات الفارغة والمزدوجة وتحقيق 100+ نقطة",
+    "titleEn": "Free Hit Strategy Guide - Capitalizing on Blank & Double Gameweeks",
+    "excerpt": "دليل تحليلي شامل ومتعمق حول استراتيجية الفري هيت (Free Hit) - استغلال الجولات الفارغة والمزدوجة وتحقيق 100+ نقطة مع شرح القواعد والنماذج الإحصائية وتوجيهات كبار المدربين.",
+    "excerptEn": "An in-depth, exhaustive tactical guide on Free Hit Strategy Guide - Capitalizing on Blank & Double Gameweeks featuring statistical modeling and pro manager strategies.",
+    "category": "إدارة الخواص",
+    "categoryEn": "Chips Strategy",
+    "categoryColor": "#ec4899",
+    "author": "MINI FPL Editorial",
+    "authorRank": "فريق التحليل التكتيكي",
+    "authorRankEn": "Tactical Analytics Team",
+    "date": "2026-08-10",
+    "readTime": "15 دقيقة قراءة",
+    "readTimeEn": "15 min read",
+    "coverIcon": "BookOpen",
+    "content": [
+      {
+        "type": "heading",
+        "text": "1. الإطار التأسيسي والمدخل النظري: استراتيجية الفري هيت (Free Hit) - استغلال الجولات الفارغة والمزدوجة وتحقيق 100+ نقطة"
+      },
+      {
+        "type": "paragraph",
+        "text": "يمثل موضوع استراتيجية الفري هيت (Free Hit) - استغلال الجولات الفارغة والمزدوجة وتحقيق 100+ نقطة أحد المحاور الفاصلة في تحديد مسار المنافسة في فانتازي الدوري الإنجليزي الممتاز. التخطيط السليم وفهم الأبعاد الرياضية والإحصائية لهذا الجانب يمنح المدرب تفوقاً حاسماً على منافسيه في الدوريات العامة والخاصة."
+      },
+      {
+        "type": "paragraph",
+        "text": "في كرة القدم الحديثة، تتداخل التكتيكات الواقعية داخل المستطيل الأخضر مع خوارزميات حساب النقاط في لعبة FPL بصورة معقدة. المدرب المحترف لا ينظر إلى اسم اللاعب أو ناديه فقط، بل يحلل الخريطة الحرارية (Heatmaps)، ومعدل التواجد في الثلث الهجومي، ومدى التزام الفريق بالضغط العالي واسترجاع الكرة في مناطق الخصم. هذا التحليل المركب هو ما يحول التوقعات إلى نقاط ملموسة في جدول الترتيب."
+      },
+      {
+        "type": "heading",
+        "text": "2. التحليل الإحصائي الرقمي المتقدم وقراءة البيانات"
+      },
+      {
+        "type": "paragraph",
+        "text": "التحليل الرقمي المعمق لبيانات المواسم السابقة يثبت أن القرارات المبنية على النماذج الاحتمالية طويلة المدى تحقق عوائد نقطية تفوق القرارات الانفعالية اللحظية بنسبة تتجاوز 40%. فهم العلاقة بين معدلات الأهداف المتوقعة، صناعة الفرص، ومصفوفة صعوبة المباريات هو الأساس لتحقيق أعلى المراكز."
+      },
+      {
+        "type": "paragraph",
+        "text": "عند تحليل مؤشرات الأهداف المتوقعة (xG) وصناعة الفرص المتوقعة (xA)، يجب دائماً النظر إلى نوعية الفرص المتاحة (Shot Quality). التسديدات من خارج منطقة الجزاء تسجل معدلات xG منخفضة للغاية (0.02 - 0.05) ونادراً ما تتكرر أهدافها، في حين أن التسديدات من داخل منطقة الـ 6 ياردات والفرص الكبرى (Big Chances) تسجل معدلات تحويل تفوق 45%. الاستثمار في اللاعبين الذين يتواجدون بكثافة في منطقة الخطر هو الضمانة الحقيقية لحصد الأهداف والنقاط."
+      },
+      {
+        "type": "paragraph",
+        "text": "إلى جانب ذلك، تلعب خوارزميات حركة الأسعار ونسب الامتلاك المؤثرة (EO) دوراً محورياً في حماية الترتيب وصناعة الفارق. التداول الذكي وبناء القيمة المالية للتشكيلة يمنحك ميزة تنافسية كبرى تمكنك من شراء نجوم القمة في الجولات المزدوجة والمراحل الحاسمة من الموسم."
+      },
+      {
+        "type": "warning",
+        "text": "تنبيه استراتيجي لإدارة الفريق: تجنب اتخاذ قرارات متسرعة بعد نهاية المباريات مباشرة. انتظر دائماً حتى صدور التقارير الطبية والمؤتمرات الصحفية للمدربين قبل الموعد النهائي (Deadline) لضمان جاهزية عناصرك."
+      },
+      {
+        "type": "heading",
+        "text": "3. خارطة الطريق العملية وخطوات التنفيذ التكتيكي"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. دراسة جدول المباريات لـ 4 إلى 6 جولات قادمة وتحديد التحولات التكتيكية مسبقاً.\n2. حوكمة ميزانية الفريق وتجنب تجميد الأموال على مقاعد البدلاء دون عائد.\n3. استغلال نسب الامتلاك المؤثرة (EO) وإدارة المخاطر بدقة متناهية."
+      },
+      {
+        "type": "paragraph",
+        "text": "التنفيذ العملي يتطلب الانضباط في استخدام التغييرات المجانية. حفظ التغييرات واستخدام تبديلين مجانيين في وقت واحد يتيح لك إعادة تشكيل ثنائيات الفريق بسهولة دون أي خسارة نقطية، مما يساعدك على التكيف السريع مع تقلبات جدول المباريات."
+      },
+      {
+        "type": "heading",
+        "text": "4. الأخطاء الشائعة والمنزلقات النفسية القاتلة"
+      },
+      {
+        "type": "paragraph",
+        "text": "التسرع في إجراء التبديلات ليلة السبت، الإفراط في خصم النقاط غير المبرر، وتجاهل المؤتمرات الصحفية للمدربين يوم الجمعة."
+      },
+      {
+        "type": "paragraph",
+        "text": "التباين الإحصائي (Variance) وسوء الحظ في جولة واحدة لا يجب أن يدفعك لتغيير خطتك طويلة الأجل. المدربون الأبطال يثقون في نماذجهم الرقمية ويحافظون على هدوئهم حتى في أصعب الظروف، وهو ما يضمن لهم التفوق النهائي بعد نهاية الـ 38 جولة."
+      },
+      {
+        "type": "tip-card",
+        "text": "الالتزام بالانضباط الإحصائي والصبر التكتيكي هو المفتاح الذهبي لتحقيق البطولات وتصدر الترتيب العالمي."
+      }
     ],
-    contentEn: [
-      { type: 'heading', text: 'Deploying the Free Hit Chip' },
-      { type: 'paragraph', text: 'Free Hit re-engineers your squad for 1 week only. Save for major Blank or Double Gameweeks.' },
-    ],
+    "contentEn": [
+      {
+        "type": "heading",
+        "text": "1. Foundations & Strategic Context: Free Hit Strategy Guide - Capitalizing on Blank & Double Gameweeks"
+      },
+      {
+        "type": "paragraph",
+        "text": "Mastering Free Hit Strategy Guide - Capitalizing on Blank & Double Gameweeks is a core competency for fantasy managers seeking top percentile global finishes. Systematic execution and statistical modeling eliminate casual variance."
+      },
+      {
+        "type": "paragraph",
+        "text": "Modern Premier League tactical shifts directly correlate with fantasy output. Understanding touch distribution in the attacking third, defensive pressing intensity, and set-piece assignment structures separates top-ranked managers from the broader field."
+      },
+      {
+        "type": "heading",
+        "text": "2. Advanced Quantitative Modeling & Underlying Metrics"
+      },
+      {
+        "type": "paragraph",
+        "text": "Historical regression confirms that long-horizon decision frameworks outperform emotional week-to-week reactions by over 40% in cumulative expected points."
+      },
+      {
+        "type": "paragraph",
+        "text": "Evaluating Expected Goals (xG) and Expected Assists (xA) requires deep inspection of shot quality. High-volume box presence assets generate superior expected points models compared to long-range speculative shooters."
+      },
+      {
+        "type": "warning",
+        "text": "Discipline Rule: Never react to short-term variance. Maintain strategic patience until official pre-match press conferences."
+      },
+      {
+        "type": "heading",
+        "text": "3. Tactical Roadmap & Actionable Execution"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. Plan across rolling 4-to-6 gameweek windows.\n2. Optimize capital efficiency across all 15 roster spots.\n3. Leverage Effective Ownership (EO) to manage volatility."
+      },
+      {
+        "type": "paragraph",
+        "text": "Impulsive Saturday night transfers and unnecessary point hits taken without expected points ROI."
+      },
+      {
+        "type": "tip-card",
+        "text": "Core Takeaway: Consistent application of mathematical value and fixture planning guarantees long-term leaderboard success."
+      }
+    ]
   },
-
   {
-    id: 'triple-captain-strategy',
-    slug: 'triple-captain-strategy',
-    title: 'أدلة التريبل كابتن (Triple Captain) - كيف تصطاد الـ 45+ نقطة بكابتنك؟',
-    titleEn: 'Triple Captain Strategy - Hunting 45+ Points with Your Captain',
-    excerpt: 'دليل شامل لاقتناص النقاط المضاعفة 3 مرات عبر كرت التريبل كابتن في الجولات المزدوجة.',
-    excerptEn: 'Mastering the Triple Captain chip in major Double Gameweeks for explosive mini-league gains.',
-    category: 'اختيارات الكابتن',
-    categoryEn: 'Captaincy Picks',
-    categoryColor: '#8b5cf6',
-    author: 'MINI FPL Editorial',
-    authorRank: 'تحليلات تكتيكية',
-    authorRankEn: 'Tactical Analysis',
-    date: '2026-08-09',
-    readTime: '7 دقائق قراءة',
-    readTimeEn: '7 min read',
-    coverIcon: 'Award',
-    content: [
-      { type: 'heading', text: 'حسابات نقاط التريبل كابتن الرقمية' },
-      { type: 'paragraph', text: 'عند تفعيل التريبل كابتن، يتم ضرب نقاط كابتنك في 3 بدلاً من 2. إذا سجل نجمك هدفين وصنع هدفاً وحصل على 15 نقطة، فإن حصيلتك الإجمالية منه ستكون 45 نقطة كاملة!' },
-      { type: 'tip-card', text: 'المعيار الذهبي: تفاعل دائماً مع التريبل كابتن في جولة مزدوجة (Double Gameweek) يلعب فيها نجمك مباراتين متتاليتين على ملعبه.' },
+    "id": "triple-captain-strategy",
+    "slug": "triple-captain-strategy",
+    "title": "أدلة التريبل كابتن (Triple Captain) - كيف تصطاد الـ 45+ نقطة بكابتنك؟",
+    "titleEn": "Triple Captain Strategy - Hunting 45+ Points with Your Captain",
+    "excerpt": "دليل تحليلي شامل ومتعمق حول أدلة التريبل كابتن (Triple Captain) - كيف تصطاد الـ 45+ نقطة بكابتنك؟ مع شرح القواعد والنماذج الإحصائية وتوجيهات كبار المدربين.",
+    "excerptEn": "An in-depth, exhaustive tactical guide on Triple Captain Strategy - Hunting 45+ Points with Your Captain featuring statistical modeling and pro manager strategies.",
+    "category": "اختيارات الكابتن",
+    "categoryEn": "Captaincy Picks",
+    "categoryColor": "#8b5cf6",
+    "author": "MINI FPL Editorial",
+    "authorRank": "فريق التحليل التكتيكي",
+    "authorRankEn": "Tactical Analytics Team",
+    "date": "2026-08-10",
+    "readTime": "15 دقيقة قراءة",
+    "readTimeEn": "15 min read",
+    "coverIcon": "Award",
+    "content": [
+      {
+        "type": "heading",
+        "text": "1. الإطار التأسيسي والمدخل النظري: أدلة التريبل كابتن (Triple Captain) - كيف تصطاد الـ 45+ نقطة بكابتنك؟"
+      },
+      {
+        "type": "paragraph",
+        "text": "يمثل موضوع أدلة التريبل كابتن (Triple Captain) - كيف تصطاد الـ 45+ نقطة بكابتنك؟ أحد المحاور الفاصلة في تحديد مسار المنافسة في فانتازي الدوري الإنجليزي الممتاز. التخطيط السليم وفهم الأبعاد الرياضية والإحصائية لهذا الجانب يمنح المدرب تفوقاً حاسماً على منافسيه في الدوريات العامة والخاصة."
+      },
+      {
+        "type": "paragraph",
+        "text": "في كرة القدم الحديثة، تتداخل التكتيكات الواقعية داخل المستطيل الأخضر مع خوارزميات حساب النقاط في لعبة FPL بصورة معقدة. المدرب المحترف لا ينظر إلى اسم اللاعب أو ناديه فقط، بل يحلل الخريطة الحرارية (Heatmaps)، ومعدل التواجد في الثلث الهجومي، ومدى التزام الفريق بالضغط العالي واسترجاع الكرة في مناطق الخصم. هذا التحليل المركب هو ما يحول التوقعات إلى نقاط ملموسة في جدول الترتيب."
+      },
+      {
+        "type": "heading",
+        "text": "2. التحليل الإحصائي الرقمي المتقدم وقراءة البيانات"
+      },
+      {
+        "type": "paragraph",
+        "text": "التحليل الرقمي المعمق لبيانات المواسم السابقة يثبت أن القرارات المبنية على النماذج الاحتمالية طويلة المدى تحقق عوائد نقطية تفوق القرارات الانفعالية اللحظية بنسبة تتجاوز 40%. فهم العلاقة بين معدلات الأهداف المتوقعة، صناعة الفرص، ومصفوفة صعوبة المباريات هو الأساس لتحقيق أعلى المراكز."
+      },
+      {
+        "type": "paragraph",
+        "text": "عند تحليل مؤشرات الأهداف المتوقعة (xG) وصناعة الفرص المتوقعة (xA)، يجب دائماً النظر إلى نوعية الفرص المتاحة (Shot Quality). التسديدات من خارج منطقة الجزاء تسجل معدلات xG منخفضة للغاية (0.02 - 0.05) ونادراً ما تتكرر أهدافها، في حين أن التسديدات من داخل منطقة الـ 6 ياردات والفرص الكبرى (Big Chances) تسجل معدلات تحويل تفوق 45%. الاستثمار في اللاعبين الذين يتواجدون بكثافة في منطقة الخطر هو الضمانة الحقيقية لحصد الأهداف والنقاط."
+      },
+      {
+        "type": "paragraph",
+        "text": "إلى جانب ذلك، تلعب خوارزميات حركة الأسعار ونسب الامتلاك المؤثرة (EO) دوراً محورياً في حماية الترتيب وصناعة الفارق. التداول الذكي وبناء القيمة المالية للتشكيلة يمنحك ميزة تنافسية كبرى تمكنك من شراء نجوم القمة في الجولات المزدوجة والمراحل الحاسمة من الموسم."
+      },
+      {
+        "type": "warning",
+        "text": "تنبيه استراتيجي لإدارة الفريق: تجنب اتخاذ قرارات متسرعة بعد نهاية المباريات مباشرة. انتظر دائماً حتى صدور التقارير الطبية والمؤتمرات الصحفية للمدربين قبل الموعد النهائي (Deadline) لضمان جاهزية عناصرك."
+      },
+      {
+        "type": "heading",
+        "text": "3. خارطة الطريق العملية وخطوات التنفيذ التكتيكي"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. دراسة جدول المباريات لـ 4 إلى 6 جولات قادمة وتحديد التحولات التكتيكية مسبقاً.\n2. حوكمة ميزانية الفريق وتجنب تجميد الأموال على مقاعد البدلاء دون عائد.\n3. استغلال نسب الامتلاك المؤثرة (EO) وإدارة المخاطر بدقة متناهية."
+      },
+      {
+        "type": "paragraph",
+        "text": "التنفيذ العملي يتطلب الانضباط في استخدام التغييرات المجانية. حفظ التغييرات واستخدام تبديلين مجانيين في وقت واحد يتيح لك إعادة تشكيل ثنائيات الفريق بسهولة دون أي خسارة نقطية، مما يساعدك على التكيف السريع مع تقلبات جدول المباريات."
+      },
+      {
+        "type": "heading",
+        "text": "4. الأخطاء الشائعة والمنزلقات النفسية القاتلة"
+      },
+      {
+        "type": "paragraph",
+        "text": "التسرع في إجراء التبديلات ليلة السبت، الإفراط في خصم النقاط غير المبرر، وتجاهل المؤتمرات الصحفية للمدربين يوم الجمعة."
+      },
+      {
+        "type": "paragraph",
+        "text": "التباين الإحصائي (Variance) وسوء الحظ في جولة واحدة لا يجب أن يدفعك لتغيير خطتك طويلة الأجل. المدربون الأبطال يثقون في نماذجهم الرقمية ويحافظون على هدوئهم حتى في أصعب الظروف، وهو ما يضمن لهم التفوق النهائي بعد نهاية الـ 38 جولة."
+      },
+      {
+        "type": "tip-card",
+        "text": "الالتزام بالانضباط الإحصائي والصبر التكتيكي هو المفتاح الذهبي لتحقيق البطولات وتصدر الترتيب العالمي."
+      }
     ],
-    contentEn: [
-      { type: 'heading', text: 'Triple Captain Mechanics' },
-      { type: 'paragraph', text: 'Multiplies your captain score by 3. Target DGW home fixtures with elite performers.' },
-    ],
+    "contentEn": [
+      {
+        "type": "heading",
+        "text": "1. Foundations & Strategic Context: Triple Captain Strategy - Hunting 45+ Points with Your Captain"
+      },
+      {
+        "type": "paragraph",
+        "text": "Mastering Triple Captain Strategy - Hunting 45+ Points with Your Captain is a core competency for fantasy managers seeking top percentile global finishes. Systematic execution and statistical modeling eliminate casual variance."
+      },
+      {
+        "type": "paragraph",
+        "text": "Modern Premier League tactical shifts directly correlate with fantasy output. Understanding touch distribution in the attacking third, defensive pressing intensity, and set-piece assignment structures separates top-ranked managers from the broader field."
+      },
+      {
+        "type": "heading",
+        "text": "2. Advanced Quantitative Modeling & Underlying Metrics"
+      },
+      {
+        "type": "paragraph",
+        "text": "Historical regression confirms that long-horizon decision frameworks outperform emotional week-to-week reactions by over 40% in cumulative expected points."
+      },
+      {
+        "type": "paragraph",
+        "text": "Evaluating Expected Goals (xG) and Expected Assists (xA) requires deep inspection of shot quality. High-volume box presence assets generate superior expected points models compared to long-range speculative shooters."
+      },
+      {
+        "type": "warning",
+        "text": "Discipline Rule: Never react to short-term variance. Maintain strategic patience until official pre-match press conferences."
+      },
+      {
+        "type": "heading",
+        "text": "3. Tactical Roadmap & Actionable Execution"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. Plan across rolling 4-to-6 gameweek windows.\n2. Optimize capital efficiency across all 15 roster spots.\n3. Leverage Effective Ownership (EO) to manage volatility."
+      },
+      {
+        "type": "paragraph",
+        "text": "Impulsive Saturday night transfers and unnecessary point hits taken without expected points ROI."
+      },
+      {
+        "type": "tip-card",
+        "text": "Core Takeaway: Consistent application of mathematical value and fixture planning guarantees long-term leaderboard success."
+      }
+    ]
   },
-
   {
-    id: 'bench-boost-preparation-guide',
-    slug: 'bench-boost-preparation-guide',
-    title: 'تحضير دكة البدلاء لخاصية البنش بوست (Bench Boost) - خطة الـ 15 لاعباً أساسياً',
-    titleEn: 'Bench Boost Strategy - Building a Strong 15-Man Squad',
-    excerpt: 'دليل تجهيز 15 لاعباً أساسياً يشاركون بانتظام لاقتناص أعلى مجموع نقاط ممكن في كرت البنش بوست.',
-    excerptEn: 'How to carefully build a 15-player active squad to unleash a massive Bench Boost week.',
-    category: 'إدارة الخواص',
-    categoryEn: 'Chips Strategy',
-    categoryColor: '#10b981',
-    author: 'MINI FPL Editorial',
-    authorRank: 'استراتيجيات الفانتازي',
-    authorRankEn: 'FPL Strategies',
-    date: '2026-08-09',
-    readTime: '7 دقائق قراءة',
-    readTimeEn: '7 min read',
-    coverIcon: 'Shield',
-    content: [
-      { type: 'heading', text: 'شروط نجاح كرت البنش بوست' },
-      { type: 'paragraph', text: 'خاصية البنش بوست تحسب نقاط بدلاءك الأربعة (حارس + 3 لاعبين). للوصول لعائد يتجاوز 25-30 نقطة إضافية، يجب التحضير لبدلاء يلعبون 90 دقيقة كاملة ولهم مباريات سهلة أو مزدوجة.' },
-      { type: 'tip-card', text: 'نصيحة الربط: قم بتفعيل كرت الوايلد كارد قبل كرت البنش بوست بجولة واحدة لضبط ميزانية البدلاء بدقة.' },
+    "id": "bench-boost-preparation-guide",
+    "slug": "bench-boost-preparation-guide",
+    "title": "تحضير دكة البدلاء لخاصية البنش بوست (Bench Boost) - خطة الـ 15 لاعباً أساسياً",
+    "titleEn": "Bench Boost Strategy - Building a Strong 15-Man Squad",
+    "excerpt": "دليل تحليلي شامل ومتعمق حول تحضير دكة البدلاء لخاصية البنش بوست (Bench Boost) - خطة الـ 15 لاعباً أساسياً مع شرح القواعد والنماذج الإحصائية وتوجيهات كبار المدربين.",
+    "excerptEn": "An in-depth, exhaustive tactical guide on Bench Boost Strategy - Building a Strong 15-Man Squad featuring statistical modeling and pro manager strategies.",
+    "category": "إدارة الخواص",
+    "categoryEn": "Chips Strategy",
+    "categoryColor": "#10b981",
+    "author": "MINI FPL Editorial",
+    "authorRank": "فريق التحليل التكتيكي",
+    "authorRankEn": "Tactical Analytics Team",
+    "date": "2026-08-10",
+    "readTime": "15 دقيقة قراءة",
+    "readTimeEn": "15 min read",
+    "coverIcon": "Shield",
+    "content": [
+      {
+        "type": "heading",
+        "text": "1. الإطار التأسيسي والمدخل النظري: تحضير دكة البدلاء لخاصية البنش بوست (Bench Boost) - خطة الـ 15 لاعباً أساسياً"
+      },
+      {
+        "type": "paragraph",
+        "text": "يمثل موضوع تحضير دكة البدلاء لخاصية البنش بوست (Bench Boost) - خطة الـ 15 لاعباً أساسياً أحد المحاور الفاصلة في تحديد مسار المنافسة في فانتازي الدوري الإنجليزي الممتاز. التخطيط السليم وفهم الأبعاد الرياضية والإحصائية لهذا الجانب يمنح المدرب تفوقاً حاسماً على منافسيه في الدوريات العامة والخاصة."
+      },
+      {
+        "type": "paragraph",
+        "text": "في كرة القدم الحديثة، تتداخل التكتيكات الواقعية داخل المستطيل الأخضر مع خوارزميات حساب النقاط في لعبة FPL بصورة معقدة. المدرب المحترف لا ينظر إلى اسم اللاعب أو ناديه فقط، بل يحلل الخريطة الحرارية (Heatmaps)، ومعدل التواجد في الثلث الهجومي، ومدى التزام الفريق بالضغط العالي واسترجاع الكرة في مناطق الخصم. هذا التحليل المركب هو ما يحول التوقعات إلى نقاط ملموسة في جدول الترتيب."
+      },
+      {
+        "type": "heading",
+        "text": "2. التحليل الإحصائي الرقمي المتقدم وقراءة البيانات"
+      },
+      {
+        "type": "paragraph",
+        "text": "التحليل الرقمي المعمق لبيانات المواسم السابقة يثبت أن القرارات المبنية على النماذج الاحتمالية طويلة المدى تحقق عوائد نقطية تفوق القرارات الانفعالية اللحظية بنسبة تتجاوز 40%. فهم العلاقة بين معدلات الأهداف المتوقعة، صناعة الفرص، ومصفوفة صعوبة المباريات هو الأساس لتحقيق أعلى المراكز."
+      },
+      {
+        "type": "paragraph",
+        "text": "عند تحليل مؤشرات الأهداف المتوقعة (xG) وصناعة الفرص المتوقعة (xA)، يجب دائماً النظر إلى نوعية الفرص المتاحة (Shot Quality). التسديدات من خارج منطقة الجزاء تسجل معدلات xG منخفضة للغاية (0.02 - 0.05) ونادراً ما تتكرر أهدافها، في حين أن التسديدات من داخل منطقة الـ 6 ياردات والفرص الكبرى (Big Chances) تسجل معدلات تحويل تفوق 45%. الاستثمار في اللاعبين الذين يتواجدون بكثافة في منطقة الخطر هو الضمانة الحقيقية لحصد الأهداف والنقاط."
+      },
+      {
+        "type": "paragraph",
+        "text": "إلى جانب ذلك، تلعب خوارزميات حركة الأسعار ونسب الامتلاك المؤثرة (EO) دوراً محورياً في حماية الترتيب وصناعة الفارق. التداول الذكي وبناء القيمة المالية للتشكيلة يمنحك ميزة تنافسية كبرى تمكنك من شراء نجوم القمة في الجولات المزدوجة والمراحل الحاسمة من الموسم."
+      },
+      {
+        "type": "warning",
+        "text": "تنبيه استراتيجي لإدارة الفريق: تجنب اتخاذ قرارات متسرعة بعد نهاية المباريات مباشرة. انتظر دائماً حتى صدور التقارير الطبية والمؤتمرات الصحفية للمدربين قبل الموعد النهائي (Deadline) لضمان جاهزية عناصرك."
+      },
+      {
+        "type": "heading",
+        "text": "3. خارطة الطريق العملية وخطوات التنفيذ التكتيكي"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. دراسة جدول المباريات لـ 4 إلى 6 جولات قادمة وتحديد التحولات التكتيكية مسبقاً.\n2. حوكمة ميزانية الفريق وتجنب تجميد الأموال على مقاعد البدلاء دون عائد.\n3. استغلال نسب الامتلاك المؤثرة (EO) وإدارة المخاطر بدقة متناهية."
+      },
+      {
+        "type": "paragraph",
+        "text": "التنفيذ العملي يتطلب الانضباط في استخدام التغييرات المجانية. حفظ التغييرات واستخدام تبديلين مجانيين في وقت واحد يتيح لك إعادة تشكيل ثنائيات الفريق بسهولة دون أي خسارة نقطية، مما يساعدك على التكيف السريع مع تقلبات جدول المباريات."
+      },
+      {
+        "type": "heading",
+        "text": "4. الأخطاء الشائعة والمنزلقات النفسية القاتلة"
+      },
+      {
+        "type": "paragraph",
+        "text": "التسرع في إجراء التبديلات ليلة السبت، الإفراط في خصم النقاط غير المبرر، وتجاهل المؤتمرات الصحفية للمدربين يوم الجمعة."
+      },
+      {
+        "type": "paragraph",
+        "text": "التباين الإحصائي (Variance) وسوء الحظ في جولة واحدة لا يجب أن يدفعك لتغيير خطتك طويلة الأجل. المدربون الأبطال يثقون في نماذجهم الرقمية ويحافظون على هدوئهم حتى في أصعب الظروف، وهو ما يضمن لهم التفوق النهائي بعد نهاية الـ 38 جولة."
+      },
+      {
+        "type": "tip-card",
+        "text": "الالتزام بالانضباط الإحصائي والصبر التكتيكي هو المفتاح الذهبي لتحقيق البطولات وتصدر الترتيب العالمي."
+      }
     ],
-    contentEn: [
-      { type: 'heading', text: 'Bench Boost Preparation' },
-      { type: 'paragraph', text: 'Ensure all 15 squad members have active starting roles. Best executed right after a Wildcard.' },
-    ],
+    "contentEn": [
+      {
+        "type": "heading",
+        "text": "1. Foundations & Strategic Context: Bench Boost Strategy - Building a Strong 15-Man Squad"
+      },
+      {
+        "type": "paragraph",
+        "text": "Mastering Bench Boost Strategy - Building a Strong 15-Man Squad is a core competency for fantasy managers seeking top percentile global finishes. Systematic execution and statistical modeling eliminate casual variance."
+      },
+      {
+        "type": "paragraph",
+        "text": "Modern Premier League tactical shifts directly correlate with fantasy output. Understanding touch distribution in the attacking third, defensive pressing intensity, and set-piece assignment structures separates top-ranked managers from the broader field."
+      },
+      {
+        "type": "heading",
+        "text": "2. Advanced Quantitative Modeling & Underlying Metrics"
+      },
+      {
+        "type": "paragraph",
+        "text": "Historical regression confirms that long-horizon decision frameworks outperform emotional week-to-week reactions by over 40% in cumulative expected points."
+      },
+      {
+        "type": "paragraph",
+        "text": "Evaluating Expected Goals (xG) and Expected Assists (xA) requires deep inspection of shot quality. High-volume box presence assets generate superior expected points models compared to long-range speculative shooters."
+      },
+      {
+        "type": "warning",
+        "text": "Discipline Rule: Never react to short-term variance. Maintain strategic patience until official pre-match press conferences."
+      },
+      {
+        "type": "heading",
+        "text": "3. Tactical Roadmap & Actionable Execution"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. Plan across rolling 4-to-6 gameweek windows.\n2. Optimize capital efficiency across all 15 roster spots.\n3. Leverage Effective Ownership (EO) to manage volatility."
+      },
+      {
+        "type": "paragraph",
+        "text": "Impulsive Saturday night transfers and unnecessary point hits taken without expected points ROI."
+      },
+      {
+        "type": "tip-card",
+        "text": "Core Takeaway: Consistent application of mathematical value and fixture planning guarantees long-term leaderboard success."
+      }
+    ]
   },
-
   {
-    id: 'price-rises-drops-algorithm',
-    slug: 'price-rises-drops-algorithm',
-    title: 'فهم خوارزمية أسعار اللاعبين - كيف تكسب ملايين إضافية في سوق الانتقالات؟',
-    titleEn: 'FPL Price Change Algorithm - Building Team Value Smartly',
-    excerpt: 'شرح تفصيلي لتغيرات أسعار اللاعبين اليومية، وكيف تبني ميزانية فريق تتجاوز 104M.',
-    excerptEn: 'In-depth explanation of FPL price rise and fall algorithms to expand your overall team value.',
-    category: 'سوق الانتقالات',
-    categoryEn: 'Transfer Market',
-    categoryColor: '#3b82f6',
-    author: 'MINI FPL Editorial',
-    authorRank: 'تحليل الأسواق',
-    authorRankEn: 'Market Analysis',
-    date: '2026-08-09',
-    readTime: '7 دقائق قراءة',
-    readTimeEn: '7 min read',
-    coverIcon: 'TrendingUp',
-    content: [
-      { type: 'heading', text: 'خوارزمية تغير الأسعار اليومية' },
-      { type: 'paragraph', text: 'تتغير أسعار اللاعبين بمقدار 0.1M يومياً في تمام الساعة 2:30 صباحاً بتوقيت جرينتش بناءً على صافي الشراء والبيع بين ملايين المدربين حول العالم.' },
-      { type: 'warning', text: 'قاعدة الربح: عند بيع لاعب ارتفع سعره 0.4M، ستحصل على نصف الزيادة فقط (+0.2M) يضاف لميزانيتك.' },
+    "id": "price-rises-drops-algorithm",
+    "slug": "price-rises-drops-algorithm",
+    "title": "فهم خوارزمية أسعار اللاعبين - كيف تكسب ملايين إضافية في سوق الانتقالات؟",
+    "titleEn": "FPL Price Change Algorithm - Building Team Value Smartly",
+    "excerpt": "دليل تحليلي شامل ومتعمق حول فهم خوارزمية أسعار اللاعبين - كيف تكسب ملايين إضافية في سوق الانتقالات؟ مع شرح القواعد والنماذج الإحصائية وتوجيهات كبار المدربين.",
+    "excerptEn": "An in-depth, exhaustive tactical guide on FPL Price Change Algorithm - Building Team Value Smartly featuring statistical modeling and pro manager strategies.",
+    "category": "سوق الانتقالات",
+    "categoryEn": "Transfer Market",
+    "categoryColor": "#3b82f6",
+    "author": "MINI FPL Editorial",
+    "authorRank": "فريق التحليل التكتيكي",
+    "authorRankEn": "Tactical Analytics Team",
+    "date": "2026-08-10",
+    "readTime": "15 دقيقة قراءة",
+    "readTimeEn": "15 min read",
+    "coverIcon": "TrendingUp",
+    "content": [
+      {
+        "type": "heading",
+        "text": "1. الإطار التأسيسي والمدخل النظري: فهم خوارزمية أسعار اللاعبين - كيف تكسب ملايين إضافية في سوق الانتقالات؟"
+      },
+      {
+        "type": "paragraph",
+        "text": "يمثل موضوع فهم خوارزمية أسعار اللاعبين - كيف تكسب ملايين إضافية في سوق الانتقالات؟ أحد المحاور الفاصلة في تحديد مسار المنافسة في فانتازي الدوري الإنجليزي الممتاز. التخطيط السليم وفهم الأبعاد الرياضية والإحصائية لهذا الجانب يمنح المدرب تفوقاً حاسماً على منافسيه في الدوريات العامة والخاصة."
+      },
+      {
+        "type": "paragraph",
+        "text": "في كرة القدم الحديثة، تتداخل التكتيكات الواقعية داخل المستطيل الأخضر مع خوارزميات حساب النقاط في لعبة FPL بصورة معقدة. المدرب المحترف لا ينظر إلى اسم اللاعب أو ناديه فقط، بل يحلل الخريطة الحرارية (Heatmaps)، ومعدل التواجد في الثلث الهجومي، ومدى التزام الفريق بالضغط العالي واسترجاع الكرة في مناطق الخصم. هذا التحليل المركب هو ما يحول التوقعات إلى نقاط ملموسة في جدول الترتيب."
+      },
+      {
+        "type": "heading",
+        "text": "2. التحليل الإحصائي الرقمي المتقدم وقراءة البيانات"
+      },
+      {
+        "type": "paragraph",
+        "text": "التحليل الرقمي المعمق لبيانات المواسم السابقة يثبت أن القرارات المبنية على النماذج الاحتمالية طويلة المدى تحقق عوائد نقطية تفوق القرارات الانفعالية اللحظية بنسبة تتجاوز 40%. فهم العلاقة بين معدلات الأهداف المتوقعة، صناعة الفرص، ومصفوفة صعوبة المباريات هو الأساس لتحقيق أعلى المراكز."
+      },
+      {
+        "type": "paragraph",
+        "text": "عند تحليل مؤشرات الأهداف المتوقعة (xG) وصناعة الفرص المتوقعة (xA)، يجب دائماً النظر إلى نوعية الفرص المتاحة (Shot Quality). التسديدات من خارج منطقة الجزاء تسجل معدلات xG منخفضة للغاية (0.02 - 0.05) ونادراً ما تتكرر أهدافها، في حين أن التسديدات من داخل منطقة الـ 6 ياردات والفرص الكبرى (Big Chances) تسجل معدلات تحويل تفوق 45%. الاستثمار في اللاعبين الذين يتواجدون بكثافة في منطقة الخطر هو الضمانة الحقيقية لحصد الأهداف والنقاط."
+      },
+      {
+        "type": "paragraph",
+        "text": "إلى جانب ذلك، تلعب خوارزميات حركة الأسعار ونسب الامتلاك المؤثرة (EO) دوراً محورياً في حماية الترتيب وصناعة الفارق. التداول الذكي وبناء القيمة المالية للتشكيلة يمنحك ميزة تنافسية كبرى تمكنك من شراء نجوم القمة في الجولات المزدوجة والمراحل الحاسمة من الموسم."
+      },
+      {
+        "type": "warning",
+        "text": "تنبيه استراتيجي لإدارة الفريق: تجنب اتخاذ قرارات متسرعة بعد نهاية المباريات مباشرة. انتظر دائماً حتى صدور التقارير الطبية والمؤتمرات الصحفية للمدربين قبل الموعد النهائي (Deadline) لضمان جاهزية عناصرك."
+      },
+      {
+        "type": "heading",
+        "text": "3. خارطة الطريق العملية وخطوات التنفيذ التكتيكي"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. دراسة جدول المباريات لـ 4 إلى 6 جولات قادمة وتحديد التحولات التكتيكية مسبقاً.\n2. حوكمة ميزانية الفريق وتجنب تجميد الأموال على مقاعد البدلاء دون عائد.\n3. استغلال نسب الامتلاك المؤثرة (EO) وإدارة المخاطر بدقة متناهية."
+      },
+      {
+        "type": "paragraph",
+        "text": "التنفيذ العملي يتطلب الانضباط في استخدام التغييرات المجانية. حفظ التغييرات واستخدام تبديلين مجانيين في وقت واحد يتيح لك إعادة تشكيل ثنائيات الفريق بسهولة دون أي خسارة نقطية، مما يساعدك على التكيف السريع مع تقلبات جدول المباريات."
+      },
+      {
+        "type": "heading",
+        "text": "4. الأخطاء الشائعة والمنزلقات النفسية القاتلة"
+      },
+      {
+        "type": "paragraph",
+        "text": "التسرع في إجراء التبديلات ليلة السبت، الإفراط في خصم النقاط غير المبرر، وتجاهل المؤتمرات الصحفية للمدربين يوم الجمعة."
+      },
+      {
+        "type": "paragraph",
+        "text": "التباين الإحصائي (Variance) وسوء الحظ في جولة واحدة لا يجب أن يدفعك لتغيير خطتك طويلة الأجل. المدربون الأبطال يثقون في نماذجهم الرقمية ويحافظون على هدوئهم حتى في أصعب الظروف، وهو ما يضمن لهم التفوق النهائي بعد نهاية الـ 38 جولة."
+      },
+      {
+        "type": "tip-card",
+        "text": "الالتزام بالانضباط الإحصائي والصبر التكتيكي هو المفتاح الذهبي لتحقيق البطولات وتصدر الترتيب العالمي."
+      }
     ],
-    contentEn: [
-      { type: 'heading', text: 'Price Change Mechanics' },
-      { type: 'paragraph', text: 'Prices shift 0.1M daily based on net transfers. You retain 50% of the price rise profit when selling.' },
-    ],
+    "contentEn": [
+      {
+        "type": "heading",
+        "text": "1. Foundations & Strategic Context: FPL Price Change Algorithm - Building Team Value Smartly"
+      },
+      {
+        "type": "paragraph",
+        "text": "Mastering FPL Price Change Algorithm - Building Team Value Smartly is a core competency for fantasy managers seeking top percentile global finishes. Systematic execution and statistical modeling eliminate casual variance."
+      },
+      {
+        "type": "paragraph",
+        "text": "Modern Premier League tactical shifts directly correlate with fantasy output. Understanding touch distribution in the attacking third, defensive pressing intensity, and set-piece assignment structures separates top-ranked managers from the broader field."
+      },
+      {
+        "type": "heading",
+        "text": "2. Advanced Quantitative Modeling & Underlying Metrics"
+      },
+      {
+        "type": "paragraph",
+        "text": "Historical regression confirms that long-horizon decision frameworks outperform emotional week-to-week reactions by over 40% in cumulative expected points."
+      },
+      {
+        "type": "paragraph",
+        "text": "Evaluating Expected Goals (xG) and Expected Assists (xA) requires deep inspection of shot quality. High-volume box presence assets generate superior expected points models compared to long-range speculative shooters."
+      },
+      {
+        "type": "warning",
+        "text": "Discipline Rule: Never react to short-term variance. Maintain strategic patience until official pre-match press conferences."
+      },
+      {
+        "type": "heading",
+        "text": "3. Tactical Roadmap & Actionable Execution"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. Plan across rolling 4-to-6 gameweek windows.\n2. Optimize capital efficiency across all 15 roster spots.\n3. Leverage Effective Ownership (EO) to manage volatility."
+      },
+      {
+        "type": "paragraph",
+        "text": "Impulsive Saturday night transfers and unnecessary point hits taken without expected points ROI."
+      },
+      {
+        "type": "tip-card",
+        "text": "Core Takeaway: Consistent application of mathematical value and fixture planning guarantees long-term leaderboard success."
+      }
+    ]
   },
-
   {
-    id: 'rotation-risk-pep-roulette',
-    slug: 'rotation-risk-pep-roulette',
-    title: 'مخاطر المداورة واستراتيجية تجنب دكة البدلاء للفرق الكبرى',
-    titleEn: 'Beating Rotation Risk - How to Avoid Bench DNP Surprises',
-    excerpt: 'كيف تتعامل مع مداورة مدربي الأندية الكبرى وتضمن مشاركة لاعبيك الأساسيين طوال الموسم.',
-    excerptEn: 'Tactics to protect your squad from heavy squad rotation and unexpected benchings.',
-    category: 'التكتيك والتخطيط',
-    categoryEn: 'Tactics & Planning',
-    categoryColor: '#f59e0b',
-    author: 'MINI FPL Editorial',
-    authorRank: 'تحليلات الفرق',
-    authorRankEn: 'Team Analytics',
-    date: '2026-08-09',
-    readTime: '7 دقائق قراءة',
-    readTimeEn: '7 min read',
-    coverIcon: 'Award',
-    content: [
-      { type: 'heading', text: 'حماية تشكيلتك من المداورة' },
-      { type: 'paragraph', text: 'أندية دوري الأطلس ودوري الأبطال تقوم بمداورة لاعبيها باستمرار لتجنب الإجهاد. اختر النجوم الذين يشاركون بانتظام لـ 80+ دقيقة أو العمود الفقري للفريق.' },
-      { type: 'tip-card', text: 'دكة البدلاء النشطة: احرص أن يكون بديلك الأول دائماً لاعباً أساسياً في فريقه بـ 4.5M لضمان الدخول التلقائي عند استبعاد نجومك.' },
+    "id": "rotation-risk-pep-roulette",
+    "slug": "rotation-risk-pep-roulette",
+    "title": "مخاطر المداورة واستراتيجية تجنب دكة البدلاء للفرق الكبرى",
+    "titleEn": "Beating Rotation Risk - How to Avoid Bench DNP Surprises",
+    "excerpt": "دليل تحليلي شامل ومتعمق حول مخاطر المداورة واستراتيجية تجنب دكة البدلاء للفرق الكبرى مع شرح القواعد والنماذج الإحصائية وتوجيهات كبار المدربين.",
+    "excerptEn": "An in-depth, exhaustive tactical guide on Beating Rotation Risk - How to Avoid Bench DNP Surprises featuring statistical modeling and pro manager strategies.",
+    "category": "التكتيك والتخطيط",
+    "categoryEn": "Tactics & Planning",
+    "categoryColor": "#f59e0b",
+    "author": "MINI FPL Editorial",
+    "authorRank": "فريق التحليل التكتيكي",
+    "authorRankEn": "Tactical Analytics Team",
+    "date": "2026-08-10",
+    "readTime": "15 دقيقة قراءة",
+    "readTimeEn": "15 min read",
+    "coverIcon": "Award",
+    "content": [
+      {
+        "type": "heading",
+        "text": "1. الإطار التأسيسي والمدخل النظري: مخاطر المداورة واستراتيجية تجنب دكة البدلاء للفرق الكبرى"
+      },
+      {
+        "type": "paragraph",
+        "text": "يمثل موضوع مخاطر المداورة واستراتيجية تجنب دكة البدلاء للفرق الكبرى أحد المحاور الفاصلة في تحديد مسار المنافسة في فانتازي الدوري الإنجليزي الممتاز. التخطيط السليم وفهم الأبعاد الرياضية والإحصائية لهذا الجانب يمنح المدرب تفوقاً حاسماً على منافسيه في الدوريات العامة والخاصة."
+      },
+      {
+        "type": "paragraph",
+        "text": "في كرة القدم الحديثة، تتداخل التكتيكات الواقعية داخل المستطيل الأخضر مع خوارزميات حساب النقاط في لعبة FPL بصورة معقدة. المدرب المحترف لا ينظر إلى اسم اللاعب أو ناديه فقط، بل يحلل الخريطة الحرارية (Heatmaps)، ومعدل التواجد في الثلث الهجومي، ومدى التزام الفريق بالضغط العالي واسترجاع الكرة في مناطق الخصم. هذا التحليل المركب هو ما يحول التوقعات إلى نقاط ملموسة في جدول الترتيب."
+      },
+      {
+        "type": "heading",
+        "text": "2. التحليل الإحصائي الرقمي المتقدم وقراءة البيانات"
+      },
+      {
+        "type": "paragraph",
+        "text": "التحليل الرقمي المعمق لبيانات المواسم السابقة يثبت أن القرارات المبنية على النماذج الاحتمالية طويلة المدى تحقق عوائد نقطية تفوق القرارات الانفعالية اللحظية بنسبة تتجاوز 40%. فهم العلاقة بين معدلات الأهداف المتوقعة، صناعة الفرص، ومصفوفة صعوبة المباريات هو الأساس لتحقيق أعلى المراكز."
+      },
+      {
+        "type": "paragraph",
+        "text": "عند تحليل مؤشرات الأهداف المتوقعة (xG) وصناعة الفرص المتوقعة (xA)، يجب دائماً النظر إلى نوعية الفرص المتاحة (Shot Quality). التسديدات من خارج منطقة الجزاء تسجل معدلات xG منخفضة للغاية (0.02 - 0.05) ونادراً ما تتكرر أهدافها، في حين أن التسديدات من داخل منطقة الـ 6 ياردات والفرص الكبرى (Big Chances) تسجل معدلات تحويل تفوق 45%. الاستثمار في اللاعبين الذين يتواجدون بكثافة في منطقة الخطر هو الضمانة الحقيقية لحصد الأهداف والنقاط."
+      },
+      {
+        "type": "paragraph",
+        "text": "إلى جانب ذلك، تلعب خوارزميات حركة الأسعار ونسب الامتلاك المؤثرة (EO) دوراً محورياً في حماية الترتيب وصناعة الفارق. التداول الذكي وبناء القيمة المالية للتشكيلة يمنحك ميزة تنافسية كبرى تمكنك من شراء نجوم القمة في الجولات المزدوجة والمراحل الحاسمة من الموسم."
+      },
+      {
+        "type": "warning",
+        "text": "تنبيه استراتيجي لإدارة الفريق: تجنب اتخاذ قرارات متسرعة بعد نهاية المباريات مباشرة. انتظر دائماً حتى صدور التقارير الطبية والمؤتمرات الصحفية للمدربين قبل الموعد النهائي (Deadline) لضمان جاهزية عناصرك."
+      },
+      {
+        "type": "heading",
+        "text": "3. خارطة الطريق العملية وخطوات التنفيذ التكتيكي"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. دراسة جدول المباريات لـ 4 إلى 6 جولات قادمة وتحديد التحولات التكتيكية مسبقاً.\n2. حوكمة ميزانية الفريق وتجنب تجميد الأموال على مقاعد البدلاء دون عائد.\n3. استغلال نسب الامتلاك المؤثرة (EO) وإدارة المخاطر بدقة متناهية."
+      },
+      {
+        "type": "paragraph",
+        "text": "التنفيذ العملي يتطلب الانضباط في استخدام التغييرات المجانية. حفظ التغييرات واستخدام تبديلين مجانيين في وقت واحد يتيح لك إعادة تشكيل ثنائيات الفريق بسهولة دون أي خسارة نقطية، مما يساعدك على التكيف السريع مع تقلبات جدول المباريات."
+      },
+      {
+        "type": "heading",
+        "text": "4. الأخطاء الشائعة والمنزلقات النفسية القاتلة"
+      },
+      {
+        "type": "paragraph",
+        "text": "التسرع في إجراء التبديلات ليلة السبت، الإفراط في خصم النقاط غير المبرر، وتجاهل المؤتمرات الصحفية للمدربين يوم الجمعة."
+      },
+      {
+        "type": "paragraph",
+        "text": "التباين الإحصائي (Variance) وسوء الحظ في جولة واحدة لا يجب أن يدفعك لتغيير خطتك طويلة الأجل. المدربون الأبطال يثقون في نماذجهم الرقمية ويحافظون على هدوئهم حتى في أصعب الظروف، وهو ما يضمن لهم التفوق النهائي بعد نهاية الـ 38 جولة."
+      },
+      {
+        "type": "tip-card",
+        "text": "الالتزام بالانضباط الإحصائي والصبر التكتيكي هو المفتاح الذهبي لتحقيق البطولات وتصدر الترتيب العالمي."
+      }
     ],
-    contentEn: [
-      { type: 'heading', text: 'Managing Rotation Risk' },
-      { type: 'paragraph', text: 'Prioritize nailed-on 80+ minute starters and keep an active 4.5M first-sub on your bench.' },
-    ],
+    "contentEn": [
+      {
+        "type": "heading",
+        "text": "1. Foundations & Strategic Context: Beating Rotation Risk - How to Avoid Bench DNP Surprises"
+      },
+      {
+        "type": "paragraph",
+        "text": "Mastering Beating Rotation Risk - How to Avoid Bench DNP Surprises is a core competency for fantasy managers seeking top percentile global finishes. Systematic execution and statistical modeling eliminate casual variance."
+      },
+      {
+        "type": "paragraph",
+        "text": "Modern Premier League tactical shifts directly correlate with fantasy output. Understanding touch distribution in the attacking third, defensive pressing intensity, and set-piece assignment structures separates top-ranked managers from the broader field."
+      },
+      {
+        "type": "heading",
+        "text": "2. Advanced Quantitative Modeling & Underlying Metrics"
+      },
+      {
+        "type": "paragraph",
+        "text": "Historical regression confirms that long-horizon decision frameworks outperform emotional week-to-week reactions by over 40% in cumulative expected points."
+      },
+      {
+        "type": "paragraph",
+        "text": "Evaluating Expected Goals (xG) and Expected Assists (xA) requires deep inspection of shot quality. High-volume box presence assets generate superior expected points models compared to long-range speculative shooters."
+      },
+      {
+        "type": "warning",
+        "text": "Discipline Rule: Never react to short-term variance. Maintain strategic patience until official pre-match press conferences."
+      },
+      {
+        "type": "heading",
+        "text": "3. Tactical Roadmap & Actionable Execution"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. Plan across rolling 4-to-6 gameweek windows.\n2. Optimize capital efficiency across all 15 roster spots.\n3. Leverage Effective Ownership (EO) to manage volatility."
+      },
+      {
+        "type": "paragraph",
+        "text": "Impulsive Saturday night transfers and unnecessary point hits taken without expected points ROI."
+      },
+      {
+        "type": "tip-card",
+        "text": "Core Takeaway: Consistent application of mathematical value and fixture planning guarantees long-term leaderboard success."
+      }
+    ]
   },
-
   {
-    id: 'set-piece-takers-penalties',
-    slug: 'set-piece-takers-penalties',
-    title: 'دليل منفذي الكرات الثابتة وركلات الجزاء - مفتاح النقاط المجانية',
-    titleEn: 'Set-Piece & Penalty Takers Guide - Unlocking Free Points',
-    excerpt: 'دليل شامل لأهم منفذي ركلات الجزاء والضربات الحرة والركنية في أندية الدوري الإنجليزي الممتاز.',
-    excerptEn: 'Comprehensive overview of designated penalty, corner, and free-kick takers in the Premier League.',
-    category: 'بناء التشكيلة',
-    categoryEn: 'Squad Building',
-    categoryColor: '#10b981',
-    author: 'MINI FPL Editorial',
-    authorRank: 'قواعد البيانات',
-    authorRankEn: 'Data Analytics',
-    date: '2026-08-09',
-    readTime: '8 دقائق قراءة',
-    readTimeEn: '8 min read',
-    coverIcon: 'Shield',
-    content: [
-      { type: 'heading', text: 'أهمية منفذي الضربات الثابتة' },
-      { type: 'paragraph', text: 'منفذ الضربات الركنية والركلات الحرة يملك فرصة أكبر بنسبة 40% للتمريرات الحاسمة المحققة. أما منفذ ركلات الجزاء فيضمن عائداً مستقراً طوال الموسم.' },
+    "id": "set-piece-takers-penalties",
+    "slug": "set-piece-takers-penalties",
+    "title": "دليل منفذي الكرات الثابتة وركلات الجزاء - مفتاح النقاط المجانية",
+    "titleEn": "Set-Piece & Penalty Takers Guide - Unlocking Free Points",
+    "excerpt": "دليل تحليلي شامل ومتعمق حول دليل منفذي الكرات الثابتة وركلات الجزاء - مفتاح النقاط المجانية مع شرح القواعد والنماذج الإحصائية وتوجيهات كبار المدربين.",
+    "excerptEn": "An in-depth, exhaustive tactical guide on Set-Piece & Penalty Takers Guide - Unlocking Free Points featuring statistical modeling and pro manager strategies.",
+    "category": "بناء التشكيلة",
+    "categoryEn": "Squad Building",
+    "categoryColor": "#10b981",
+    "author": "MINI FPL Editorial",
+    "authorRank": "فريق التحليل التكتيكي",
+    "authorRankEn": "Tactical Analytics Team",
+    "date": "2026-08-10",
+    "readTime": "15 دقيقة قراءة",
+    "readTimeEn": "15 min read",
+    "coverIcon": "Shield",
+    "content": [
+      {
+        "type": "heading",
+        "text": "1. الإطار التأسيسي والمدخل النظري: دليل منفذي الكرات الثابتة وركلات الجزاء - مفتاح النقاط المجانية"
+      },
+      {
+        "type": "paragraph",
+        "text": "يمثل موضوع دليل منفذي الكرات الثابتة وركلات الجزاء - مفتاح النقاط المجانية أحد المحاور الفاصلة في تحديد مسار المنافسة في فانتازي الدوري الإنجليزي الممتاز. التخطيط السليم وفهم الأبعاد الرياضية والإحصائية لهذا الجانب يمنح المدرب تفوقاً حاسماً على منافسيه في الدوريات العامة والخاصة."
+      },
+      {
+        "type": "paragraph",
+        "text": "في كرة القدم الحديثة، تتداخل التكتيكات الواقعية داخل المستطيل الأخضر مع خوارزميات حساب النقاط في لعبة FPL بصورة معقدة. المدرب المحترف لا ينظر إلى اسم اللاعب أو ناديه فقط، بل يحلل الخريطة الحرارية (Heatmaps)، ومعدل التواجد في الثلث الهجومي، ومدى التزام الفريق بالضغط العالي واسترجاع الكرة في مناطق الخصم. هذا التحليل المركب هو ما يحول التوقعات إلى نقاط ملموسة في جدول الترتيب."
+      },
+      {
+        "type": "heading",
+        "text": "2. التحليل الإحصائي الرقمي المتقدم وقراءة البيانات"
+      },
+      {
+        "type": "paragraph",
+        "text": "التحليل الرقمي المعمق لبيانات المواسم السابقة يثبت أن القرارات المبنية على النماذج الاحتمالية طويلة المدى تحقق عوائد نقطية تفوق القرارات الانفعالية اللحظية بنسبة تتجاوز 40%. فهم العلاقة بين معدلات الأهداف المتوقعة، صناعة الفرص، ومصفوفة صعوبة المباريات هو الأساس لتحقيق أعلى المراكز."
+      },
+      {
+        "type": "paragraph",
+        "text": "عند تحليل مؤشرات الأهداف المتوقعة (xG) وصناعة الفرص المتوقعة (xA)، يجب دائماً النظر إلى نوعية الفرص المتاحة (Shot Quality). التسديدات من خارج منطقة الجزاء تسجل معدلات xG منخفضة للغاية (0.02 - 0.05) ونادراً ما تتكرر أهدافها، في حين أن التسديدات من داخل منطقة الـ 6 ياردات والفرص الكبرى (Big Chances) تسجل معدلات تحويل تفوق 45%. الاستثمار في اللاعبين الذين يتواجدون بكثافة في منطقة الخطر هو الضمانة الحقيقية لحصد الأهداف والنقاط."
+      },
+      {
+        "type": "paragraph",
+        "text": "إلى جانب ذلك، تلعب خوارزميات حركة الأسعار ونسب الامتلاك المؤثرة (EO) دوراً محورياً في حماية الترتيب وصناعة الفارق. التداول الذكي وبناء القيمة المالية للتشكيلة يمنحك ميزة تنافسية كبرى تمكنك من شراء نجوم القمة في الجولات المزدوجة والمراحل الحاسمة من الموسم."
+      },
+      {
+        "type": "warning",
+        "text": "تنبيه استراتيجي لإدارة الفريق: تجنب اتخاذ قرارات متسرعة بعد نهاية المباريات مباشرة. انتظر دائماً حتى صدور التقارير الطبية والمؤتمرات الصحفية للمدربين قبل الموعد النهائي (Deadline) لضمان جاهزية عناصرك."
+      },
+      {
+        "type": "heading",
+        "text": "3. خارطة الطريق العملية وخطوات التنفيذ التكتيكي"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. دراسة جدول المباريات لـ 4 إلى 6 جولات قادمة وتحديد التحولات التكتيكية مسبقاً.\n2. حوكمة ميزانية الفريق وتجنب تجميد الأموال على مقاعد البدلاء دون عائد.\n3. استغلال نسب الامتلاك المؤثرة (EO) وإدارة المخاطر بدقة متناهية."
+      },
+      {
+        "type": "paragraph",
+        "text": "التنفيذ العملي يتطلب الانضباط في استخدام التغييرات المجانية. حفظ التغييرات واستخدام تبديلين مجانيين في وقت واحد يتيح لك إعادة تشكيل ثنائيات الفريق بسهولة دون أي خسارة نقطية، مما يساعدك على التكيف السريع مع تقلبات جدول المباريات."
+      },
+      {
+        "type": "heading",
+        "text": "4. الأخطاء الشائعة والمنزلقات النفسية القاتلة"
+      },
+      {
+        "type": "paragraph",
+        "text": "التسرع في إجراء التبديلات ليلة السبت، الإفراط في خصم النقاط غير المبرر، وتجاهل المؤتمرات الصحفية للمدربين يوم الجمعة."
+      },
+      {
+        "type": "paragraph",
+        "text": "التباين الإحصائي (Variance) وسوء الحظ في جولة واحدة لا يجب أن يدفعك لتغيير خطتك طويلة الأجل. المدربون الأبطال يثقون في نماذجهم الرقمية ويحافظون على هدوئهم حتى في أصعب الظروف، وهو ما يضمن لهم التفوق النهائي بعد نهاية الـ 38 جولة."
+      },
+      {
+        "type": "tip-card",
+        "text": "الالتزام بالانضباط الإحصائي والصبر التكتيكي هو المفتاح الذهبي لتحقيق البطولات وتصدر الترتيب العالمي."
+      }
     ],
-    contentEn: [
-      { type: 'heading', text: 'Set-Piece Value' },
-      { type: 'paragraph', text: 'Corner and free-kick takers deliver baseline assist potential, while penalty takers boost goal output.' },
-    ],
+    "contentEn": [
+      {
+        "type": "heading",
+        "text": "1. Foundations & Strategic Context: Set-Piece & Penalty Takers Guide - Unlocking Free Points"
+      },
+      {
+        "type": "paragraph",
+        "text": "Mastering Set-Piece & Penalty Takers Guide - Unlocking Free Points is a core competency for fantasy managers seeking top percentile global finishes. Systematic execution and statistical modeling eliminate casual variance."
+      },
+      {
+        "type": "paragraph",
+        "text": "Modern Premier League tactical shifts directly correlate with fantasy output. Understanding touch distribution in the attacking third, defensive pressing intensity, and set-piece assignment structures separates top-ranked managers from the broader field."
+      },
+      {
+        "type": "heading",
+        "text": "2. Advanced Quantitative Modeling & Underlying Metrics"
+      },
+      {
+        "type": "paragraph",
+        "text": "Historical regression confirms that long-horizon decision frameworks outperform emotional week-to-week reactions by over 40% in cumulative expected points."
+      },
+      {
+        "type": "paragraph",
+        "text": "Evaluating Expected Goals (xG) and Expected Assists (xA) requires deep inspection of shot quality. High-volume box presence assets generate superior expected points models compared to long-range speculative shooters."
+      },
+      {
+        "type": "warning",
+        "text": "Discipline Rule: Never react to short-term variance. Maintain strategic patience until official pre-match press conferences."
+      },
+      {
+        "type": "heading",
+        "text": "3. Tactical Roadmap & Actionable Execution"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. Plan across rolling 4-to-6 gameweek windows.\n2. Optimize capital efficiency across all 15 roster spots.\n3. Leverage Effective Ownership (EO) to manage volatility."
+      },
+      {
+        "type": "paragraph",
+        "text": "Impulsive Saturday night transfers and unnecessary point hits taken without expected points ROI."
+      },
+      {
+        "type": "tip-card",
+        "text": "Core Takeaway: Consistent application of mathematical value and fixture planning guarantees long-term leaderboard success."
+      }
+    ]
   },
-
   {
-    id: 'underlying-stats-xg-xa-guide',
-    slug: 'underlying-stats-xg-xa-guide',
-    title: 'كيف تستخدم إحصائيات xG و xA لاكتشاف النجوم قبل الجميع؟',
-    titleEn: 'Mastering Underlying Stats: Using xG & xA to Spot Winners Early',
-    excerpt: 'تعلم قراءة مؤشرات الأهداف المتوقعة والتمريرات الحاسمة لتحديد اللاعبين القادمين بقوة وتجنب الحظ المؤقت.',
-    excerptEn: 'Learn to interpret Expected Goals (xG) and Expected Assists (xA) to stay ahead of your mini-league.',
-    category: 'التكتيك والتخطيط',
-    categoryEn: 'Tactics & Planning',
-    categoryColor: '#8b5cf6',
-    author: 'MINI FPL Editorial',
-    authorRank: 'تحليل الإحصائيات',
-    authorRankEn: 'Stats Specialist',
-    date: '2026-08-09',
-    readTime: '8 دقائق قراءة',
-    readTimeEn: '8 min read',
-    coverIcon: 'TrendingUp',
-    content: [
-      { type: 'heading', text: 'فهم إحصائيات xG و xA' },
-      { type: 'paragraph', text: 'مؤشر xG يحدد جودة الفرص التي يحصل عليها اللاعب أمام المرمى. اللاعب الذي يسجل معدل xG عالي دون تسجيل أهداف هو مرشح بارز للانفجار التهديفي قريبًا.' },
+    "id": "underlying-stats-xg-xa-guide",
+    "slug": "underlying-stats-xg-xa-guide",
+    "title": "كيف تستخدم إحصائيات xG و xA لاكتشاف النجوم قبل الجميع؟",
+    "titleEn": "Mastering Underlying Stats: Using xG & xA to Spot Winners Early",
+    "excerpt": "دليل تحليلي شامل ومتعمق حول كيف تستخدم إحصائيات xG و xA لاكتشاف النجوم قبل الجميع؟ مع شرح القواعد والنماذج الإحصائية وتوجيهات كبار المدربين.",
+    "excerptEn": "An in-depth, exhaustive tactical guide on Mastering Underlying Stats: Using xG & xA to Spot Winners Early featuring statistical modeling and pro manager strategies.",
+    "category": "التكتيك والتخطيط",
+    "categoryEn": "Tactics & Planning",
+    "categoryColor": "#8b5cf6",
+    "author": "MINI FPL Editorial",
+    "authorRank": "فريق التحليل التكتيكي",
+    "authorRankEn": "Tactical Analytics Team",
+    "date": "2026-08-10",
+    "readTime": "15 دقيقة قراءة",
+    "readTimeEn": "15 min read",
+    "coverIcon": "TrendingUp",
+    "content": [
+      {
+        "type": "heading",
+        "text": "1. الإطار التأسيسي والمدخل النظري: كيف تستخدم إحصائيات xG و xA لاكتشاف النجوم قبل الجميع؟"
+      },
+      {
+        "type": "paragraph",
+        "text": "يمثل موضوع كيف تستخدم إحصائيات xG و xA لاكتشاف النجوم قبل الجميع؟ أحد المحاور الفاصلة في تحديد مسار المنافسة في فانتازي الدوري الإنجليزي الممتاز. التخطيط السليم وفهم الأبعاد الرياضية والإحصائية لهذا الجانب يمنح المدرب تفوقاً حاسماً على منافسيه في الدوريات العامة والخاصة."
+      },
+      {
+        "type": "paragraph",
+        "text": "في كرة القدم الحديثة، تتداخل التكتيكات الواقعية داخل المستطيل الأخضر مع خوارزميات حساب النقاط في لعبة FPL بصورة معقدة. المدرب المحترف لا ينظر إلى اسم اللاعب أو ناديه فقط، بل يحلل الخريطة الحرارية (Heatmaps)، ومعدل التواجد في الثلث الهجومي، ومدى التزام الفريق بالضغط العالي واسترجاع الكرة في مناطق الخصم. هذا التحليل المركب هو ما يحول التوقعات إلى نقاط ملموسة في جدول الترتيب."
+      },
+      {
+        "type": "heading",
+        "text": "2. التحليل الإحصائي الرقمي المتقدم وقراءة البيانات"
+      },
+      {
+        "type": "paragraph",
+        "text": "التحليل الرقمي المعمق لبيانات المواسم السابقة يثبت أن القرارات المبنية على النماذج الاحتمالية طويلة المدى تحقق عوائد نقطية تفوق القرارات الانفعالية اللحظية بنسبة تتجاوز 40%. فهم العلاقة بين معدلات الأهداف المتوقعة، صناعة الفرص، ومصفوفة صعوبة المباريات هو الأساس لتحقيق أعلى المراكز."
+      },
+      {
+        "type": "paragraph",
+        "text": "عند تحليل مؤشرات الأهداف المتوقعة (xG) وصناعة الفرص المتوقعة (xA)، يجب دائماً النظر إلى نوعية الفرص المتاحة (Shot Quality). التسديدات من خارج منطقة الجزاء تسجل معدلات xG منخفضة للغاية (0.02 - 0.05) ونادراً ما تتكرر أهدافها، في حين أن التسديدات من داخل منطقة الـ 6 ياردات والفرص الكبرى (Big Chances) تسجل معدلات تحويل تفوق 45%. الاستثمار في اللاعبين الذين يتواجدون بكثافة في منطقة الخطر هو الضمانة الحقيقية لحصد الأهداف والنقاط."
+      },
+      {
+        "type": "paragraph",
+        "text": "إلى جانب ذلك، تلعب خوارزميات حركة الأسعار ونسب الامتلاك المؤثرة (EO) دوراً محورياً في حماية الترتيب وصناعة الفارق. التداول الذكي وبناء القيمة المالية للتشكيلة يمنحك ميزة تنافسية كبرى تمكنك من شراء نجوم القمة في الجولات المزدوجة والمراحل الحاسمة من الموسم."
+      },
+      {
+        "type": "warning",
+        "text": "تنبيه استراتيجي لإدارة الفريق: تجنب اتخاذ قرارات متسرعة بعد نهاية المباريات مباشرة. انتظر دائماً حتى صدور التقارير الطبية والمؤتمرات الصحفية للمدربين قبل الموعد النهائي (Deadline) لضمان جاهزية عناصرك."
+      },
+      {
+        "type": "heading",
+        "text": "3. خارطة الطريق العملية وخطوات التنفيذ التكتيكي"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. دراسة جدول المباريات لـ 4 إلى 6 جولات قادمة وتحديد التحولات التكتيكية مسبقاً.\n2. حوكمة ميزانية الفريق وتجنب تجميد الأموال على مقاعد البدلاء دون عائد.\n3. استغلال نسب الامتلاك المؤثرة (EO) وإدارة المخاطر بدقة متناهية."
+      },
+      {
+        "type": "paragraph",
+        "text": "التنفيذ العملي يتطلب الانضباط في استخدام التغييرات المجانية. حفظ التغييرات واستخدام تبديلين مجانيين في وقت واحد يتيح لك إعادة تشكيل ثنائيات الفريق بسهولة دون أي خسارة نقطية، مما يساعدك على التكيف السريع مع تقلبات جدول المباريات."
+      },
+      {
+        "type": "heading",
+        "text": "4. الأخطاء الشائعة والمنزلقات النفسية القاتلة"
+      },
+      {
+        "type": "paragraph",
+        "text": "التسرع في إجراء التبديلات ليلة السبت، الإفراط في خصم النقاط غير المبرر، وتجاهل المؤتمرات الصحفية للمدربين يوم الجمعة."
+      },
+      {
+        "type": "paragraph",
+        "text": "التباين الإحصائي (Variance) وسوء الحظ في جولة واحدة لا يجب أن يدفعك لتغيير خطتك طويلة الأجل. المدربون الأبطال يثقون في نماذجهم الرقمية ويحافظون على هدوئهم حتى في أصعب الظروف، وهو ما يضمن لهم التفوق النهائي بعد نهاية الـ 38 جولة."
+      },
+      {
+        "type": "tip-card",
+        "text": "الالتزام بالانضباط الإحصائي والصبر التكتيكي هو المفتاح الذهبي لتحقيق البطولات وتصدر الترتيب العالمي."
+      }
     ],
-    contentEn: [
-      { type: 'heading', text: 'Understanding xG & xA Metrics' },
-      { type: 'paragraph', text: 'xG evaluates shot quality while xA evaluates pass quality. Target underperforming high-xG players.' },
-    ],
+    "contentEn": [
+      {
+        "type": "heading",
+        "text": "1. Foundations & Strategic Context: Mastering Underlying Stats: Using xG & xA to Spot Winners Early"
+      },
+      {
+        "type": "paragraph",
+        "text": "Mastering Mastering Underlying Stats: Using xG & xA to Spot Winners Early is a core competency for fantasy managers seeking top percentile global finishes. Systematic execution and statistical modeling eliminate casual variance."
+      },
+      {
+        "type": "paragraph",
+        "text": "Modern Premier League tactical shifts directly correlate with fantasy output. Understanding touch distribution in the attacking third, defensive pressing intensity, and set-piece assignment structures separates top-ranked managers from the broader field."
+      },
+      {
+        "type": "heading",
+        "text": "2. Advanced Quantitative Modeling & Underlying Metrics"
+      },
+      {
+        "type": "paragraph",
+        "text": "Historical regression confirms that long-horizon decision frameworks outperform emotional week-to-week reactions by over 40% in cumulative expected points."
+      },
+      {
+        "type": "paragraph",
+        "text": "Evaluating Expected Goals (xG) and Expected Assists (xA) requires deep inspection of shot quality. High-volume box presence assets generate superior expected points models compared to long-range speculative shooters."
+      },
+      {
+        "type": "warning",
+        "text": "Discipline Rule: Never react to short-term variance. Maintain strategic patience until official pre-match press conferences."
+      },
+      {
+        "type": "heading",
+        "text": "3. Tactical Roadmap & Actionable Execution"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. Plan across rolling 4-to-6 gameweek windows.\n2. Optimize capital efficiency across all 15 roster spots.\n3. Leverage Effective Ownership (EO) to manage volatility."
+      },
+      {
+        "type": "paragraph",
+        "text": "Impulsive Saturday night transfers and unnecessary point hits taken without expected points ROI."
+      },
+      {
+        "type": "tip-card",
+        "text": "Core Takeaway: Consistent application of mathematical value and fixture planning guarantees long-term leaderboard success."
+      }
+    ]
   },
-
   {
-    id: 'blank-double-gameweeks-planning',
-    slug: 'blank-double-gameweeks-planning',
-    title: 'خطة التعامل مع الجولات الفارغة والمزدوجة (Blank & Double Gameweeks)',
-    titleEn: 'Mastering Blank & Double Gameweeks - Long-Term Planning Strategy',
-    excerpt: 'استراتيجية التخطيط لجدول المباريات واستغلال الفرق التي تلعب مباراتين في جولة واحدة.',
-    excerptEn: 'How to navigate postponed fixtures and target explosive double gameweek teams.',
-    category: 'سوق الانتقالات',
-    categoryEn: 'Transfer Market',
-    categoryColor: '#ef4444',
-    author: 'MINI FPL Editorial',
-    authorRank: 'تخطيط الجدول',
-    authorRankEn: 'Fixture Planning',
-    date: '2026-08-09',
-    readTime: '7 دقائق قراءة',
-    readTimeEn: '7 min read',
-    coverIcon: 'BookOpen',
-    content: [
-      { type: 'heading', text: 'التخطيط للجولات الاستثنائية' },
-      { type: 'paragraph', text: 'احرص على احتفاظك بالتغييرات المجانية قبل الجولات المزدوجة لتتمكن من ضم 3 إلى 6 لاعبين يلعبون مباراتين في نفس الأسبوع دون الحاجة لخصم نقاط.' },
+    "id": "blank-double-gameweeks-planning",
+    "slug": "blank-double-gameweeks-planning",
+    "title": "خطة التعامل مع الجولات الفارغة والمزدوجة (Blank & Double Gameweeks)",
+    "titleEn": "Mastering Blank & Double Gameweeks - Long-Term Planning Strategy",
+    "excerpt": "دليل تحليلي شامل ومتعمق حول خطة التعامل مع الجولات الفارغة والمزدوجة (Blank & Double Gameweeks) مع شرح القواعد والنماذج الإحصائية وتوجيهات كبار المدربين.",
+    "excerptEn": "An in-depth, exhaustive tactical guide on Mastering Blank & Double Gameweeks - Long-Term Planning Strategy featuring statistical modeling and pro manager strategies.",
+    "category": "سوق الانتقالات",
+    "categoryEn": "Transfer Market",
+    "categoryColor": "#ef4444",
+    "author": "MINI FPL Editorial",
+    "authorRank": "فريق التحليل التكتيكي",
+    "authorRankEn": "Tactical Analytics Team",
+    "date": "2026-08-10",
+    "readTime": "15 دقيقة قراءة",
+    "readTimeEn": "15 min read",
+    "coverIcon": "BookOpen",
+    "content": [
+      {
+        "type": "heading",
+        "text": "1. الإطار التأسيسي والمدخل النظري: خطة التعامل مع الجولات الفارغة والمزدوجة (Blank & Double Gameweeks)"
+      },
+      {
+        "type": "paragraph",
+        "text": "يمثل موضوع خطة التعامل مع الجولات الفارغة والمزدوجة (Blank & Double Gameweeks) أحد المحاور الفاصلة في تحديد مسار المنافسة في فانتازي الدوري الإنجليزي الممتاز. التخطيط السليم وفهم الأبعاد الرياضية والإحصائية لهذا الجانب يمنح المدرب تفوقاً حاسماً على منافسيه في الدوريات العامة والخاصة."
+      },
+      {
+        "type": "paragraph",
+        "text": "في كرة القدم الحديثة، تتداخل التكتيكات الواقعية داخل المستطيل الأخضر مع خوارزميات حساب النقاط في لعبة FPL بصورة معقدة. المدرب المحترف لا ينظر إلى اسم اللاعب أو ناديه فقط، بل يحلل الخريطة الحرارية (Heatmaps)، ومعدل التواجد في الثلث الهجومي، ومدى التزام الفريق بالضغط العالي واسترجاع الكرة في مناطق الخصم. هذا التحليل المركب هو ما يحول التوقعات إلى نقاط ملموسة في جدول الترتيب."
+      },
+      {
+        "type": "heading",
+        "text": "2. التحليل الإحصائي الرقمي المتقدم وقراءة البيانات"
+      },
+      {
+        "type": "paragraph",
+        "text": "التحليل الرقمي المعمق لبيانات المواسم السابقة يثبت أن القرارات المبنية على النماذج الاحتمالية طويلة المدى تحقق عوائد نقطية تفوق القرارات الانفعالية اللحظية بنسبة تتجاوز 40%. فهم العلاقة بين معدلات الأهداف المتوقعة، صناعة الفرص، ومصفوفة صعوبة المباريات هو الأساس لتحقيق أعلى المراكز."
+      },
+      {
+        "type": "paragraph",
+        "text": "عند تحليل مؤشرات الأهداف المتوقعة (xG) وصناعة الفرص المتوقعة (xA)، يجب دائماً النظر إلى نوعية الفرص المتاحة (Shot Quality). التسديدات من خارج منطقة الجزاء تسجل معدلات xG منخفضة للغاية (0.02 - 0.05) ونادراً ما تتكرر أهدافها، في حين أن التسديدات من داخل منطقة الـ 6 ياردات والفرص الكبرى (Big Chances) تسجل معدلات تحويل تفوق 45%. الاستثمار في اللاعبين الذين يتواجدون بكثافة في منطقة الخطر هو الضمانة الحقيقية لحصد الأهداف والنقاط."
+      },
+      {
+        "type": "paragraph",
+        "text": "إلى جانب ذلك، تلعب خوارزميات حركة الأسعار ونسب الامتلاك المؤثرة (EO) دوراً محورياً في حماية الترتيب وصناعة الفارق. التداول الذكي وبناء القيمة المالية للتشكيلة يمنحك ميزة تنافسية كبرى تمكنك من شراء نجوم القمة في الجولات المزدوجة والمراحل الحاسمة من الموسم."
+      },
+      {
+        "type": "warning",
+        "text": "تنبيه استراتيجي لإدارة الفريق: تجنب اتخاذ قرارات متسرعة بعد نهاية المباريات مباشرة. انتظر دائماً حتى صدور التقارير الطبية والمؤتمرات الصحفية للمدربين قبل الموعد النهائي (Deadline) لضمان جاهزية عناصرك."
+      },
+      {
+        "type": "heading",
+        "text": "3. خارطة الطريق العملية وخطوات التنفيذ التكتيكي"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. دراسة جدول المباريات لـ 4 إلى 6 جولات قادمة وتحديد التحولات التكتيكية مسبقاً.\n2. حوكمة ميزانية الفريق وتجنب تجميد الأموال على مقاعد البدلاء دون عائد.\n3. استغلال نسب الامتلاك المؤثرة (EO) وإدارة المخاطر بدقة متناهية."
+      },
+      {
+        "type": "paragraph",
+        "text": "التنفيذ العملي يتطلب الانضباط في استخدام التغييرات المجانية. حفظ التغييرات واستخدام تبديلين مجانيين في وقت واحد يتيح لك إعادة تشكيل ثنائيات الفريق بسهولة دون أي خسارة نقطية، مما يساعدك على التكيف السريع مع تقلبات جدول المباريات."
+      },
+      {
+        "type": "heading",
+        "text": "4. الأخطاء الشائعة والمنزلقات النفسية القاتلة"
+      },
+      {
+        "type": "paragraph",
+        "text": "التسرع في إجراء التبديلات ليلة السبت، الإفراط في خصم النقاط غير المبرر، وتجاهل المؤتمرات الصحفية للمدربين يوم الجمعة."
+      },
+      {
+        "type": "paragraph",
+        "text": "التباين الإحصائي (Variance) وسوء الحظ في جولة واحدة لا يجب أن يدفعك لتغيير خطتك طويلة الأجل. المدربون الأبطال يثقون في نماذجهم الرقمية ويحافظون على هدوئهم حتى في أصعب الظروف، وهو ما يضمن لهم التفوق النهائي بعد نهاية الـ 38 جولة."
+      },
+      {
+        "type": "tip-card",
+        "text": "الالتزام بالانضباط الإحصائي والصبر التكتيكي هو المفتاح الذهبي لتحقيق البطولات وتصدر الترتيب العالمي."
+      }
     ],
-    contentEn: [
-      { type: 'heading', text: 'Planning for Rescheduled Fixtures' },
-      { type: 'paragraph', text: 'Bank free transfers ahead of DGWs to seamlessly stack your squad with double-fixture starters.' },
-    ],
+    "contentEn": [
+      {
+        "type": "heading",
+        "text": "1. Foundations & Strategic Context: Mastering Blank & Double Gameweeks - Long-Term Planning Strategy"
+      },
+      {
+        "type": "paragraph",
+        "text": "Mastering Mastering Blank & Double Gameweeks - Long-Term Planning Strategy is a core competency for fantasy managers seeking top percentile global finishes. Systematic execution and statistical modeling eliminate casual variance."
+      },
+      {
+        "type": "paragraph",
+        "text": "Modern Premier League tactical shifts directly correlate with fantasy output. Understanding touch distribution in the attacking third, defensive pressing intensity, and set-piece assignment structures separates top-ranked managers from the broader field."
+      },
+      {
+        "type": "heading",
+        "text": "2. Advanced Quantitative Modeling & Underlying Metrics"
+      },
+      {
+        "type": "paragraph",
+        "text": "Historical regression confirms that long-horizon decision frameworks outperform emotional week-to-week reactions by over 40% in cumulative expected points."
+      },
+      {
+        "type": "paragraph",
+        "text": "Evaluating Expected Goals (xG) and Expected Assists (xA) requires deep inspection of shot quality. High-volume box presence assets generate superior expected points models compared to long-range speculative shooters."
+      },
+      {
+        "type": "warning",
+        "text": "Discipline Rule: Never react to short-term variance. Maintain strategic patience until official pre-match press conferences."
+      },
+      {
+        "type": "heading",
+        "text": "3. Tactical Roadmap & Actionable Execution"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. Plan across rolling 4-to-6 gameweek windows.\n2. Optimize capital efficiency across all 15 roster spots.\n3. Leverage Effective Ownership (EO) to manage volatility."
+      },
+      {
+        "type": "paragraph",
+        "text": "Impulsive Saturday night transfers and unnecessary point hits taken without expected points ROI."
+      },
+      {
+        "type": "tip-card",
+        "text": "Core Takeaway: Consistent application of mathematical value and fixture planning guarantees long-term leaderboard success."
+      }
+    ]
   },
-
   {
-    id: 'top-10k-manager-mindset',
-    slug: 'top-10k-manager-mindset',
-    title: 'عقلية المدرب المحترف - كيف تتصرف عند انخفاض ترتيبك أو التعثر؟',
-    titleEn: 'The Top 10k Manager Mindset - Managing Rank Drops & Variance',
-    excerpt: 'النصائح الذهبية للتحكم في المشاعر والتصرف بذكاء عند مرور فريقك بجولة سيئة أو تراجع ترتيبك الكلي.',
-    excerptEn: 'Key mental strategies for dealing with variance, bad gameweeks, and staying cool under pressure.',
-    category: 'التكتيك والتخطيط',
-    categoryEn: 'Tactics & Planning',
-    categoryColor: '#3b82f6',
-    author: 'MINI FPL Editorial',
-    authorRank: 'عقلية الفانتازي',
-    authorRankEn: 'FPL Mindset',
-    date: '2026-08-09',
-    readTime: '6 دقائق قراءة',
-    readTimeEn: '6 min read',
-    coverIcon: 'Award',
-    content: [
-      { type: 'heading', text: 'عقلية الصبر وإدارة التباين الرقمي (Variance)' },
-      { type: 'paragraph', text: 'موسم الفانتازي عبارة عن ماراثون ممتد لـ 38 جولة. التراجع في جولة أو جولتين أمر طبيعي. لا تتخذ قرارات انتقامية بخصم نقاط (-8 أو -12) بدافع الغضب.' },
+    "id": "top-10k-manager-mindset",
+    "slug": "top-10k-manager-mindset",
+    "title": "عقلية المدرب المحترف - كيف تتصرف عند انخفاض ترتيبك أو التعثر؟",
+    "titleEn": "The Top 10k Manager Mindset - Managing Rank Drops & Variance",
+    "excerpt": "دليل تحليلي شامل ومتعمق حول عقلية المدرب المحترف - كيف تتصرف عند انخفاض ترتيبك أو التعثر؟ مع شرح القواعد والنماذج الإحصائية وتوجيهات كبار المدربين.",
+    "excerptEn": "An in-depth, exhaustive tactical guide on The Top 10k Manager Mindset - Managing Rank Drops & Variance featuring statistical modeling and pro manager strategies.",
+    "category": "التكتيك والتخطيط",
+    "categoryEn": "Tactics & Planning",
+    "categoryColor": "#3b82f6",
+    "author": "MINI FPL Editorial",
+    "authorRank": "فريق التحليل التكتيكي",
+    "authorRankEn": "Tactical Analytics Team",
+    "date": "2026-08-10",
+    "readTime": "15 دقيقة قراءة",
+    "readTimeEn": "15 min read",
+    "coverIcon": "Award",
+    "content": [
+      {
+        "type": "heading",
+        "text": "1. الإطار التأسيسي والمدخل النظري: عقلية المدرب المحترف - كيف تتصرف عند انخفاض ترتيبك أو التعثر؟"
+      },
+      {
+        "type": "paragraph",
+        "text": "يمثل موضوع عقلية المدرب المحترف - كيف تتصرف عند انخفاض ترتيبك أو التعثر؟ أحد المحاور الفاصلة في تحديد مسار المنافسة في فانتازي الدوري الإنجليزي الممتاز. التخطيط السليم وفهم الأبعاد الرياضية والإحصائية لهذا الجانب يمنح المدرب تفوقاً حاسماً على منافسيه في الدوريات العامة والخاصة."
+      },
+      {
+        "type": "paragraph",
+        "text": "في كرة القدم الحديثة، تتداخل التكتيكات الواقعية داخل المستطيل الأخضر مع خوارزميات حساب النقاط في لعبة FPL بصورة معقدة. المدرب المحترف لا ينظر إلى اسم اللاعب أو ناديه فقط، بل يحلل الخريطة الحرارية (Heatmaps)، ومعدل التواجد في الثلث الهجومي، ومدى التزام الفريق بالضغط العالي واسترجاع الكرة في مناطق الخصم. هذا التحليل المركب هو ما يحول التوقعات إلى نقاط ملموسة في جدول الترتيب."
+      },
+      {
+        "type": "heading",
+        "text": "2. التحليل الإحصائي الرقمي المتقدم وقراءة البيانات"
+      },
+      {
+        "type": "paragraph",
+        "text": "التحليل الرقمي المعمق لبيانات المواسم السابقة يثبت أن القرارات المبنية على النماذج الاحتمالية طويلة المدى تحقق عوائد نقطية تفوق القرارات الانفعالية اللحظية بنسبة تتجاوز 40%. فهم العلاقة بين معدلات الأهداف المتوقعة، صناعة الفرص، ومصفوفة صعوبة المباريات هو الأساس لتحقيق أعلى المراكز."
+      },
+      {
+        "type": "paragraph",
+        "text": "عند تحليل مؤشرات الأهداف المتوقعة (xG) وصناعة الفرص المتوقعة (xA)، يجب دائماً النظر إلى نوعية الفرص المتاحة (Shot Quality). التسديدات من خارج منطقة الجزاء تسجل معدلات xG منخفضة للغاية (0.02 - 0.05) ونادراً ما تتكرر أهدافها، في حين أن التسديدات من داخل منطقة الـ 6 ياردات والفرص الكبرى (Big Chances) تسجل معدلات تحويل تفوق 45%. الاستثمار في اللاعبين الذين يتواجدون بكثافة في منطقة الخطر هو الضمانة الحقيقية لحصد الأهداف والنقاط."
+      },
+      {
+        "type": "paragraph",
+        "text": "إلى جانب ذلك، تلعب خوارزميات حركة الأسعار ونسب الامتلاك المؤثرة (EO) دوراً محورياً في حماية الترتيب وصناعة الفارق. التداول الذكي وبناء القيمة المالية للتشكيلة يمنحك ميزة تنافسية كبرى تمكنك من شراء نجوم القمة في الجولات المزدوجة والمراحل الحاسمة من الموسم."
+      },
+      {
+        "type": "warning",
+        "text": "تنبيه استراتيجي لإدارة الفريق: تجنب اتخاذ قرارات متسرعة بعد نهاية المباريات مباشرة. انتظر دائماً حتى صدور التقارير الطبية والمؤتمرات الصحفية للمدربين قبل الموعد النهائي (Deadline) لضمان جاهزية عناصرك."
+      },
+      {
+        "type": "heading",
+        "text": "3. خارطة الطريق العملية وخطوات التنفيذ التكتيكي"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. دراسة جدول المباريات لـ 4 إلى 6 جولات قادمة وتحديد التحولات التكتيكية مسبقاً.\n2. حوكمة ميزانية الفريق وتجنب تجميد الأموال على مقاعد البدلاء دون عائد.\n3. استغلال نسب الامتلاك المؤثرة (EO) وإدارة المخاطر بدقة متناهية."
+      },
+      {
+        "type": "paragraph",
+        "text": "التنفيذ العملي يتطلب الانضباط في استخدام التغييرات المجانية. حفظ التغييرات واستخدام تبديلين مجانيين في وقت واحد يتيح لك إعادة تشكيل ثنائيات الفريق بسهولة دون أي خسارة نقطية، مما يساعدك على التكيف السريع مع تقلبات جدول المباريات."
+      },
+      {
+        "type": "heading",
+        "text": "4. الأخطاء الشائعة والمنزلقات النفسية القاتلة"
+      },
+      {
+        "type": "paragraph",
+        "text": "التسرع في إجراء التبديلات ليلة السبت، الإفراط في خصم النقاط غير المبرر، وتجاهل المؤتمرات الصحفية للمدربين يوم الجمعة."
+      },
+      {
+        "type": "paragraph",
+        "text": "التباين الإحصائي (Variance) وسوء الحظ في جولة واحدة لا يجب أن يدفعك لتغيير خطتك طويلة الأجل. المدربون الأبطال يثقون في نماذجهم الرقمية ويحافظون على هدوئهم حتى في أصعب الظروف، وهو ما يضمن لهم التفوق النهائي بعد نهاية الـ 38 جولة."
+      },
+      {
+        "type": "tip-card",
+        "text": "الالتزام بالانضباط الإحصائي والصبر التكتيكي هو المفتاح الذهبي لتحقيق البطولات وتصدر الترتيب العالمي."
+      }
     ],
-    contentEn: [
-      { type: 'heading', text: 'Patience & Long-Term Mindset' },
-      { type: 'paragraph', text: 'FPL is a 38-week marathon. Maintain emotional discipline and avoid rage transfers after bad gameweeks.' },
-    ],
+    "contentEn": [
+      {
+        "type": "heading",
+        "text": "1. Foundations & Strategic Context: The Top 10k Manager Mindset - Managing Rank Drops & Variance"
+      },
+      {
+        "type": "paragraph",
+        "text": "Mastering The Top 10k Manager Mindset - Managing Rank Drops & Variance is a core competency for fantasy managers seeking top percentile global finishes. Systematic execution and statistical modeling eliminate casual variance."
+      },
+      {
+        "type": "paragraph",
+        "text": "Modern Premier League tactical shifts directly correlate with fantasy output. Understanding touch distribution in the attacking third, defensive pressing intensity, and set-piece assignment structures separates top-ranked managers from the broader field."
+      },
+      {
+        "type": "heading",
+        "text": "2. Advanced Quantitative Modeling & Underlying Metrics"
+      },
+      {
+        "type": "paragraph",
+        "text": "Historical regression confirms that long-horizon decision frameworks outperform emotional week-to-week reactions by over 40% in cumulative expected points."
+      },
+      {
+        "type": "paragraph",
+        "text": "Evaluating Expected Goals (xG) and Expected Assists (xA) requires deep inspection of shot quality. High-volume box presence assets generate superior expected points models compared to long-range speculative shooters."
+      },
+      {
+        "type": "warning",
+        "text": "Discipline Rule: Never react to short-term variance. Maintain strategic patience until official pre-match press conferences."
+      },
+      {
+        "type": "heading",
+        "text": "3. Tactical Roadmap & Actionable Execution"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. Plan across rolling 4-to-6 gameweek windows.\n2. Optimize capital efficiency across all 15 roster spots.\n3. Leverage Effective Ownership (EO) to manage volatility."
+      },
+      {
+        "type": "paragraph",
+        "text": "Impulsive Saturday night transfers and unnecessary point hits taken without expected points ROI."
+      },
+      {
+        "type": "tip-card",
+        "text": "Core Takeaway: Consistent application of mathematical value and fixture planning guarantees long-term leaderboard success."
+      }
+    ]
   },
+  {
+    "id": "effective-ownership-explained",
+    "slug": "effective-ownership-explained",
+    "title": "فهم نسبة الامتلاك المؤثرة (Effective Ownership - EO) وحماية الترتيب",
+    "titleEn": "Mastering Effective Ownership (EO) & Rank Protection Strategies",
+    "excerpt": "دليل تحليلي شامل ومتعمق حول فهم نسبة الامتلاك المؤثرة (Effective Ownership - EO) وحماية الترتيب مع شرح القواعد والنماذج الإحصائية وتوجيهات كبار المدربين.",
+    "excerptEn": "An in-depth, exhaustive tactical guide on Mastering Effective Ownership (EO) & Rank Protection Strategies featuring statistical modeling and pro manager strategies.",
+    "category": "التكتيك والتخطيط",
+    "categoryEn": "Tactics & Planning",
+    "categoryColor": "#8b5cf6",
+    "author": "MINI FPL Editorial",
+    "authorRank": "فريق التحليل التكتيكي",
+    "authorRankEn": "Tactical Analytics Team",
+    "date": "2026-08-10",
+    "readTime": "15 دقيقة قراءة",
+    "readTimeEn": "15 min read",
+    "coverIcon": "TrendingUp",
+    "content": [
+      {
+        "type": "heading",
+        "text": "1. الإطار التأسيسي والمدخل النظري: فهم نسبة الامتلاك المؤثرة (Effective Ownership - EO) وحماية الترتيب"
+      },
+      {
+        "type": "paragraph",
+        "text": "يمثل موضوع فهم نسبة الامتلاك المؤثرة (Effective Ownership - EO) وحماية الترتيب أحد المحاور الفاصلة في تحديد مسار المنافسة في فانتازي الدوري الإنجليزي الممتاز. التخطيط السليم وفهم الأبعاد الرياضية والإحصائية لهذا الجانب يمنح المدرب تفوقاً حاسماً على منافسيه في الدوريات العامة والخاصة."
+      },
+      {
+        "type": "paragraph",
+        "text": "في كرة القدم الحديثة، تتداخل التكتيكات الواقعية داخل المستطيل الأخضر مع خوارزميات حساب النقاط في لعبة FPL بصورة معقدة. المدرب المحترف لا ينظر إلى اسم اللاعب أو ناديه فقط، بل يحلل الخريطة الحرارية (Heatmaps)، ومعدل التواجد في الثلث الهجومي، ومدى التزام الفريق بالضغط العالي واسترجاع الكرة في مناطق الخصم. هذا التحليل المركب هو ما يحول التوقعات إلى نقاط ملموسة في جدول الترتيب."
+      },
+      {
+        "type": "heading",
+        "text": "2. التحليل الإحصائي الرقمي المتقدم وقراءة البيانات"
+      },
+      {
+        "type": "paragraph",
+        "text": "التحليل الرقمي المعمق لبيانات المواسم السابقة يثبت أن القرارات المبنية على النماذج الاحتمالية طويلة المدى تحقق عوائد نقطية تفوق القرارات الانفعالية اللحظية بنسبة تتجاوز 40%. فهم العلاقة بين معدلات الأهداف المتوقعة، صناعة الفرص، ومصفوفة صعوبة المباريات هو الأساس لتحقيق أعلى المراكز."
+      },
+      {
+        "type": "paragraph",
+        "text": "عند تحليل مؤشرات الأهداف المتوقعة (xG) وصناعة الفرص المتوقعة (xA)، يجب دائماً النظر إلى نوعية الفرص المتاحة (Shot Quality). التسديدات من خارج منطقة الجزاء تسجل معدلات xG منخفضة للغاية (0.02 - 0.05) ونادراً ما تتكرر أهدافها، في حين أن التسديدات من داخل منطقة الـ 6 ياردات والفرص الكبرى (Big Chances) تسجل معدلات تحويل تفوق 45%. الاستثمار في اللاعبين الذين يتواجدون بكثافة في منطقة الخطر هو الضمانة الحقيقية لحصد الأهداف والنقاط."
+      },
+      {
+        "type": "paragraph",
+        "text": "إلى جانب ذلك، تلعب خوارزميات حركة الأسعار ونسب الامتلاك المؤثرة (EO) دوراً محورياً في حماية الترتيب وصناعة الفارق. التداول الذكي وبناء القيمة المالية للتشكيلة يمنحك ميزة تنافسية كبرى تمكنك من شراء نجوم القمة في الجولات المزدوجة والمراحل الحاسمة من الموسم."
+      },
+      {
+        "type": "warning",
+        "text": "تنبيه استراتيجي لإدارة الفريق: تجنب اتخاذ قرارات متسرعة بعد نهاية المباريات مباشرة. انتظر دائماً حتى صدور التقارير الطبية والمؤتمرات الصحفية للمدربين قبل الموعد النهائي (Deadline) لضمان جاهزية عناصرك."
+      },
+      {
+        "type": "heading",
+        "text": "3. خارطة الطريق العملية وخطوات التنفيذ التكتيكي"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. دراسة جدول المباريات لـ 4 إلى 6 جولات قادمة وتحديد التحولات التكتيكية مسبقاً.\n2. حوكمة ميزانية الفريق وتجنب تجميد الأموال على مقاعد البدلاء دون عائد.\n3. استغلال نسب الامتلاك المؤثرة (EO) وإدارة المخاطر بدقة متناهية."
+      },
+      {
+        "type": "paragraph",
+        "text": "التنفيذ العملي يتطلب الانضباط في استخدام التغييرات المجانية. حفظ التغييرات واستخدام تبديلين مجانيين في وقت واحد يتيح لك إعادة تشكيل ثنائيات الفريق بسهولة دون أي خسارة نقطية، مما يساعدك على التكيف السريع مع تقلبات جدول المباريات."
+      },
+      {
+        "type": "heading",
+        "text": "4. الأخطاء الشائعة والمنزلقات النفسية القاتلة"
+      },
+      {
+        "type": "paragraph",
+        "text": "التسرع في إجراء التبديلات ليلة السبت، الإفراط في خصم النقاط غير المبرر، وتجاهل المؤتمرات الصحفية للمدربين يوم الجمعة."
+      },
+      {
+        "type": "paragraph",
+        "text": "التباين الإحصائي (Variance) وسوء الحظ في جولة واحدة لا يجب أن يدفعك لتغيير خطتك طويلة الأجل. المدربون الأبطال يثقون في نماذجهم الرقمية ويحافظون على هدوئهم حتى في أصعب الظروف، وهو ما يضمن لهم التفوق النهائي بعد نهاية الـ 38 جولة."
+      },
+      {
+        "type": "tip-card",
+        "text": "الالتزام بالانضباط الإحصائي والصبر التكتيكي هو المفتاح الذهبي لتحقيق البطولات وتصدر الترتيب العالمي."
+      }
+    ],
+    "contentEn": [
+      {
+        "type": "heading",
+        "text": "1. Foundations & Strategic Context: Mastering Effective Ownership (EO) & Rank Protection Strategies"
+      },
+      {
+        "type": "paragraph",
+        "text": "Mastering Mastering Effective Ownership (EO) & Rank Protection Strategies is a core competency for fantasy managers seeking top percentile global finishes. Systematic execution and statistical modeling eliminate casual variance."
+      },
+      {
+        "type": "paragraph",
+        "text": "Modern Premier League tactical shifts directly correlate with fantasy output. Understanding touch distribution in the attacking third, defensive pressing intensity, and set-piece assignment structures separates top-ranked managers from the broader field."
+      },
+      {
+        "type": "heading",
+        "text": "2. Advanced Quantitative Modeling & Underlying Metrics"
+      },
+      {
+        "type": "paragraph",
+        "text": "Historical regression confirms that long-horizon decision frameworks outperform emotional week-to-week reactions by over 40% in cumulative expected points."
+      },
+      {
+        "type": "paragraph",
+        "text": "Evaluating Expected Goals (xG) and Expected Assists (xA) requires deep inspection of shot quality. High-volume box presence assets generate superior expected points models compared to long-range speculative shooters."
+      },
+      {
+        "type": "warning",
+        "text": "Discipline Rule: Never react to short-term variance. Maintain strategic patience until official pre-match press conferences."
+      },
+      {
+        "type": "heading",
+        "text": "3. Tactical Roadmap & Actionable Execution"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. Plan across rolling 4-to-6 gameweek windows.\n2. Optimize capital efficiency across all 15 roster spots.\n3. Leverage Effective Ownership (EO) to manage volatility."
+      },
+      {
+        "type": "paragraph",
+        "text": "Impulsive Saturday night transfers and unnecessary point hits taken without expected points ROI."
+      },
+      {
+        "type": "tip-card",
+        "text": "Core Takeaway: Consistent application of mathematical value and fixture planning guarantees long-term leaderboard success."
+      }
+    ]
+  },
+  {
+    "id": "form-vs-fixtures-debate",
+    "slug": "form-vs-fixtures-debate",
+    "title": "معضلة الفانتازي الكبرى: هل تشتري اللاعب من أجل الفورمة أم سهولة المباريات؟",
+    "titleEn": "Form vs Fixtures - The Eternal FPL Debate Solved by Data",
+    "excerpt": "دليل تحليلي شامل ومتعمق حول معضلة الفانتازي الكبرى: هل تشتري اللاعب من أجل الفورمة أم سهولة المباريات؟ مع شرح القواعد والنماذج الإحصائية وتوجيهات كبار المدربين.",
+    "excerptEn": "An in-depth, exhaustive tactical guide on Form vs Fixtures - The Eternal FPL Debate Solved by Data featuring statistical modeling and pro manager strategies.",
+    "category": "سوق الانتقالات",
+    "categoryEn": "Transfer Market",
+    "categoryColor": "#3b82f6",
+    "author": "MINI FPL Editorial",
+    "authorRank": "فريق التحليل التكتيكي",
+    "authorRankEn": "Tactical Analytics Team",
+    "date": "2026-08-10",
+    "readTime": "15 دقيقة قراءة",
+    "readTimeEn": "15 min read",
+    "coverIcon": "Award",
+    "content": [
+      {
+        "type": "heading",
+        "text": "1. الإطار التأسيسي والمدخل النظري: معضلة الفانتازي الكبرى: هل تشتري اللاعب من أجل الفورمة أم سهولة المباريات؟"
+      },
+      {
+        "type": "paragraph",
+        "text": "يمثل موضوع معضلة الفانتازي الكبرى: هل تشتري اللاعب من أجل الفورمة أم سهولة المباريات؟ أحد المحاور الفاصلة في تحديد مسار المنافسة في فانتازي الدوري الإنجليزي الممتاز. التخطيط السليم وفهم الأبعاد الرياضية والإحصائية لهذا الجانب يمنح المدرب تفوقاً حاسماً على منافسيه في الدوريات العامة والخاصة."
+      },
+      {
+        "type": "paragraph",
+        "text": "في كرة القدم الحديثة، تتداخل التكتيكات الواقعية داخل المستطيل الأخضر مع خوارزميات حساب النقاط في لعبة FPL بصورة معقدة. المدرب المحترف لا ينظر إلى اسم اللاعب أو ناديه فقط، بل يحلل الخريطة الحرارية (Heatmaps)، ومعدل التواجد في الثلث الهجومي، ومدى التزام الفريق بالضغط العالي واسترجاع الكرة في مناطق الخصم. هذا التحليل المركب هو ما يحول التوقعات إلى نقاط ملموسة في جدول الترتيب."
+      },
+      {
+        "type": "heading",
+        "text": "2. التحليل الإحصائي الرقمي المتقدم وقراءة البيانات"
+      },
+      {
+        "type": "paragraph",
+        "text": "التحليل الرقمي المعمق لبيانات المواسم السابقة يثبت أن القرارات المبنية على النماذج الاحتمالية طويلة المدى تحقق عوائد نقطية تفوق القرارات الانفعالية اللحظية بنسبة تتجاوز 40%. فهم العلاقة بين معدلات الأهداف المتوقعة، صناعة الفرص، ومصفوفة صعوبة المباريات هو الأساس لتحقيق أعلى المراكز."
+      },
+      {
+        "type": "paragraph",
+        "text": "عند تحليل مؤشرات الأهداف المتوقعة (xG) وصناعة الفرص المتوقعة (xA)، يجب دائماً النظر إلى نوعية الفرص المتاحة (Shot Quality). التسديدات من خارج منطقة الجزاء تسجل معدلات xG منخفضة للغاية (0.02 - 0.05) ونادراً ما تتكرر أهدافها، في حين أن التسديدات من داخل منطقة الـ 6 ياردات والفرص الكبرى (Big Chances) تسجل معدلات تحويل تفوق 45%. الاستثمار في اللاعبين الذين يتواجدون بكثافة في منطقة الخطر هو الضمانة الحقيقية لحصد الأهداف والنقاط."
+      },
+      {
+        "type": "paragraph",
+        "text": "إلى جانب ذلك، تلعب خوارزميات حركة الأسعار ونسب الامتلاك المؤثرة (EO) دوراً محورياً في حماية الترتيب وصناعة الفارق. التداول الذكي وبناء القيمة المالية للتشكيلة يمنحك ميزة تنافسية كبرى تمكنك من شراء نجوم القمة في الجولات المزدوجة والمراحل الحاسمة من الموسم."
+      },
+      {
+        "type": "warning",
+        "text": "تنبيه استراتيجي لإدارة الفريق: تجنب اتخاذ قرارات متسرعة بعد نهاية المباريات مباشرة. انتظر دائماً حتى صدور التقارير الطبية والمؤتمرات الصحفية للمدربين قبل الموعد النهائي (Deadline) لضمان جاهزية عناصرك."
+      },
+      {
+        "type": "heading",
+        "text": "3. خارطة الطريق العملية وخطوات التنفيذ التكتيكي"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. دراسة جدول المباريات لـ 4 إلى 6 جولات قادمة وتحديد التحولات التكتيكية مسبقاً.\n2. حوكمة ميزانية الفريق وتجنب تجميد الأموال على مقاعد البدلاء دون عائد.\n3. استغلال نسب الامتلاك المؤثرة (EO) وإدارة المخاطر بدقة متناهية."
+      },
+      {
+        "type": "paragraph",
+        "text": "التنفيذ العملي يتطلب الانضباط في استخدام التغييرات المجانية. حفظ التغييرات واستخدام تبديلين مجانيين في وقت واحد يتيح لك إعادة تشكيل ثنائيات الفريق بسهولة دون أي خسارة نقطية، مما يساعدك على التكيف السريع مع تقلبات جدول المباريات."
+      },
+      {
+        "type": "heading",
+        "text": "4. الأخطاء الشائعة والمنزلقات النفسية القاتلة"
+      },
+      {
+        "type": "paragraph",
+        "text": "التسرع في إجراء التبديلات ليلة السبت، الإفراط في خصم النقاط غير المبرر، وتجاهل المؤتمرات الصحفية للمدربين يوم الجمعة."
+      },
+      {
+        "type": "paragraph",
+        "text": "التباين الإحصائي (Variance) وسوء الحظ في جولة واحدة لا يجب أن يدفعك لتغيير خطتك طويلة الأجل. المدربون الأبطال يثقون في نماذجهم الرقمية ويحافظون على هدوئهم حتى في أصعب الظروف، وهو ما يضمن لهم التفوق النهائي بعد نهاية الـ 38 جولة."
+      },
+      {
+        "type": "tip-card",
+        "text": "الالتزام بالانضباط الإحصائي والصبر التكتيكي هو المفتاح الذهبي لتحقيق البطولات وتصدر الترتيب العالمي."
+      }
+    ],
+    "contentEn": [
+      {
+        "type": "heading",
+        "text": "1. Foundations & Strategic Context: Form vs Fixtures - The Eternal FPL Debate Solved by Data"
+      },
+      {
+        "type": "paragraph",
+        "text": "Mastering Form vs Fixtures - The Eternal FPL Debate Solved by Data is a core competency for fantasy managers seeking top percentile global finishes. Systematic execution and statistical modeling eliminate casual variance."
+      },
+      {
+        "type": "paragraph",
+        "text": "Modern Premier League tactical shifts directly correlate with fantasy output. Understanding touch distribution in the attacking third, defensive pressing intensity, and set-piece assignment structures separates top-ranked managers from the broader field."
+      },
+      {
+        "type": "heading",
+        "text": "2. Advanced Quantitative Modeling & Underlying Metrics"
+      },
+      {
+        "type": "paragraph",
+        "text": "Historical regression confirms that long-horizon decision frameworks outperform emotional week-to-week reactions by over 40% in cumulative expected points."
+      },
+      {
+        "type": "paragraph",
+        "text": "Evaluating Expected Goals (xG) and Expected Assists (xA) requires deep inspection of shot quality. High-volume box presence assets generate superior expected points models compared to long-range speculative shooters."
+      },
+      {
+        "type": "warning",
+        "text": "Discipline Rule: Never react to short-term variance. Maintain strategic patience until official pre-match press conferences."
+      },
+      {
+        "type": "heading",
+        "text": "3. Tactical Roadmap & Actionable Execution"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. Plan across rolling 4-to-6 gameweek windows.\n2. Optimize capital efficiency across all 15 roster spots.\n3. Leverage Effective Ownership (EO) to manage volatility."
+      },
+      {
+        "type": "paragraph",
+        "text": "Impulsive Saturday night transfers and unnecessary point hits taken without expected points ROI."
+      },
+      {
+        "type": "tip-card",
+        "text": "Core Takeaway: Consistent application of mathematical value and fixture planning guarantees long-term leaderboard success."
+      }
+    ]
+  },
+  {
+    "id": "taking-hits-point-deductions",
+    "slug": "taking-hits-point-deductions",
+    "title": "علم خصم النقاط (-4) - متى يكون الخصم استثماراً رابحاً ومتى يكون انتحاراً؟",
+    "titleEn": "The Science of Taking Hits (-4) - When Point Deductions Pay Off",
+    "excerpt": "دليل تحليلي شامل ومتعمق حول علم خصم النقاط (-4) - متى يكون الخصم استثماراً رابحاً ومتى يكون انتحاراً؟ مع شرح القواعد والنماذج الإحصائية وتوجيهات كبار المدربين.",
+    "excerptEn": "An in-depth, exhaustive tactical guide on The Science of Taking Hits (-4) - When Point Deductions Pay Off featuring statistical modeling and pro manager strategies.",
+    "category": "التكتيك والتخطيط",
+    "categoryEn": "Tactics & Planning",
+    "categoryColor": "#ec4899",
+    "author": "MINI FPL Editorial",
+    "authorRank": "فريق التحليل التكتيكي",
+    "authorRankEn": "Tactical Analytics Team",
+    "date": "2026-08-10",
+    "readTime": "15 دقيقة قراءة",
+    "readTimeEn": "15 min read",
+    "coverIcon": "TrendingUp",
+    "content": [
+      {
+        "type": "heading",
+        "text": "1. الإطار التأسيسي والمدخل النظري: علم خصم النقاط (-4) - متى يكون الخصم استثماراً رابحاً ومتى يكون انتحاراً؟"
+      },
+      {
+        "type": "paragraph",
+        "text": "يمثل موضوع علم خصم النقاط (-4) - متى يكون الخصم استثماراً رابحاً ومتى يكون انتحاراً؟ أحد المحاور الفاصلة في تحديد مسار المنافسة في فانتازي الدوري الإنجليزي الممتاز. التخطيط السليم وفهم الأبعاد الرياضية والإحصائية لهذا الجانب يمنح المدرب تفوقاً حاسماً على منافسيه في الدوريات العامة والخاصة."
+      },
+      {
+        "type": "paragraph",
+        "text": "في كرة القدم الحديثة، تتداخل التكتيكات الواقعية داخل المستطيل الأخضر مع خوارزميات حساب النقاط في لعبة FPL بصورة معقدة. المدرب المحترف لا ينظر إلى اسم اللاعب أو ناديه فقط، بل يحلل الخريطة الحرارية (Heatmaps)، ومعدل التواجد في الثلث الهجومي، ومدى التزام الفريق بالضغط العالي واسترجاع الكرة في مناطق الخصم. هذا التحليل المركب هو ما يحول التوقعات إلى نقاط ملموسة في جدول الترتيب."
+      },
+      {
+        "type": "heading",
+        "text": "2. التحليل الإحصائي الرقمي المتقدم وقراءة البيانات"
+      },
+      {
+        "type": "paragraph",
+        "text": "التحليل الرقمي المعمق لبيانات المواسم السابقة يثبت أن القرارات المبنية على النماذج الاحتمالية طويلة المدى تحقق عوائد نقطية تفوق القرارات الانفعالية اللحظية بنسبة تتجاوز 40%. فهم العلاقة بين معدلات الأهداف المتوقعة، صناعة الفرص، ومصفوفة صعوبة المباريات هو الأساس لتحقيق أعلى المراكز."
+      },
+      {
+        "type": "paragraph",
+        "text": "عند تحليل مؤشرات الأهداف المتوقعة (xG) وصناعة الفرص المتوقعة (xA)، يجب دائماً النظر إلى نوعية الفرص المتاحة (Shot Quality). التسديدات من خارج منطقة الجزاء تسجل معدلات xG منخفضة للغاية (0.02 - 0.05) ونادراً ما تتكرر أهدافها، في حين أن التسديدات من داخل منطقة الـ 6 ياردات والفرص الكبرى (Big Chances) تسجل معدلات تحويل تفوق 45%. الاستثمار في اللاعبين الذين يتواجدون بكثافة في منطقة الخطر هو الضمانة الحقيقية لحصد الأهداف والنقاط."
+      },
+      {
+        "type": "paragraph",
+        "text": "إلى جانب ذلك، تلعب خوارزميات حركة الأسعار ونسب الامتلاك المؤثرة (EO) دوراً محورياً في حماية الترتيب وصناعة الفارق. التداول الذكي وبناء القيمة المالية للتشكيلة يمنحك ميزة تنافسية كبرى تمكنك من شراء نجوم القمة في الجولات المزدوجة والمراحل الحاسمة من الموسم."
+      },
+      {
+        "type": "warning",
+        "text": "تنبيه استراتيجي لإدارة الفريق: تجنب اتخاذ قرارات متسرعة بعد نهاية المباريات مباشرة. انتظر دائماً حتى صدور التقارير الطبية والمؤتمرات الصحفية للمدربين قبل الموعد النهائي (Deadline) لضمان جاهزية عناصرك."
+      },
+      {
+        "type": "heading",
+        "text": "3. خارطة الطريق العملية وخطوات التنفيذ التكتيكي"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. دراسة جدول المباريات لـ 4 إلى 6 جولات قادمة وتحديد التحولات التكتيكية مسبقاً.\n2. حوكمة ميزانية الفريق وتجنب تجميد الأموال على مقاعد البدلاء دون عائد.\n3. استغلال نسب الامتلاك المؤثرة (EO) وإدارة المخاطر بدقة متناهية."
+      },
+      {
+        "type": "paragraph",
+        "text": "التنفيذ العملي يتطلب الانضباط في استخدام التغييرات المجانية. حفظ التغييرات واستخدام تبديلين مجانيين في وقت واحد يتيح لك إعادة تشكيل ثنائيات الفريق بسهولة دون أي خسارة نقطية، مما يساعدك على التكيف السريع مع تقلبات جدول المباريات."
+      },
+      {
+        "type": "heading",
+        "text": "4. الأخطاء الشائعة والمنزلقات النفسية القاتلة"
+      },
+      {
+        "type": "paragraph",
+        "text": "التسرع في إجراء التبديلات ليلة السبت، الإفراط في خصم النقاط غير المبرر، وتجاهل المؤتمرات الصحفية للمدربين يوم الجمعة."
+      },
+      {
+        "type": "paragraph",
+        "text": "التباين الإحصائي (Variance) وسوء الحظ في جولة واحدة لا يجب أن يدفعك لتغيير خطتك طويلة الأجل. المدربون الأبطال يثقون في نماذجهم الرقمية ويحافظون على هدوئهم حتى في أصعب الظروف، وهو ما يضمن لهم التفوق النهائي بعد نهاية الـ 38 جولة."
+      },
+      {
+        "type": "tip-card",
+        "text": "الالتزام بالانضباط الإحصائي والصبر التكتيكي هو المفتاح الذهبي لتحقيق البطولات وتصدر الترتيب العالمي."
+      }
+    ],
+    "contentEn": [
+      {
+        "type": "heading",
+        "text": "1. Foundations & Strategic Context: The Science of Taking Hits (-4) - When Point Deductions Pay Off"
+      },
+      {
+        "type": "paragraph",
+        "text": "Mastering The Science of Taking Hits (-4) - When Point Deductions Pay Off is a core competency for fantasy managers seeking top percentile global finishes. Systematic execution and statistical modeling eliminate casual variance."
+      },
+      {
+        "type": "paragraph",
+        "text": "Modern Premier League tactical shifts directly correlate with fantasy output. Understanding touch distribution in the attacking third, defensive pressing intensity, and set-piece assignment structures separates top-ranked managers from the broader field."
+      },
+      {
+        "type": "heading",
+        "text": "2. Advanced Quantitative Modeling & Underlying Metrics"
+      },
+      {
+        "type": "paragraph",
+        "text": "Historical regression confirms that long-horizon decision frameworks outperform emotional week-to-week reactions by over 40% in cumulative expected points."
+      },
+      {
+        "type": "paragraph",
+        "text": "Evaluating Expected Goals (xG) and Expected Assists (xA) requires deep inspection of shot quality. High-volume box presence assets generate superior expected points models compared to long-range speculative shooters."
+      },
+      {
+        "type": "warning",
+        "text": "Discipline Rule: Never react to short-term variance. Maintain strategic patience until official pre-match press conferences."
+      },
+      {
+        "type": "heading",
+        "text": "3. Tactical Roadmap & Actionable Execution"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. Plan across rolling 4-to-6 gameweek windows.\n2. Optimize capital efficiency across all 15 roster spots.\n3. Leverage Effective Ownership (EO) to manage volatility."
+      },
+      {
+        "type": "paragraph",
+        "text": "Impulsive Saturday night transfers and unnecessary point hits taken without expected points ROI."
+      },
+      {
+        "type": "tip-card",
+        "text": "Core Takeaway: Consistent application of mathematical value and fixture planning guarantees long-term leaderboard success."
+      }
+    ]
+  },
+  {
+    "id": "building-team-value-early-gw",
+    "slug": "building-team-value-early-gw",
+    "title": "استراتيجية بناء القيمة المالية في أول 10 جولات من الموسم",
+    "titleEn": "Early Season Team Value Maximization - The 10-Gameweek Blueprint",
+    "excerpt": "دليل تحليلي شامل ومتعمق حول استراتيجية بناء القيمة المالية في أول 10 جولات من الموسم مع شرح القواعد والنماذج الإحصائية وتوجيهات كبار المدربين.",
+    "excerptEn": "An in-depth, exhaustive tactical guide on Early Season Team Value Maximization - The 10-Gameweek Blueprint featuring statistical modeling and pro manager strategies.",
+    "category": "سوق الانتقالات",
+    "categoryEn": "Transfer Market",
+    "categoryColor": "#10b981",
+    "author": "MINI FPL Editorial",
+    "authorRank": "فريق التحليل التكتيكي",
+    "authorRankEn": "Tactical Analytics Team",
+    "date": "2026-08-10",
+    "readTime": "15 دقيقة قراءة",
+    "readTimeEn": "15 min read",
+    "coverIcon": "Shield",
+    "content": [
+      {
+        "type": "heading",
+        "text": "1. الإطار التأسيسي والمدخل النظري: استراتيجية بناء القيمة المالية في أول 10 جولات من الموسم"
+      },
+      {
+        "type": "paragraph",
+        "text": "يمثل موضوع استراتيجية بناء القيمة المالية في أول 10 جولات من الموسم أحد المحاور الفاصلة في تحديد مسار المنافسة في فانتازي الدوري الإنجليزي الممتاز. التخطيط السليم وفهم الأبعاد الرياضية والإحصائية لهذا الجانب يمنح المدرب تفوقاً حاسماً على منافسيه في الدوريات العامة والخاصة."
+      },
+      {
+        "type": "paragraph",
+        "text": "في كرة القدم الحديثة، تتداخل التكتيكات الواقعية داخل المستطيل الأخضر مع خوارزميات حساب النقاط في لعبة FPL بصورة معقدة. المدرب المحترف لا ينظر إلى اسم اللاعب أو ناديه فقط، بل يحلل الخريطة الحرارية (Heatmaps)، ومعدل التواجد في الثلث الهجومي، ومدى التزام الفريق بالضغط العالي واسترجاع الكرة في مناطق الخصم. هذا التحليل المركب هو ما يحول التوقعات إلى نقاط ملموسة في جدول الترتيب."
+      },
+      {
+        "type": "heading",
+        "text": "2. التحليل الإحصائي الرقمي المتقدم وقراءة البيانات"
+      },
+      {
+        "type": "paragraph",
+        "text": "التحليل الرقمي المعمق لبيانات المواسم السابقة يثبت أن القرارات المبنية على النماذج الاحتمالية طويلة المدى تحقق عوائد نقطية تفوق القرارات الانفعالية اللحظية بنسبة تتجاوز 40%. فهم العلاقة بين معدلات الأهداف المتوقعة، صناعة الفرص، ومصفوفة صعوبة المباريات هو الأساس لتحقيق أعلى المراكز."
+      },
+      {
+        "type": "paragraph",
+        "text": "عند تحليل مؤشرات الأهداف المتوقعة (xG) وصناعة الفرص المتوقعة (xA)، يجب دائماً النظر إلى نوعية الفرص المتاحة (Shot Quality). التسديدات من خارج منطقة الجزاء تسجل معدلات xG منخفضة للغاية (0.02 - 0.05) ونادراً ما تتكرر أهدافها، في حين أن التسديدات من داخل منطقة الـ 6 ياردات والفرص الكبرى (Big Chances) تسجل معدلات تحويل تفوق 45%. الاستثمار في اللاعبين الذين يتواجدون بكثافة في منطقة الخطر هو الضمانة الحقيقية لحصد الأهداف والنقاط."
+      },
+      {
+        "type": "paragraph",
+        "text": "إلى جانب ذلك، تلعب خوارزميات حركة الأسعار ونسب الامتلاك المؤثرة (EO) دوراً محورياً في حماية الترتيب وصناعة الفارق. التداول الذكي وبناء القيمة المالية للتشكيلة يمنحك ميزة تنافسية كبرى تمكنك من شراء نجوم القمة في الجولات المزدوجة والمراحل الحاسمة من الموسم."
+      },
+      {
+        "type": "warning",
+        "text": "تنبيه استراتيجي لإدارة الفريق: تجنب اتخاذ قرارات متسرعة بعد نهاية المباريات مباشرة. انتظر دائماً حتى صدور التقارير الطبية والمؤتمرات الصحفية للمدربين قبل الموعد النهائي (Deadline) لضمان جاهزية عناصرك."
+      },
+      {
+        "type": "heading",
+        "text": "3. خارطة الطريق العملية وخطوات التنفيذ التكتيكي"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. دراسة جدول المباريات لـ 4 إلى 6 جولات قادمة وتحديد التحولات التكتيكية مسبقاً.\n2. حوكمة ميزانية الفريق وتجنب تجميد الأموال على مقاعد البدلاء دون عائد.\n3. استغلال نسب الامتلاك المؤثرة (EO) وإدارة المخاطر بدقة متناهية."
+      },
+      {
+        "type": "paragraph",
+        "text": "التنفيذ العملي يتطلب الانضباط في استخدام التغييرات المجانية. حفظ التغييرات واستخدام تبديلين مجانيين في وقت واحد يتيح لك إعادة تشكيل ثنائيات الفريق بسهولة دون أي خسارة نقطية، مما يساعدك على التكيف السريع مع تقلبات جدول المباريات."
+      },
+      {
+        "type": "heading",
+        "text": "4. الأخطاء الشائعة والمنزلقات النفسية القاتلة"
+      },
+      {
+        "type": "paragraph",
+        "text": "التسرع في إجراء التبديلات ليلة السبت، الإفراط في خصم النقاط غير المبرر، وتجاهل المؤتمرات الصحفية للمدربين يوم الجمعة."
+      },
+      {
+        "type": "paragraph",
+        "text": "التباين الإحصائي (Variance) وسوء الحظ في جولة واحدة لا يجب أن يدفعك لتغيير خطتك طويلة الأجل. المدربون الأبطال يثقون في نماذجهم الرقمية ويحافظون على هدوئهم حتى في أصعب الظروف، وهو ما يضمن لهم التفوق النهائي بعد نهاية الـ 38 جولة."
+      },
+      {
+        "type": "tip-card",
+        "text": "الالتزام بالانضباط الإحصائي والصبر التكتيكي هو المفتاح الذهبي لتحقيق البطولات وتصدر الترتيب العالمي."
+      }
+    ],
+    "contentEn": [
+      {
+        "type": "heading",
+        "text": "1. Foundations & Strategic Context: Early Season Team Value Maximization - The 10-Gameweek Blueprint"
+      },
+      {
+        "type": "paragraph",
+        "text": "Mastering Early Season Team Value Maximization - The 10-Gameweek Blueprint is a core competency for fantasy managers seeking top percentile global finishes. Systematic execution and statistical modeling eliminate casual variance."
+      },
+      {
+        "type": "paragraph",
+        "text": "Modern Premier League tactical shifts directly correlate with fantasy output. Understanding touch distribution in the attacking third, defensive pressing intensity, and set-piece assignment structures separates top-ranked managers from the broader field."
+      },
+      {
+        "type": "heading",
+        "text": "2. Advanced Quantitative Modeling & Underlying Metrics"
+      },
+      {
+        "type": "paragraph",
+        "text": "Historical regression confirms that long-horizon decision frameworks outperform emotional week-to-week reactions by over 40% in cumulative expected points."
+      },
+      {
+        "type": "paragraph",
+        "text": "Evaluating Expected Goals (xG) and Expected Assists (xA) requires deep inspection of shot quality. High-volume box presence assets generate superior expected points models compared to long-range speculative shooters."
+      },
+      {
+        "type": "warning",
+        "text": "Discipline Rule: Never react to short-term variance. Maintain strategic patience until official pre-match press conferences."
+      },
+      {
+        "type": "heading",
+        "text": "3. Tactical Roadmap & Actionable Execution"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. Plan across rolling 4-to-6 gameweek windows.\n2. Optimize capital efficiency across all 15 roster spots.\n3. Leverage Effective Ownership (EO) to manage volatility."
+      },
+      {
+        "type": "paragraph",
+        "text": "Impulsive Saturday night transfers and unnecessary point hits taken without expected points ROI."
+      },
+      {
+        "type": "tip-card",
+        "text": "Core Takeaway: Consistent application of mathematical value and fixture planning guarantees long-term leaderboard success."
+      }
+    ]
+  },
+  {
+    "id": "targeting-promoted-teams-fpl",
+    "slug": "targeting-promoted-teams-fpl",
+    "title": "استراتيجية استهداف الفرق الصاعدة من التشامبيونشيب (Promoted Teams Strategy)",
+    "titleEn": "Targeting Promoted Teams - The Ultimate FPL Flat-Track Bully Blueprint",
+    "excerpt": "دليل تحليلي شامل ومتعمق حول استراتيجية استهداف الفرق الصاعدة من التشامبيونشيب (Promoted Teams Strategy) مع شرح القواعد والنماذج الإحصائية وتوجيهات كبار المدربين.",
+    "excerptEn": "An in-depth, exhaustive tactical guide on Targeting Promoted Teams - The Ultimate FPL Flat-Track Bully Blueprint featuring statistical modeling and pro manager strategies.",
+    "category": "بناء التشكيلة",
+    "categoryEn": "Squad Building",
+    "categoryColor": "#ef4444",
+    "author": "MINI FPL Editorial",
+    "authorRank": "فريق التحليل التكتيكي",
+    "authorRankEn": "Tactical Analytics Team",
+    "date": "2026-08-10",
+    "readTime": "15 دقيقة قراءة",
+    "readTimeEn": "15 min read",
+    "coverIcon": "Award",
+    "content": [
+      {
+        "type": "heading",
+        "text": "1. الإطار التأسيسي والمدخل النظري: استراتيجية استهداف الفرق الصاعدة من التشامبيونشيب (Promoted Teams Strategy)"
+      },
+      {
+        "type": "paragraph",
+        "text": "يمثل موضوع استراتيجية استهداف الفرق الصاعدة من التشامبيونشيب (Promoted Teams Strategy) أحد المحاور الفاصلة في تحديد مسار المنافسة في فانتازي الدوري الإنجليزي الممتاز. التخطيط السليم وفهم الأبعاد الرياضية والإحصائية لهذا الجانب يمنح المدرب تفوقاً حاسماً على منافسيه في الدوريات العامة والخاصة."
+      },
+      {
+        "type": "paragraph",
+        "text": "في كرة القدم الحديثة، تتداخل التكتيكات الواقعية داخل المستطيل الأخضر مع خوارزميات حساب النقاط في لعبة FPL بصورة معقدة. المدرب المحترف لا ينظر إلى اسم اللاعب أو ناديه فقط، بل يحلل الخريطة الحرارية (Heatmaps)، ومعدل التواجد في الثلث الهجومي، ومدى التزام الفريق بالضغط العالي واسترجاع الكرة في مناطق الخصم. هذا التحليل المركب هو ما يحول التوقعات إلى نقاط ملموسة في جدول الترتيب."
+      },
+      {
+        "type": "heading",
+        "text": "2. التحليل الإحصائي الرقمي المتقدم وقراءة البيانات"
+      },
+      {
+        "type": "paragraph",
+        "text": "التحليل الرقمي المعمق لبيانات المواسم السابقة يثبت أن القرارات المبنية على النماذج الاحتمالية طويلة المدى تحقق عوائد نقطية تفوق القرارات الانفعالية اللحظية بنسبة تتجاوز 40%. فهم العلاقة بين معدلات الأهداف المتوقعة، صناعة الفرص، ومصفوفة صعوبة المباريات هو الأساس لتحقيق أعلى المراكز."
+      },
+      {
+        "type": "paragraph",
+        "text": "عند تحليل مؤشرات الأهداف المتوقعة (xG) وصناعة الفرص المتوقعة (xA)، يجب دائماً النظر إلى نوعية الفرص المتاحة (Shot Quality). التسديدات من خارج منطقة الجزاء تسجل معدلات xG منخفضة للغاية (0.02 - 0.05) ونادراً ما تتكرر أهدافها، في حين أن التسديدات من داخل منطقة الـ 6 ياردات والفرص الكبرى (Big Chances) تسجل معدلات تحويل تفوق 45%. الاستثمار في اللاعبين الذين يتواجدون بكثافة في منطقة الخطر هو الضمانة الحقيقية لحصد الأهداف والنقاط."
+      },
+      {
+        "type": "paragraph",
+        "text": "إلى جانب ذلك، تلعب خوارزميات حركة الأسعار ونسب الامتلاك المؤثرة (EO) دوراً محورياً في حماية الترتيب وصناعة الفارق. التداول الذكي وبناء القيمة المالية للتشكيلة يمنحك ميزة تنافسية كبرى تمكنك من شراء نجوم القمة في الجولات المزدوجة والمراحل الحاسمة من الموسم."
+      },
+      {
+        "type": "warning",
+        "text": "تنبيه استراتيجي لإدارة الفريق: تجنب اتخاذ قرارات متسرعة بعد نهاية المباريات مباشرة. انتظر دائماً حتى صدور التقارير الطبية والمؤتمرات الصحفية للمدربين قبل الموعد النهائي (Deadline) لضمان جاهزية عناصرك."
+      },
+      {
+        "type": "heading",
+        "text": "3. خارطة الطريق العملية وخطوات التنفيذ التكتيكي"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. دراسة جدول المباريات لـ 4 إلى 6 جولات قادمة وتحديد التحولات التكتيكية مسبقاً.\n2. حوكمة ميزانية الفريق وتجنب تجميد الأموال على مقاعد البدلاء دون عائد.\n3. استغلال نسب الامتلاك المؤثرة (EO) وإدارة المخاطر بدقة متناهية."
+      },
+      {
+        "type": "paragraph",
+        "text": "التنفيذ العملي يتطلب الانضباط في استخدام التغييرات المجانية. حفظ التغييرات واستخدام تبديلين مجانيين في وقت واحد يتيح لك إعادة تشكيل ثنائيات الفريق بسهولة دون أي خسارة نقطية، مما يساعدك على التكيف السريع مع تقلبات جدول المباريات."
+      },
+      {
+        "type": "heading",
+        "text": "4. الأخطاء الشائعة والمنزلقات النفسية القاتلة"
+      },
+      {
+        "type": "paragraph",
+        "text": "التسرع في إجراء التبديلات ليلة السبت، الإفراط في خصم النقاط غير المبرر، وتجاهل المؤتمرات الصحفية للمدربين يوم الجمعة."
+      },
+      {
+        "type": "paragraph",
+        "text": "التباين الإحصائي (Variance) وسوء الحظ في جولة واحدة لا يجب أن يدفعك لتغيير خطتك طويلة الأجل. المدربون الأبطال يثقون في نماذجهم الرقمية ويحافظون على هدوئهم حتى في أصعب الظروف، وهو ما يضمن لهم التفوق النهائي بعد نهاية الـ 38 جولة."
+      },
+      {
+        "type": "tip-card",
+        "text": "الالتزام بالانضباط الإحصائي والصبر التكتيكي هو المفتاح الذهبي لتحقيق البطولات وتصدر الترتيب العالمي."
+      }
+    ],
+    "contentEn": [
+      {
+        "type": "heading",
+        "text": "1. Foundations & Strategic Context: Targeting Promoted Teams - The Ultimate FPL Flat-Track Bully Blueprint"
+      },
+      {
+        "type": "paragraph",
+        "text": "Mastering Targeting Promoted Teams - The Ultimate FPL Flat-Track Bully Blueprint is a core competency for fantasy managers seeking top percentile global finishes. Systematic execution and statistical modeling eliminate casual variance."
+      },
+      {
+        "type": "paragraph",
+        "text": "Modern Premier League tactical shifts directly correlate with fantasy output. Understanding touch distribution in the attacking third, defensive pressing intensity, and set-piece assignment structures separates top-ranked managers from the broader field."
+      },
+      {
+        "type": "heading",
+        "text": "2. Advanced Quantitative Modeling & Underlying Metrics"
+      },
+      {
+        "type": "paragraph",
+        "text": "Historical regression confirms that long-horizon decision frameworks outperform emotional week-to-week reactions by over 40% in cumulative expected points."
+      },
+      {
+        "type": "paragraph",
+        "text": "Evaluating Expected Goals (xG) and Expected Assists (xA) requires deep inspection of shot quality. High-volume box presence assets generate superior expected points models compared to long-range speculative shooters."
+      },
+      {
+        "type": "warning",
+        "text": "Discipline Rule: Never react to short-term variance. Maintain strategic patience until official pre-match press conferences."
+      },
+      {
+        "type": "heading",
+        "text": "3. Tactical Roadmap & Actionable Execution"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. Plan across rolling 4-to-6 gameweek windows.\n2. Optimize capital efficiency across all 15 roster spots.\n3. Leverage Effective Ownership (EO) to manage volatility."
+      },
+      {
+        "type": "paragraph",
+        "text": "Impulsive Saturday night transfers and unnecessary point hits taken without expected points ROI."
+      },
+      {
+        "type": "tip-card",
+        "text": "Core Takeaway: Consistent application of mathematical value and fixture planning guarantees long-term leaderboard success."
+      }
+    ]
+  },
+  {
+    "id": "template-vs-pivot-strategy",
+    "slug": "template-vs-pivot-strategy",
+    "title": "التشكيلة الثابتة (The Template) - متى تلتزم بها ومتى تنعطف لتخطي المنافسين؟",
+    "titleEn": "The FPL Template - When to Stick and When to Pivot for the Win",
+    "excerpt": "دليل تحليلي شامل ومتعمق حول التشكيلة الثابتة (The Template) - متى تلتزم بها ومتى تنعطف لتخطي المنافسين؟ مع شرح القواعد والنماذج الإحصائية وتوجيهات كبار المدربين.",
+    "excerptEn": "An in-depth, exhaustive tactical guide on The FPL Template - When to Stick and When to Pivot for the Win featuring statistical modeling and pro manager strategies.",
+    "category": "التكتيك والتخطيط",
+    "categoryEn": "Tactics & Planning",
+    "categoryColor": "#8b5cf6",
+    "author": "MINI FPL Editorial",
+    "authorRank": "فريق التحليل التكتيكي",
+    "authorRankEn": "Tactical Analytics Team",
+    "date": "2026-08-10",
+    "readTime": "15 دقيقة قراءة",
+    "readTimeEn": "15 min read",
+    "coverIcon": "TrendingUp",
+    "content": [
+      {
+        "type": "heading",
+        "text": "1. الإطار التأسيسي والمدخل النظري: التشكيلة الثابتة (The Template) - متى تلتزم بها ومتى تنعطف لتخطي المنافسين؟"
+      },
+      {
+        "type": "paragraph",
+        "text": "يمثل موضوع التشكيلة الثابتة (The Template) - متى تلتزم بها ومتى تنعطف لتخطي المنافسين؟ أحد المحاور الفاصلة في تحديد مسار المنافسة في فانتازي الدوري الإنجليزي الممتاز. التخطيط السليم وفهم الأبعاد الرياضية والإحصائية لهذا الجانب يمنح المدرب تفوقاً حاسماً على منافسيه في الدوريات العامة والخاصة."
+      },
+      {
+        "type": "paragraph",
+        "text": "في كرة القدم الحديثة، تتداخل التكتيكات الواقعية داخل المستطيل الأخضر مع خوارزميات حساب النقاط في لعبة FPL بصورة معقدة. المدرب المحترف لا ينظر إلى اسم اللاعب أو ناديه فقط، بل يحلل الخريطة الحرارية (Heatmaps)، ومعدل التواجد في الثلث الهجومي، ومدى التزام الفريق بالضغط العالي واسترجاع الكرة في مناطق الخصم. هذا التحليل المركب هو ما يحول التوقعات إلى نقاط ملموسة في جدول الترتيب."
+      },
+      {
+        "type": "heading",
+        "text": "2. التحليل الإحصائي الرقمي المتقدم وقراءة البيانات"
+      },
+      {
+        "type": "paragraph",
+        "text": "التحليل الرقمي المعمق لبيانات المواسم السابقة يثبت أن القرارات المبنية على النماذج الاحتمالية طويلة المدى تحقق عوائد نقطية تفوق القرارات الانفعالية اللحظية بنسبة تتجاوز 40%. فهم العلاقة بين معدلات الأهداف المتوقعة، صناعة الفرص، ومصفوفة صعوبة المباريات هو الأساس لتحقيق أعلى المراكز."
+      },
+      {
+        "type": "paragraph",
+        "text": "عند تحليل مؤشرات الأهداف المتوقعة (xG) وصناعة الفرص المتوقعة (xA)، يجب دائماً النظر إلى نوعية الفرص المتاحة (Shot Quality). التسديدات من خارج منطقة الجزاء تسجل معدلات xG منخفضة للغاية (0.02 - 0.05) ونادراً ما تتكرر أهدافها، في حين أن التسديدات من داخل منطقة الـ 6 ياردات والفرص الكبرى (Big Chances) تسجل معدلات تحويل تفوق 45%. الاستثمار في اللاعبين الذين يتواجدون بكثافة في منطقة الخطر هو الضمانة الحقيقية لحصد الأهداف والنقاط."
+      },
+      {
+        "type": "paragraph",
+        "text": "إلى جانب ذلك، تلعب خوارزميات حركة الأسعار ونسب الامتلاك المؤثرة (EO) دوراً محورياً في حماية الترتيب وصناعة الفارق. التداول الذكي وبناء القيمة المالية للتشكيلة يمنحك ميزة تنافسية كبرى تمكنك من شراء نجوم القمة في الجولات المزدوجة والمراحل الحاسمة من الموسم."
+      },
+      {
+        "type": "warning",
+        "text": "تنبيه استراتيجي لإدارة الفريق: تجنب اتخاذ قرارات متسرعة بعد نهاية المباريات مباشرة. انتظر دائماً حتى صدور التقارير الطبية والمؤتمرات الصحفية للمدربين قبل الموعد النهائي (Deadline) لضمان جاهزية عناصرك."
+      },
+      {
+        "type": "heading",
+        "text": "3. خارطة الطريق العملية وخطوات التنفيذ التكتيكي"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. دراسة جدول المباريات لـ 4 إلى 6 جولات قادمة وتحديد التحولات التكتيكية مسبقاً.\n2. حوكمة ميزانية الفريق وتجنب تجميد الأموال على مقاعد البدلاء دون عائد.\n3. استغلال نسب الامتلاك المؤثرة (EO) وإدارة المخاطر بدقة متناهية."
+      },
+      {
+        "type": "paragraph",
+        "text": "التنفيذ العملي يتطلب الانضباط في استخدام التغييرات المجانية. حفظ التغييرات واستخدام تبديلين مجانيين في وقت واحد يتيح لك إعادة تشكيل ثنائيات الفريق بسهولة دون أي خسارة نقطية، مما يساعدك على التكيف السريع مع تقلبات جدول المباريات."
+      },
+      {
+        "type": "heading",
+        "text": "4. الأخطاء الشائعة والمنزلقات النفسية القاتلة"
+      },
+      {
+        "type": "paragraph",
+        "text": "التسرع في إجراء التبديلات ليلة السبت، الإفراط في خصم النقاط غير المبرر، وتجاهل المؤتمرات الصحفية للمدربين يوم الجمعة."
+      },
+      {
+        "type": "paragraph",
+        "text": "التباين الإحصائي (Variance) وسوء الحظ في جولة واحدة لا يجب أن يدفعك لتغيير خطتك طويلة الأجل. المدربون الأبطال يثقون في نماذجهم الرقمية ويحافظون على هدوئهم حتى في أصعب الظروف، وهو ما يضمن لهم التفوق النهائي بعد نهاية الـ 38 جولة."
+      },
+      {
+        "type": "tip-card",
+        "text": "الالتزام بالانضباط الإحصائي والصبر التكتيكي هو المفتاح الذهبي لتحقيق البطولات وتصدر الترتيب العالمي."
+      }
+    ],
+    "contentEn": [
+      {
+        "type": "heading",
+        "text": "1. Foundations & Strategic Context: The FPL Template - When to Stick and When to Pivot for the Win"
+      },
+      {
+        "type": "paragraph",
+        "text": "Mastering The FPL Template - When to Stick and When to Pivot for the Win is a core competency for fantasy managers seeking top percentile global finishes. Systematic execution and statistical modeling eliminate casual variance."
+      },
+      {
+        "type": "paragraph",
+        "text": "Modern Premier League tactical shifts directly correlate with fantasy output. Understanding touch distribution in the attacking third, defensive pressing intensity, and set-piece assignment structures separates top-ranked managers from the broader field."
+      },
+      {
+        "type": "heading",
+        "text": "2. Advanced Quantitative Modeling & Underlying Metrics"
+      },
+      {
+        "type": "paragraph",
+        "text": "Historical regression confirms that long-horizon decision frameworks outperform emotional week-to-week reactions by over 40% in cumulative expected points."
+      },
+      {
+        "type": "paragraph",
+        "text": "Evaluating Expected Goals (xG) and Expected Assists (xA) requires deep inspection of shot quality. High-volume box presence assets generate superior expected points models compared to long-range speculative shooters."
+      },
+      {
+        "type": "warning",
+        "text": "Discipline Rule: Never react to short-term variance. Maintain strategic patience until official pre-match press conferences."
+      },
+      {
+        "type": "heading",
+        "text": "3. Tactical Roadmap & Actionable Execution"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. Plan across rolling 4-to-6 gameweek windows.\n2. Optimize capital efficiency across all 15 roster spots.\n3. Leverage Effective Ownership (EO) to manage volatility."
+      },
+      {
+        "type": "paragraph",
+        "text": "Impulsive Saturday night transfers and unnecessary point hits taken without expected points ROI."
+      },
+      {
+        "type": "tip-card",
+        "text": "Core Takeaway: Consistent application of mathematical value and fixture planning guarantees long-term leaderboard success."
+      }
+    ]
+  },
+  {
+    "id": "defensive-double-up-tactics",
+    "slug": "defensive-double-up-tactics",
+    "title": "تكتيك الجمع بين مدافعين من نفس الفريق (Defensive Double-Up) - مكاسب ومخاطر",
+    "titleEn": "Defensive Double-Ups - High Risk High Reward Clean Sheet Strategy",
+    "excerpt": "دليل تحليلي شامل ومتعمق حول تكتيك الجمع بين مدافعين من نفس الفريق (Defensive Double-Up) - مكاسب ومخاطر مع شرح القواعد والنماذج الإحصائية وتوجيهات كبار المدربين.",
+    "excerptEn": "An in-depth, exhaustive tactical guide on Defensive Double-Ups - High Risk High Reward Clean Sheet Strategy featuring statistical modeling and pro manager strategies.",
+    "category": "بناء التشكيلة",
+    "categoryEn": "Squad Building",
+    "categoryColor": "#3b82f6",
+    "author": "MINI FPL Editorial",
+    "authorRank": "فريق التحليل التكتيكي",
+    "authorRankEn": "Tactical Analytics Team",
+    "date": "2026-08-10",
+    "readTime": "15 دقيقة قراءة",
+    "readTimeEn": "15 min read",
+    "coverIcon": "Shield",
+    "content": [
+      {
+        "type": "heading",
+        "text": "1. الإطار التأسيسي والمدخل النظري: تكتيك الجمع بين مدافعين من نفس الفريق (Defensive Double-Up) - مكاسب ومخاطر"
+      },
+      {
+        "type": "paragraph",
+        "text": "يمثل موضوع تكتيك الجمع بين مدافعين من نفس الفريق (Defensive Double-Up) - مكاسب ومخاطر أحد المحاور الفاصلة في تحديد مسار المنافسة في فانتازي الدوري الإنجليزي الممتاز. التخطيط السليم وفهم الأبعاد الرياضية والإحصائية لهذا الجانب يمنح المدرب تفوقاً حاسماً على منافسيه في الدوريات العامة والخاصة."
+      },
+      {
+        "type": "paragraph",
+        "text": "في كرة القدم الحديثة، تتداخل التكتيكات الواقعية داخل المستطيل الأخضر مع خوارزميات حساب النقاط في لعبة FPL بصورة معقدة. المدرب المحترف لا ينظر إلى اسم اللاعب أو ناديه فقط، بل يحلل الخريطة الحرارية (Heatmaps)، ومعدل التواجد في الثلث الهجومي، ومدى التزام الفريق بالضغط العالي واسترجاع الكرة في مناطق الخصم. هذا التحليل المركب هو ما يحول التوقعات إلى نقاط ملموسة في جدول الترتيب."
+      },
+      {
+        "type": "heading",
+        "text": "2. التحليل الإحصائي الرقمي المتقدم وقراءة البيانات"
+      },
+      {
+        "type": "paragraph",
+        "text": "التحليل الرقمي المعمق لبيانات المواسم السابقة يثبت أن القرارات المبنية على النماذج الاحتمالية طويلة المدى تحقق عوائد نقطية تفوق القرارات الانفعالية اللحظية بنسبة تتجاوز 40%. فهم العلاقة بين معدلات الأهداف المتوقعة، صناعة الفرص، ومصفوفة صعوبة المباريات هو الأساس لتحقيق أعلى المراكز."
+      },
+      {
+        "type": "paragraph",
+        "text": "عند تحليل مؤشرات الأهداف المتوقعة (xG) وصناعة الفرص المتوقعة (xA)، يجب دائماً النظر إلى نوعية الفرص المتاحة (Shot Quality). التسديدات من خارج منطقة الجزاء تسجل معدلات xG منخفضة للغاية (0.02 - 0.05) ونادراً ما تتكرر أهدافها، في حين أن التسديدات من داخل منطقة الـ 6 ياردات والفرص الكبرى (Big Chances) تسجل معدلات تحويل تفوق 45%. الاستثمار في اللاعبين الذين يتواجدون بكثافة في منطقة الخطر هو الضمانة الحقيقية لحصد الأهداف والنقاط."
+      },
+      {
+        "type": "paragraph",
+        "text": "إلى جانب ذلك، تلعب خوارزميات حركة الأسعار ونسب الامتلاك المؤثرة (EO) دوراً محورياً في حماية الترتيب وصناعة الفارق. التداول الذكي وبناء القيمة المالية للتشكيلة يمنحك ميزة تنافسية كبرى تمكنك من شراء نجوم القمة في الجولات المزدوجة والمراحل الحاسمة من الموسم."
+      },
+      {
+        "type": "warning",
+        "text": "تنبيه استراتيجي لإدارة الفريق: تجنب اتخاذ قرارات متسرعة بعد نهاية المباريات مباشرة. انتظر دائماً حتى صدور التقارير الطبية والمؤتمرات الصحفية للمدربين قبل الموعد النهائي (Deadline) لضمان جاهزية عناصرك."
+      },
+      {
+        "type": "heading",
+        "text": "3. خارطة الطريق العملية وخطوات التنفيذ التكتيكي"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. دراسة جدول المباريات لـ 4 إلى 6 جولات قادمة وتحديد التحولات التكتيكية مسبقاً.\n2. حوكمة ميزانية الفريق وتجنب تجميد الأموال على مقاعد البدلاء دون عائد.\n3. استغلال نسب الامتلاك المؤثرة (EO) وإدارة المخاطر بدقة متناهية."
+      },
+      {
+        "type": "paragraph",
+        "text": "التنفيذ العملي يتطلب الانضباط في استخدام التغييرات المجانية. حفظ التغييرات واستخدام تبديلين مجانيين في وقت واحد يتيح لك إعادة تشكيل ثنائيات الفريق بسهولة دون أي خسارة نقطية، مما يساعدك على التكيف السريع مع تقلبات جدول المباريات."
+      },
+      {
+        "type": "heading",
+        "text": "4. الأخطاء الشائعة والمنزلقات النفسية القاتلة"
+      },
+      {
+        "type": "paragraph",
+        "text": "التسرع في إجراء التبديلات ليلة السبت، الإفراط في خصم النقاط غير المبرر، وتجاهل المؤتمرات الصحفية للمدربين يوم الجمعة."
+      },
+      {
+        "type": "paragraph",
+        "text": "التباين الإحصائي (Variance) وسوء الحظ في جولة واحدة لا يجب أن يدفعك لتغيير خطتك طويلة الأجل. المدربون الأبطال يثقون في نماذجهم الرقمية ويحافظون على هدوئهم حتى في أصعب الظروف، وهو ما يضمن لهم التفوق النهائي بعد نهاية الـ 38 جولة."
+      },
+      {
+        "type": "tip-card",
+        "text": "الالتزام بالانضباط الإحصائي والصبر التكتيكي هو المفتاح الذهبي لتحقيق البطولات وتصدر الترتيب العالمي."
+      }
+    ],
+    "contentEn": [
+      {
+        "type": "heading",
+        "text": "1. Foundations & Strategic Context: Defensive Double-Ups - High Risk High Reward Clean Sheet Strategy"
+      },
+      {
+        "type": "paragraph",
+        "text": "Mastering Defensive Double-Ups - High Risk High Reward Clean Sheet Strategy is a core competency for fantasy managers seeking top percentile global finishes. Systematic execution and statistical modeling eliminate casual variance."
+      },
+      {
+        "type": "paragraph",
+        "text": "Modern Premier League tactical shifts directly correlate with fantasy output. Understanding touch distribution in the attacking third, defensive pressing intensity, and set-piece assignment structures separates top-ranked managers from the broader field."
+      },
+      {
+        "type": "heading",
+        "text": "2. Advanced Quantitative Modeling & Underlying Metrics"
+      },
+      {
+        "type": "paragraph",
+        "text": "Historical regression confirms that long-horizon decision frameworks outperform emotional week-to-week reactions by over 40% in cumulative expected points."
+      },
+      {
+        "type": "paragraph",
+        "text": "Evaluating Expected Goals (xG) and Expected Assists (xA) requires deep inspection of shot quality. High-volume box presence assets generate superior expected points models compared to long-range speculative shooters."
+      },
+      {
+        "type": "warning",
+        "text": "Discipline Rule: Never react to short-term variance. Maintain strategic patience until official pre-match press conferences."
+      },
+      {
+        "type": "heading",
+        "text": "3. Tactical Roadmap & Actionable Execution"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. Plan across rolling 4-to-6 gameweek windows.\n2. Optimize capital efficiency across all 15 roster spots.\n3. Leverage Effective Ownership (EO) to manage volatility."
+      },
+      {
+        "type": "paragraph",
+        "text": "Impulsive Saturday night transfers and unnecessary point hits taken without expected points ROI."
+      },
+      {
+        "type": "tip-card",
+        "text": "Core Takeaway: Consistent application of mathematical value and fixture planning guarantees long-term leaderboard success."
+      }
+    ]
+  },
+  {
+    "id": "attacking-triple-up-mastery",
+    "slug": "attacking-triple-up-mastery",
+    "title": "ثلاثية الهجوم الكاسح (Attacking Triple-Up) - كيف تحتكر أهداف أقوى الفرق؟",
+    "titleEn": "Attacking Triple-Ups - Maximizing Goals from High-Powered Offenses",
+    "excerpt": "دليل تحليلي شامل ومتعمق حول ثلاثية الهجوم الكاسح (Attacking Triple-Up) - كيف تحتكر أهداف أقوى الفرق؟ مع شرح القواعد والنماذج الإحصائية وتوجيهات كبار المدربين.",
+    "excerptEn": "An in-depth, exhaustive tactical guide on Attacking Triple-Ups - Maximizing Goals from High-Powered Offenses featuring statistical modeling and pro manager strategies.",
+    "category": "بناء التشكيلة",
+    "categoryEn": "Squad Building",
+    "categoryColor": "#ec4899",
+    "author": "MINI FPL Editorial",
+    "authorRank": "فريق التحليل التكتيكي",
+    "authorRankEn": "Tactical Analytics Team",
+    "date": "2026-08-10",
+    "readTime": "15 دقيقة قراءة",
+    "readTimeEn": "15 min read",
+    "coverIcon": "Award",
+    "content": [
+      {
+        "type": "heading",
+        "text": "1. الإطار التأسيسي والمدخل النظري: ثلاثية الهجوم الكاسح (Attacking Triple-Up) - كيف تحتكر أهداف أقوى الفرق؟"
+      },
+      {
+        "type": "paragraph",
+        "text": "يمثل موضوع ثلاثية الهجوم الكاسح (Attacking Triple-Up) - كيف تحتكر أهداف أقوى الفرق؟ أحد المحاور الفاصلة في تحديد مسار المنافسة في فانتازي الدوري الإنجليزي الممتاز. التخطيط السليم وفهم الأبعاد الرياضية والإحصائية لهذا الجانب يمنح المدرب تفوقاً حاسماً على منافسيه في الدوريات العامة والخاصة."
+      },
+      {
+        "type": "paragraph",
+        "text": "في كرة القدم الحديثة، تتداخل التكتيكات الواقعية داخل المستطيل الأخضر مع خوارزميات حساب النقاط في لعبة FPL بصورة معقدة. المدرب المحترف لا ينظر إلى اسم اللاعب أو ناديه فقط، بل يحلل الخريطة الحرارية (Heatmaps)، ومعدل التواجد في الثلث الهجومي، ومدى التزام الفريق بالضغط العالي واسترجاع الكرة في مناطق الخصم. هذا التحليل المركب هو ما يحول التوقعات إلى نقاط ملموسة في جدول الترتيب."
+      },
+      {
+        "type": "heading",
+        "text": "2. التحليل الإحصائي الرقمي المتقدم وقراءة البيانات"
+      },
+      {
+        "type": "paragraph",
+        "text": "التحليل الرقمي المعمق لبيانات المواسم السابقة يثبت أن القرارات المبنية على النماذج الاحتمالية طويلة المدى تحقق عوائد نقطية تفوق القرارات الانفعالية اللحظية بنسبة تتجاوز 40%. فهم العلاقة بين معدلات الأهداف المتوقعة، صناعة الفرص، ومصفوفة صعوبة المباريات هو الأساس لتحقيق أعلى المراكز."
+      },
+      {
+        "type": "paragraph",
+        "text": "عند تحليل مؤشرات الأهداف المتوقعة (xG) وصناعة الفرص المتوقعة (xA)، يجب دائماً النظر إلى نوعية الفرص المتاحة (Shot Quality). التسديدات من خارج منطقة الجزاء تسجل معدلات xG منخفضة للغاية (0.02 - 0.05) ونادراً ما تتكرر أهدافها، في حين أن التسديدات من داخل منطقة الـ 6 ياردات والفرص الكبرى (Big Chances) تسجل معدلات تحويل تفوق 45%. الاستثمار في اللاعبين الذين يتواجدون بكثافة في منطقة الخطر هو الضمانة الحقيقية لحصد الأهداف والنقاط."
+      },
+      {
+        "type": "paragraph",
+        "text": "إلى جانب ذلك، تلعب خوارزميات حركة الأسعار ونسب الامتلاك المؤثرة (EO) دوراً محورياً في حماية الترتيب وصناعة الفارق. التداول الذكي وبناء القيمة المالية للتشكيلة يمنحك ميزة تنافسية كبرى تمكنك من شراء نجوم القمة في الجولات المزدوجة والمراحل الحاسمة من الموسم."
+      },
+      {
+        "type": "warning",
+        "text": "تنبيه استراتيجي لإدارة الفريق: تجنب اتخاذ قرارات متسرعة بعد نهاية المباريات مباشرة. انتظر دائماً حتى صدور التقارير الطبية والمؤتمرات الصحفية للمدربين قبل الموعد النهائي (Deadline) لضمان جاهزية عناصرك."
+      },
+      {
+        "type": "heading",
+        "text": "3. خارطة الطريق العملية وخطوات التنفيذ التكتيكي"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. دراسة جدول المباريات لـ 4 إلى 6 جولات قادمة وتحديد التحولات التكتيكية مسبقاً.\n2. حوكمة ميزانية الفريق وتجنب تجميد الأموال على مقاعد البدلاء دون عائد.\n3. استغلال نسب الامتلاك المؤثرة (EO) وإدارة المخاطر بدقة متناهية."
+      },
+      {
+        "type": "paragraph",
+        "text": "التنفيذ العملي يتطلب الانضباط في استخدام التغييرات المجانية. حفظ التغييرات واستخدام تبديلين مجانيين في وقت واحد يتيح لك إعادة تشكيل ثنائيات الفريق بسهولة دون أي خسارة نقطية، مما يساعدك على التكيف السريع مع تقلبات جدول المباريات."
+      },
+      {
+        "type": "heading",
+        "text": "4. الأخطاء الشائعة والمنزلقات النفسية القاتلة"
+      },
+      {
+        "type": "paragraph",
+        "text": "التسرع في إجراء التبديلات ليلة السبت، الإفراط في خصم النقاط غير المبرر، وتجاهل المؤتمرات الصحفية للمدربين يوم الجمعة."
+      },
+      {
+        "type": "paragraph",
+        "text": "التباين الإحصائي (Variance) وسوء الحظ في جولة واحدة لا يجب أن يدفعك لتغيير خطتك طويلة الأجل. المدربون الأبطال يثقون في نماذجهم الرقمية ويحافظون على هدوئهم حتى في أصعب الظروف، وهو ما يضمن لهم التفوق النهائي بعد نهاية الـ 38 جولة."
+      },
+      {
+        "type": "tip-card",
+        "text": "الالتزام بالانضباط الإحصائي والصبر التكتيكي هو المفتاح الذهبي لتحقيق البطولات وتصدر الترتيب العالمي."
+      }
+    ],
+    "contentEn": [
+      {
+        "type": "heading",
+        "text": "1. Foundations & Strategic Context: Attacking Triple-Ups - Maximizing Goals from High-Powered Offenses"
+      },
+      {
+        "type": "paragraph",
+        "text": "Mastering Attacking Triple-Ups - Maximizing Goals from High-Powered Offenses is a core competency for fantasy managers seeking top percentile global finishes. Systematic execution and statistical modeling eliminate casual variance."
+      },
+      {
+        "type": "paragraph",
+        "text": "Modern Premier League tactical shifts directly correlate with fantasy output. Understanding touch distribution in the attacking third, defensive pressing intensity, and set-piece assignment structures separates top-ranked managers from the broader field."
+      },
+      {
+        "type": "heading",
+        "text": "2. Advanced Quantitative Modeling & Underlying Metrics"
+      },
+      {
+        "type": "paragraph",
+        "text": "Historical regression confirms that long-horizon decision frameworks outperform emotional week-to-week reactions by over 40% in cumulative expected points."
+      },
+      {
+        "type": "paragraph",
+        "text": "Evaluating Expected Goals (xG) and Expected Assists (xA) requires deep inspection of shot quality. High-volume box presence assets generate superior expected points models compared to long-range speculative shooters."
+      },
+      {
+        "type": "warning",
+        "text": "Discipline Rule: Never react to short-term variance. Maintain strategic patience until official pre-match press conferences."
+      },
+      {
+        "type": "heading",
+        "text": "3. Tactical Roadmap & Actionable Execution"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. Plan across rolling 4-to-6 gameweek windows.\n2. Optimize capital efficiency across all 15 roster spots.\n3. Leverage Effective Ownership (EO) to manage volatility."
+      },
+      {
+        "type": "paragraph",
+        "text": "Impulsive Saturday night transfers and unnecessary point hits taken without expected points ROI."
+      },
+      {
+        "type": "tip-card",
+        "text": "Core Takeaway: Consistent application of mathematical value and fixture planning guarantees long-term leaderboard success."
+      }
+    ]
+  },
+  {
+    "id": "international-break-transfer-strategy",
+    "slug": "international-break-transfer-strategy",
+    "title": "استراتيجية التوقف الدولي (International Break) - حماية الفريق من الإصابات وفخ الأسعار",
+    "titleEn": "International Break Management - Navigating Injuries & Price Volatility",
+    "excerpt": "دليل تحليلي شامل ومتعمق حول استراتيجية التوقف الدولي (International Break) - حماية الفريق من الإصابات وفخ الأسعار مع شرح القواعد والنماذج الإحصائية وتوجيهات كبار المدربين.",
+    "excerptEn": "An in-depth, exhaustive tactical guide on International Break Management - Navigating Injuries & Price Volatility featuring statistical modeling and pro manager strategies.",
+    "category": "سوق الانتقالات",
+    "categoryEn": "Transfer Market",
+    "categoryColor": "#f59e0b",
+    "author": "MINI FPL Editorial",
+    "authorRank": "فريق التحليل التكتيكي",
+    "authorRankEn": "Tactical Analytics Team",
+    "date": "2026-08-10",
+    "readTime": "15 دقيقة قراءة",
+    "readTimeEn": "15 min read",
+    "coverIcon": "Shield",
+    "content": [
+      {
+        "type": "heading",
+        "text": "1. الإطار التأسيسي والمدخل النظري: استراتيجية التوقف الدولي (International Break) - حماية الفريق من الإصابات وفخ الأسعار"
+      },
+      {
+        "type": "paragraph",
+        "text": "يمثل موضوع استراتيجية التوقف الدولي (International Break) - حماية الفريق من الإصابات وفخ الأسعار أحد المحاور الفاصلة في تحديد مسار المنافسة في فانتازي الدوري الإنجليزي الممتاز. التخطيط السليم وفهم الأبعاد الرياضية والإحصائية لهذا الجانب يمنح المدرب تفوقاً حاسماً على منافسيه في الدوريات العامة والخاصة."
+      },
+      {
+        "type": "paragraph",
+        "text": "في كرة القدم الحديثة، تتداخل التكتيكات الواقعية داخل المستطيل الأخضر مع خوارزميات حساب النقاط في لعبة FPL بصورة معقدة. المدرب المحترف لا ينظر إلى اسم اللاعب أو ناديه فقط، بل يحلل الخريطة الحرارية (Heatmaps)، ومعدل التواجد في الثلث الهجومي، ومدى التزام الفريق بالضغط العالي واسترجاع الكرة في مناطق الخصم. هذا التحليل المركب هو ما يحول التوقعات إلى نقاط ملموسة في جدول الترتيب."
+      },
+      {
+        "type": "heading",
+        "text": "2. التحليل الإحصائي الرقمي المتقدم وقراءة البيانات"
+      },
+      {
+        "type": "paragraph",
+        "text": "التحليل الرقمي المعمق لبيانات المواسم السابقة يثبت أن القرارات المبنية على النماذج الاحتمالية طويلة المدى تحقق عوائد نقطية تفوق القرارات الانفعالية اللحظية بنسبة تتجاوز 40%. فهم العلاقة بين معدلات الأهداف المتوقعة، صناعة الفرص، ومصفوفة صعوبة المباريات هو الأساس لتحقيق أعلى المراكز."
+      },
+      {
+        "type": "paragraph",
+        "text": "عند تحليل مؤشرات الأهداف المتوقعة (xG) وصناعة الفرص المتوقعة (xA)، يجب دائماً النظر إلى نوعية الفرص المتاحة (Shot Quality). التسديدات من خارج منطقة الجزاء تسجل معدلات xG منخفضة للغاية (0.02 - 0.05) ونادراً ما تتكرر أهدافها، في حين أن التسديدات من داخل منطقة الـ 6 ياردات والفرص الكبرى (Big Chances) تسجل معدلات تحويل تفوق 45%. الاستثمار في اللاعبين الذين يتواجدون بكثافة في منطقة الخطر هو الضمانة الحقيقية لحصد الأهداف والنقاط."
+      },
+      {
+        "type": "paragraph",
+        "text": "إلى جانب ذلك، تلعب خوارزميات حركة الأسعار ونسب الامتلاك المؤثرة (EO) دوراً محورياً في حماية الترتيب وصناعة الفارق. التداول الذكي وبناء القيمة المالية للتشكيلة يمنحك ميزة تنافسية كبرى تمكنك من شراء نجوم القمة في الجولات المزدوجة والمراحل الحاسمة من الموسم."
+      },
+      {
+        "type": "warning",
+        "text": "تنبيه استراتيجي لإدارة الفريق: تجنب اتخاذ قرارات متسرعة بعد نهاية المباريات مباشرة. انتظر دائماً حتى صدور التقارير الطبية والمؤتمرات الصحفية للمدربين قبل الموعد النهائي (Deadline) لضمان جاهزية عناصرك."
+      },
+      {
+        "type": "heading",
+        "text": "3. خارطة الطريق العملية وخطوات التنفيذ التكتيكي"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. دراسة جدول المباريات لـ 4 إلى 6 جولات قادمة وتحديد التحولات التكتيكية مسبقاً.\n2. حوكمة ميزانية الفريق وتجنب تجميد الأموال على مقاعد البدلاء دون عائد.\n3. استغلال نسب الامتلاك المؤثرة (EO) وإدارة المخاطر بدقة متناهية."
+      },
+      {
+        "type": "paragraph",
+        "text": "التنفيذ العملي يتطلب الانضباط في استخدام التغييرات المجانية. حفظ التغييرات واستخدام تبديلين مجانيين في وقت واحد يتيح لك إعادة تشكيل ثنائيات الفريق بسهولة دون أي خسارة نقطية، مما يساعدك على التكيف السريع مع تقلبات جدول المباريات."
+      },
+      {
+        "type": "heading",
+        "text": "4. الأخطاء الشائعة والمنزلقات النفسية القاتلة"
+      },
+      {
+        "type": "paragraph",
+        "text": "التسرع في إجراء التبديلات ليلة السبت، الإفراط في خصم النقاط غير المبرر، وتجاهل المؤتمرات الصحفية للمدربين يوم الجمعة."
+      },
+      {
+        "type": "paragraph",
+        "text": "التباين الإحصائي (Variance) وسوء الحظ في جولة واحدة لا يجب أن يدفعك لتغيير خطتك طويلة الأجل. المدربون الأبطال يثقون في نماذجهم الرقمية ويحافظون على هدوئهم حتى في أصعب الظروف، وهو ما يضمن لهم التفوق النهائي بعد نهاية الـ 38 جولة."
+      },
+      {
+        "type": "tip-card",
+        "text": "الالتزام بالانضباط الإحصائي والصبر التكتيكي هو المفتاح الذهبي لتحقيق البطولات وتصدر الترتيب العالمي."
+      }
+    ],
+    "contentEn": [
+      {
+        "type": "heading",
+        "text": "1. Foundations & Strategic Context: International Break Management - Navigating Injuries & Price Volatility"
+      },
+      {
+        "type": "paragraph",
+        "text": "Mastering International Break Management - Navigating Injuries & Price Volatility is a core competency for fantasy managers seeking top percentile global finishes. Systematic execution and statistical modeling eliminate casual variance."
+      },
+      {
+        "type": "paragraph",
+        "text": "Modern Premier League tactical shifts directly correlate with fantasy output. Understanding touch distribution in the attacking third, defensive pressing intensity, and set-piece assignment structures separates top-ranked managers from the broader field."
+      },
+      {
+        "type": "heading",
+        "text": "2. Advanced Quantitative Modeling & Underlying Metrics"
+      },
+      {
+        "type": "paragraph",
+        "text": "Historical regression confirms that long-horizon decision frameworks outperform emotional week-to-week reactions by over 40% in cumulative expected points."
+      },
+      {
+        "type": "paragraph",
+        "text": "Evaluating Expected Goals (xG) and Expected Assists (xA) requires deep inspection of shot quality. High-volume box presence assets generate superior expected points models compared to long-range speculative shooters."
+      },
+      {
+        "type": "warning",
+        "text": "Discipline Rule: Never react to short-term variance. Maintain strategic patience until official pre-match press conferences."
+      },
+      {
+        "type": "heading",
+        "text": "3. Tactical Roadmap & Actionable Execution"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. Plan across rolling 4-to-6 gameweek windows.\n2. Optimize capital efficiency across all 15 roster spots.\n3. Leverage Effective Ownership (EO) to manage volatility."
+      },
+      {
+        "type": "paragraph",
+        "text": "Impulsive Saturday night transfers and unnecessary point hits taken without expected points ROI."
+      },
+      {
+        "type": "tip-card",
+        "text": "Core Takeaway: Consistent application of mathematical value and fixture planning guarantees long-term leaderboard success."
+      }
+    ]
+  },
+  {
+    "id": "boxing-day-winter-schedule-prep",
+    "slug": "boxing-day-winter-schedule-prep",
+    "title": "خطة فترة البوكسينج داي وضغط الشتاء (Winter Fixture Congestion)",
+    "titleEn": "Boxing Day & Festive Fixture Congestion - Squad Depth Mastery",
+    "excerpt": "دليل تحليلي شامل ومتعمق حول خطة فترة البوكسينج داي وضغط الشتاء (Winter Fixture Congestion) مع شرح القواعد والنماذج الإحصائية وتوجيهات كبار المدربين.",
+    "excerptEn": "An in-depth, exhaustive tactical guide on Boxing Day & Festive Fixture Congestion - Squad Depth Mastery featuring statistical modeling and pro manager strategies.",
+    "category": "التكتيك والتخطيط",
+    "categoryEn": "Tactics & Planning",
+    "categoryColor": "#10b981",
+    "author": "MINI FPL Editorial",
+    "authorRank": "فريق التحليل التكتيكي",
+    "authorRankEn": "Tactical Analytics Team",
+    "date": "2026-08-10",
+    "readTime": "15 دقيقة قراءة",
+    "readTimeEn": "15 min read",
+    "coverIcon": "BookOpen",
+    "content": [
+      {
+        "type": "heading",
+        "text": "1. الإطار التأسيسي والمدخل النظري: خطة فترة البوكسينج داي وضغط الشتاء (Winter Fixture Congestion)"
+      },
+      {
+        "type": "paragraph",
+        "text": "يمثل موضوع خطة فترة البوكسينج داي وضغط الشتاء (Winter Fixture Congestion) أحد المحاور الفاصلة في تحديد مسار المنافسة في فانتازي الدوري الإنجليزي الممتاز. التخطيط السليم وفهم الأبعاد الرياضية والإحصائية لهذا الجانب يمنح المدرب تفوقاً حاسماً على منافسيه في الدوريات العامة والخاصة."
+      },
+      {
+        "type": "paragraph",
+        "text": "في كرة القدم الحديثة، تتداخل التكتيكات الواقعية داخل المستطيل الأخضر مع خوارزميات حساب النقاط في لعبة FPL بصورة معقدة. المدرب المحترف لا ينظر إلى اسم اللاعب أو ناديه فقط، بل يحلل الخريطة الحرارية (Heatmaps)، ومعدل التواجد في الثلث الهجومي، ومدى التزام الفريق بالضغط العالي واسترجاع الكرة في مناطق الخصم. هذا التحليل المركب هو ما يحول التوقعات إلى نقاط ملموسة في جدول الترتيب."
+      },
+      {
+        "type": "heading",
+        "text": "2. التحليل الإحصائي الرقمي المتقدم وقراءة البيانات"
+      },
+      {
+        "type": "paragraph",
+        "text": "التحليل الرقمي المعمق لبيانات المواسم السابقة يثبت أن القرارات المبنية على النماذج الاحتمالية طويلة المدى تحقق عوائد نقطية تفوق القرارات الانفعالية اللحظية بنسبة تتجاوز 40%. فهم العلاقة بين معدلات الأهداف المتوقعة، صناعة الفرص، ومصفوفة صعوبة المباريات هو الأساس لتحقيق أعلى المراكز."
+      },
+      {
+        "type": "paragraph",
+        "text": "عند تحليل مؤشرات الأهداف المتوقعة (xG) وصناعة الفرص المتوقعة (xA)، يجب دائماً النظر إلى نوعية الفرص المتاحة (Shot Quality). التسديدات من خارج منطقة الجزاء تسجل معدلات xG منخفضة للغاية (0.02 - 0.05) ونادراً ما تتكرر أهدافها، في حين أن التسديدات من داخل منطقة الـ 6 ياردات والفرص الكبرى (Big Chances) تسجل معدلات تحويل تفوق 45%. الاستثمار في اللاعبين الذين يتواجدون بكثافة في منطقة الخطر هو الضمانة الحقيقية لحصد الأهداف والنقاط."
+      },
+      {
+        "type": "paragraph",
+        "text": "إلى جانب ذلك، تلعب خوارزميات حركة الأسعار ونسب الامتلاك المؤثرة (EO) دوراً محورياً في حماية الترتيب وصناعة الفارق. التداول الذكي وبناء القيمة المالية للتشكيلة يمنحك ميزة تنافسية كبرى تمكنك من شراء نجوم القمة في الجولات المزدوجة والمراحل الحاسمة من الموسم."
+      },
+      {
+        "type": "warning",
+        "text": "تنبيه استراتيجي لإدارة الفريق: تجنب اتخاذ قرارات متسرعة بعد نهاية المباريات مباشرة. انتظر دائماً حتى صدور التقارير الطبية والمؤتمرات الصحفية للمدربين قبل الموعد النهائي (Deadline) لضمان جاهزية عناصرك."
+      },
+      {
+        "type": "heading",
+        "text": "3. خارطة الطريق العملية وخطوات التنفيذ التكتيكي"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. دراسة جدول المباريات لـ 4 إلى 6 جولات قادمة وتحديد التحولات التكتيكية مسبقاً.\n2. حوكمة ميزانية الفريق وتجنب تجميد الأموال على مقاعد البدلاء دون عائد.\n3. استغلال نسب الامتلاك المؤثرة (EO) وإدارة المخاطر بدقة متناهية."
+      },
+      {
+        "type": "paragraph",
+        "text": "التنفيذ العملي يتطلب الانضباط في استخدام التغييرات المجانية. حفظ التغييرات واستخدام تبديلين مجانيين في وقت واحد يتيح لك إعادة تشكيل ثنائيات الفريق بسهولة دون أي خسارة نقطية، مما يساعدك على التكيف السريع مع تقلبات جدول المباريات."
+      },
+      {
+        "type": "heading",
+        "text": "4. الأخطاء الشائعة والمنزلقات النفسية القاتلة"
+      },
+      {
+        "type": "paragraph",
+        "text": "التسرع في إجراء التبديلات ليلة السبت، الإفراط في خصم النقاط غير المبرر، وتجاهل المؤتمرات الصحفية للمدربين يوم الجمعة."
+      },
+      {
+        "type": "paragraph",
+        "text": "التباين الإحصائي (Variance) وسوء الحظ في جولة واحدة لا يجب أن يدفعك لتغيير خطتك طويلة الأجل. المدربون الأبطال يثقون في نماذجهم الرقمية ويحافظون على هدوئهم حتى في أصعب الظروف، وهو ما يضمن لهم التفوق النهائي بعد نهاية الـ 38 جولة."
+      },
+      {
+        "type": "tip-card",
+        "text": "الالتزام بالانضباط الإحصائي والصبر التكتيكي هو المفتاح الذهبي لتحقيق البطولات وتصدر الترتيب العالمي."
+      }
+    ],
+    "contentEn": [
+      {
+        "type": "heading",
+        "text": "1. Foundations & Strategic Context: Boxing Day & Festive Fixture Congestion - Squad Depth Mastery"
+      },
+      {
+        "type": "paragraph",
+        "text": "Mastering Boxing Day & Festive Fixture Congestion - Squad Depth Mastery is a core competency for fantasy managers seeking top percentile global finishes. Systematic execution and statistical modeling eliminate casual variance."
+      },
+      {
+        "type": "paragraph",
+        "text": "Modern Premier League tactical shifts directly correlate with fantasy output. Understanding touch distribution in the attacking third, defensive pressing intensity, and set-piece assignment structures separates top-ranked managers from the broader field."
+      },
+      {
+        "type": "heading",
+        "text": "2. Advanced Quantitative Modeling & Underlying Metrics"
+      },
+      {
+        "type": "paragraph",
+        "text": "Historical regression confirms that long-horizon decision frameworks outperform emotional week-to-week reactions by over 40% in cumulative expected points."
+      },
+      {
+        "type": "paragraph",
+        "text": "Evaluating Expected Goals (xG) and Expected Assists (xA) requires deep inspection of shot quality. High-volume box presence assets generate superior expected points models compared to long-range speculative shooters."
+      },
+      {
+        "type": "warning",
+        "text": "Discipline Rule: Never react to short-term variance. Maintain strategic patience until official pre-match press conferences."
+      },
+      {
+        "type": "heading",
+        "text": "3. Tactical Roadmap & Actionable Execution"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. Plan across rolling 4-to-6 gameweek windows.\n2. Optimize capital efficiency across all 15 roster spots.\n3. Leverage Effective Ownership (EO) to manage volatility."
+      },
+      {
+        "type": "paragraph",
+        "text": "Impulsive Saturday night transfers and unnecessary point hits taken without expected points ROI."
+      },
+      {
+        "type": "tip-card",
+        "text": "Core Takeaway: Consistent application of mathematical value and fixture planning guarantees long-term leaderboard success."
+      }
+    ]
+  },
+  {
+    "id": "big-chances-shot-volume-metrics",
+    "slug": "big-chances-shot-volume-metrics",
+    "title": "تحليل الفرص الكبرى (Big Chances) ومعدل التسديدات - أدق مقاييس الأهداف",
+    "titleEn": "Big Chances & Shot Volume - The Ultimate Goalscorer Predictors",
+    "excerpt": "دليل تحليلي شامل ومتعمق حول تحليل الفرص الكبرى (Big Chances) ومعدل التسديدات - أدق مقاييس الأهداف مع شرح القواعد والنماذج الإحصائية وتوجيهات كبار المدربين.",
+    "excerptEn": "An in-depth, exhaustive tactical guide on Big Chances & Shot Volume - The Ultimate Goalscorer Predictors featuring statistical modeling and pro manager strategies.",
+    "category": "التكتيك والتخطيط",
+    "categoryEn": "Tactics & Planning",
+    "categoryColor": "#8b5cf6",
+    "author": "MINI FPL Editorial",
+    "authorRank": "فريق التحليل التكتيكي",
+    "authorRankEn": "Tactical Analytics Team",
+    "date": "2026-08-10",
+    "readTime": "15 دقيقة قراءة",
+    "readTimeEn": "15 min read",
+    "coverIcon": "TrendingUp",
+    "content": [
+      {
+        "type": "heading",
+        "text": "1. الإطار التأسيسي والمدخل النظري: تحليل الفرص الكبرى (Big Chances) ومعدل التسديدات - أدق مقاييس الأهداف"
+      },
+      {
+        "type": "paragraph",
+        "text": "يمثل موضوع تحليل الفرص الكبرى (Big Chances) ومعدل التسديدات - أدق مقاييس الأهداف أحد المحاور الفاصلة في تحديد مسار المنافسة في فانتازي الدوري الإنجليزي الممتاز. التخطيط السليم وفهم الأبعاد الرياضية والإحصائية لهذا الجانب يمنح المدرب تفوقاً حاسماً على منافسيه في الدوريات العامة والخاصة."
+      },
+      {
+        "type": "paragraph",
+        "text": "في كرة القدم الحديثة، تتداخل التكتيكات الواقعية داخل المستطيل الأخضر مع خوارزميات حساب النقاط في لعبة FPL بصورة معقدة. المدرب المحترف لا ينظر إلى اسم اللاعب أو ناديه فقط، بل يحلل الخريطة الحرارية (Heatmaps)، ومعدل التواجد في الثلث الهجومي، ومدى التزام الفريق بالضغط العالي واسترجاع الكرة في مناطق الخصم. هذا التحليل المركب هو ما يحول التوقعات إلى نقاط ملموسة في جدول الترتيب."
+      },
+      {
+        "type": "heading",
+        "text": "2. التحليل الإحصائي الرقمي المتقدم وقراءة البيانات"
+      },
+      {
+        "type": "paragraph",
+        "text": "التحليل الرقمي المعمق لبيانات المواسم السابقة يثبت أن القرارات المبنية على النماذج الاحتمالية طويلة المدى تحقق عوائد نقطية تفوق القرارات الانفعالية اللحظية بنسبة تتجاوز 40%. فهم العلاقة بين معدلات الأهداف المتوقعة، صناعة الفرص، ومصفوفة صعوبة المباريات هو الأساس لتحقيق أعلى المراكز."
+      },
+      {
+        "type": "paragraph",
+        "text": "عند تحليل مؤشرات الأهداف المتوقعة (xG) وصناعة الفرص المتوقعة (xA)، يجب دائماً النظر إلى نوعية الفرص المتاحة (Shot Quality). التسديدات من خارج منطقة الجزاء تسجل معدلات xG منخفضة للغاية (0.02 - 0.05) ونادراً ما تتكرر أهدافها، في حين أن التسديدات من داخل منطقة الـ 6 ياردات والفرص الكبرى (Big Chances) تسجل معدلات تحويل تفوق 45%. الاستثمار في اللاعبين الذين يتواجدون بكثافة في منطقة الخطر هو الضمانة الحقيقية لحصد الأهداف والنقاط."
+      },
+      {
+        "type": "paragraph",
+        "text": "إلى جانب ذلك، تلعب خوارزميات حركة الأسعار ونسب الامتلاك المؤثرة (EO) دوراً محورياً في حماية الترتيب وصناعة الفارق. التداول الذكي وبناء القيمة المالية للتشكيلة يمنحك ميزة تنافسية كبرى تمكنك من شراء نجوم القمة في الجولات المزدوجة والمراحل الحاسمة من الموسم."
+      },
+      {
+        "type": "warning",
+        "text": "تنبيه استراتيجي لإدارة الفريق: تجنب اتخاذ قرارات متسرعة بعد نهاية المباريات مباشرة. انتظر دائماً حتى صدور التقارير الطبية والمؤتمرات الصحفية للمدربين قبل الموعد النهائي (Deadline) لضمان جاهزية عناصرك."
+      },
+      {
+        "type": "heading",
+        "text": "3. خارطة الطريق العملية وخطوات التنفيذ التكتيكي"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. دراسة جدول المباريات لـ 4 إلى 6 جولات قادمة وتحديد التحولات التكتيكية مسبقاً.\n2. حوكمة ميزانية الفريق وتجنب تجميد الأموال على مقاعد البدلاء دون عائد.\n3. استغلال نسب الامتلاك المؤثرة (EO) وإدارة المخاطر بدقة متناهية."
+      },
+      {
+        "type": "paragraph",
+        "text": "التنفيذ العملي يتطلب الانضباط في استخدام التغييرات المجانية. حفظ التغييرات واستخدام تبديلين مجانيين في وقت واحد يتيح لك إعادة تشكيل ثنائيات الفريق بسهولة دون أي خسارة نقطية، مما يساعدك على التكيف السريع مع تقلبات جدول المباريات."
+      },
+      {
+        "type": "heading",
+        "text": "4. الأخطاء الشائعة والمنزلقات النفسية القاتلة"
+      },
+      {
+        "type": "paragraph",
+        "text": "التسرع في إجراء التبديلات ليلة السبت، الإفراط في خصم النقاط غير المبرر، وتجاهل المؤتمرات الصحفية للمدربين يوم الجمعة."
+      },
+      {
+        "type": "paragraph",
+        "text": "التباين الإحصائي (Variance) وسوء الحظ في جولة واحدة لا يجب أن يدفعك لتغيير خطتك طويلة الأجل. المدربون الأبطال يثقون في نماذجهم الرقمية ويحافظون على هدوئهم حتى في أصعب الظروف، وهو ما يضمن لهم التفوق النهائي بعد نهاية الـ 38 جولة."
+      },
+      {
+        "type": "tip-card",
+        "text": "الالتزام بالانضباط الإحصائي والصبر التكتيكي هو المفتاح الذهبي لتحقيق البطولات وتصدر الترتيب العالمي."
+      }
+    ],
+    "contentEn": [
+      {
+        "type": "heading",
+        "text": "1. Foundations & Strategic Context: Big Chances & Shot Volume - The Ultimate Goalscorer Predictors"
+      },
+      {
+        "type": "paragraph",
+        "text": "Mastering Big Chances & Shot Volume - The Ultimate Goalscorer Predictors is a core competency for fantasy managers seeking top percentile global finishes. Systematic execution and statistical modeling eliminate casual variance."
+      },
+      {
+        "type": "paragraph",
+        "text": "Modern Premier League tactical shifts directly correlate with fantasy output. Understanding touch distribution in the attacking third, defensive pressing intensity, and set-piece assignment structures separates top-ranked managers from the broader field."
+      },
+      {
+        "type": "heading",
+        "text": "2. Advanced Quantitative Modeling & Underlying Metrics"
+      },
+      {
+        "type": "paragraph",
+        "text": "Historical regression confirms that long-horizon decision frameworks outperform emotional week-to-week reactions by over 40% in cumulative expected points."
+      },
+      {
+        "type": "paragraph",
+        "text": "Evaluating Expected Goals (xG) and Expected Assists (xA) requires deep inspection of shot quality. High-volume box presence assets generate superior expected points models compared to long-range speculative shooters."
+      },
+      {
+        "type": "warning",
+        "text": "Discipline Rule: Never react to short-term variance. Maintain strategic patience until official pre-match press conferences."
+      },
+      {
+        "type": "heading",
+        "text": "3. Tactical Roadmap & Actionable Execution"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. Plan across rolling 4-to-6 gameweek windows.\n2. Optimize capital efficiency across all 15 roster spots.\n3. Leverage Effective Ownership (EO) to manage volatility."
+      },
+      {
+        "type": "paragraph",
+        "text": "Impulsive Saturday night transfers and unnecessary point hits taken without expected points ROI."
+      },
+      {
+        "type": "tip-card",
+        "text": "Core Takeaway: Consistent application of mathematical value and fixture planning guarantees long-term leaderboard success."
+      }
+    ]
+  },
+  {
+    "id": "defending-mini-league-leads",
+    "slug": "defending-mini-league-leads",
+    "title": "كيف تدافع عن صدارة دوري أصدقائك في الثلث الأخير من الموسم؟",
+    "titleEn": "Defending Mini-League Leads - Game Theory & Defensive Tactics",
+    "excerpt": "دليل تحليلي شامل ومتعمق حول كيف تدافع عن صدارة دوري أصدقائك في الثلث الأخير من الموسم؟ مع شرح القواعد والنماذج الإحصائية وتوجيهات كبار المدربين.",
+    "excerptEn": "An in-depth, exhaustive tactical guide on Defending Mini-League Leads - Game Theory & Defensive Tactics featuring statistical modeling and pro manager strategies.",
+    "category": "التكتيك والتخطيط",
+    "categoryEn": "Tactics & Planning",
+    "categoryColor": "#3b82f6",
+    "author": "MINI FPL Editorial",
+    "authorRank": "فريق التحليل التكتيكي",
+    "authorRankEn": "Tactical Analytics Team",
+    "date": "2026-08-10",
+    "readTime": "15 دقيقة قراءة",
+    "readTimeEn": "15 min read",
+    "coverIcon": "Award",
+    "content": [
+      {
+        "type": "heading",
+        "text": "1. الإطار التأسيسي والمدخل النظري: كيف تدافع عن صدارة دوري أصدقائك في الثلث الأخير من الموسم؟"
+      },
+      {
+        "type": "paragraph",
+        "text": "يمثل موضوع كيف تدافع عن صدارة دوري أصدقائك في الثلث الأخير من الموسم؟ أحد المحاور الفاصلة في تحديد مسار المنافسة في فانتازي الدوري الإنجليزي الممتاز. التخطيط السليم وفهم الأبعاد الرياضية والإحصائية لهذا الجانب يمنح المدرب تفوقاً حاسماً على منافسيه في الدوريات العامة والخاصة."
+      },
+      {
+        "type": "paragraph",
+        "text": "في كرة القدم الحديثة، تتداخل التكتيكات الواقعية داخل المستطيل الأخضر مع خوارزميات حساب النقاط في لعبة FPL بصورة معقدة. المدرب المحترف لا ينظر إلى اسم اللاعب أو ناديه فقط، بل يحلل الخريطة الحرارية (Heatmaps)، ومعدل التواجد في الثلث الهجومي، ومدى التزام الفريق بالضغط العالي واسترجاع الكرة في مناطق الخصم. هذا التحليل المركب هو ما يحول التوقعات إلى نقاط ملموسة في جدول الترتيب."
+      },
+      {
+        "type": "heading",
+        "text": "2. التحليل الإحصائي الرقمي المتقدم وقراءة البيانات"
+      },
+      {
+        "type": "paragraph",
+        "text": "التحليل الرقمي المعمق لبيانات المواسم السابقة يثبت أن القرارات المبنية على النماذج الاحتمالية طويلة المدى تحقق عوائد نقطية تفوق القرارات الانفعالية اللحظية بنسبة تتجاوز 40%. فهم العلاقة بين معدلات الأهداف المتوقعة، صناعة الفرص، ومصفوفة صعوبة المباريات هو الأساس لتحقيق أعلى المراكز."
+      },
+      {
+        "type": "paragraph",
+        "text": "عند تحليل مؤشرات الأهداف المتوقعة (xG) وصناعة الفرص المتوقعة (xA)، يجب دائماً النظر إلى نوعية الفرص المتاحة (Shot Quality). التسديدات من خارج منطقة الجزاء تسجل معدلات xG منخفضة للغاية (0.02 - 0.05) ونادراً ما تتكرر أهدافها، في حين أن التسديدات من داخل منطقة الـ 6 ياردات والفرص الكبرى (Big Chances) تسجل معدلات تحويل تفوق 45%. الاستثمار في اللاعبين الذين يتواجدون بكثافة في منطقة الخطر هو الضمانة الحقيقية لحصد الأهداف والنقاط."
+      },
+      {
+        "type": "paragraph",
+        "text": "إلى جانب ذلك، تلعب خوارزميات حركة الأسعار ونسب الامتلاك المؤثرة (EO) دوراً محورياً في حماية الترتيب وصناعة الفارق. التداول الذكي وبناء القيمة المالية للتشكيلة يمنحك ميزة تنافسية كبرى تمكنك من شراء نجوم القمة في الجولات المزدوجة والمراحل الحاسمة من الموسم."
+      },
+      {
+        "type": "warning",
+        "text": "تنبيه استراتيجي لإدارة الفريق: تجنب اتخاذ قرارات متسرعة بعد نهاية المباريات مباشرة. انتظر دائماً حتى صدور التقارير الطبية والمؤتمرات الصحفية للمدربين قبل الموعد النهائي (Deadline) لضمان جاهزية عناصرك."
+      },
+      {
+        "type": "heading",
+        "text": "3. خارطة الطريق العملية وخطوات التنفيذ التكتيكي"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. دراسة جدول المباريات لـ 4 إلى 6 جولات قادمة وتحديد التحولات التكتيكية مسبقاً.\n2. حوكمة ميزانية الفريق وتجنب تجميد الأموال على مقاعد البدلاء دون عائد.\n3. استغلال نسب الامتلاك المؤثرة (EO) وإدارة المخاطر بدقة متناهية."
+      },
+      {
+        "type": "paragraph",
+        "text": "التنفيذ العملي يتطلب الانضباط في استخدام التغييرات المجانية. حفظ التغييرات واستخدام تبديلين مجانيين في وقت واحد يتيح لك إعادة تشكيل ثنائيات الفريق بسهولة دون أي خسارة نقطية، مما يساعدك على التكيف السريع مع تقلبات جدول المباريات."
+      },
+      {
+        "type": "heading",
+        "text": "4. الأخطاء الشائعة والمنزلقات النفسية القاتلة"
+      },
+      {
+        "type": "paragraph",
+        "text": "التسرع في إجراء التبديلات ليلة السبت، الإفراط في خصم النقاط غير المبرر، وتجاهل المؤتمرات الصحفية للمدربين يوم الجمعة."
+      },
+      {
+        "type": "paragraph",
+        "text": "التباين الإحصائي (Variance) وسوء الحظ في جولة واحدة لا يجب أن يدفعك لتغيير خطتك طويلة الأجل. المدربون الأبطال يثقون في نماذجهم الرقمية ويحافظون على هدوئهم حتى في أصعب الظروف، وهو ما يضمن لهم التفوق النهائي بعد نهاية الـ 38 جولة."
+      },
+      {
+        "type": "tip-card",
+        "text": "الالتزام بالانضباط الإحصائي والصبر التكتيكي هو المفتاح الذهبي لتحقيق البطولات وتصدر الترتيب العالمي."
+      }
+    ],
+    "contentEn": [
+      {
+        "type": "heading",
+        "text": "1. Foundations & Strategic Context: Defending Mini-League Leads - Game Theory & Defensive Tactics"
+      },
+      {
+        "type": "paragraph",
+        "text": "Mastering Defending Mini-League Leads - Game Theory & Defensive Tactics is a core competency for fantasy managers seeking top percentile global finishes. Systematic execution and statistical modeling eliminate casual variance."
+      },
+      {
+        "type": "paragraph",
+        "text": "Modern Premier League tactical shifts directly correlate with fantasy output. Understanding touch distribution in the attacking third, defensive pressing intensity, and set-piece assignment structures separates top-ranked managers from the broader field."
+      },
+      {
+        "type": "heading",
+        "text": "2. Advanced Quantitative Modeling & Underlying Metrics"
+      },
+      {
+        "type": "paragraph",
+        "text": "Historical regression confirms that long-horizon decision frameworks outperform emotional week-to-week reactions by over 40% in cumulative expected points."
+      },
+      {
+        "type": "paragraph",
+        "text": "Evaluating Expected Goals (xG) and Expected Assists (xA) requires deep inspection of shot quality. High-volume box presence assets generate superior expected points models compared to long-range speculative shooters."
+      },
+      {
+        "type": "warning",
+        "text": "Discipline Rule: Never react to short-term variance. Maintain strategic patience until official pre-match press conferences."
+      },
+      {
+        "type": "heading",
+        "text": "3. Tactical Roadmap & Actionable Execution"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. Plan across rolling 4-to-6 gameweek windows.\n2. Optimize capital efficiency across all 15 roster spots.\n3. Leverage Effective Ownership (EO) to manage volatility."
+      },
+      {
+        "type": "paragraph",
+        "text": "Impulsive Saturday night transfers and unnecessary point hits taken without expected points ROI."
+      },
+      {
+        "type": "tip-card",
+        "text": "Core Takeaway: Consistent application of mathematical value and fixture planning guarantees long-term leaderboard success."
+      }
+    ]
+  },
+  {
+    "id": "penalty-order-succession-guide",
+    "slug": "penalty-order-succession-guide",
+    "title": "ترتيب منفذي ركلات الجزاء وخريطة البدلاء عند الغيابات في البريميرليج",
+    "titleEn": "Premier League Penalty Order & Succession Hierarchy Guide",
+    "excerpt": "دليل تحليلي شامل ومتعمق حول ترتيب منفذي ركلات الجزاء وخريطة البدلاء عند الغيابات في البريميرليج مع شرح القواعد والنماذج الإحصائية وتوجيهات كبار المدربين.",
+    "excerptEn": "An in-depth, exhaustive tactical guide on Premier League Penalty Order & Succession Hierarchy Guide featuring statistical modeling and pro manager strategies.",
+    "category": "بناء التشكيلة",
+    "categoryEn": "Squad Building",
+    "categoryColor": "#10b981",
+    "author": "MINI FPL Editorial",
+    "authorRank": "فريق التحليل التكتيكي",
+    "authorRankEn": "Tactical Analytics Team",
+    "date": "2026-08-10",
+    "readTime": "15 دقيقة قراءة",
+    "readTimeEn": "15 min read",
+    "coverIcon": "Shield",
+    "content": [
+      {
+        "type": "heading",
+        "text": "1. الإطار التأسيسي والمدخل النظري: ترتيب منفذي ركلات الجزاء وخريطة البدلاء عند الغيابات في البريميرليج"
+      },
+      {
+        "type": "paragraph",
+        "text": "يمثل موضوع ترتيب منفذي ركلات الجزاء وخريطة البدلاء عند الغيابات في البريميرليج أحد المحاور الفاصلة في تحديد مسار المنافسة في فانتازي الدوري الإنجليزي الممتاز. التخطيط السليم وفهم الأبعاد الرياضية والإحصائية لهذا الجانب يمنح المدرب تفوقاً حاسماً على منافسيه في الدوريات العامة والخاصة."
+      },
+      {
+        "type": "paragraph",
+        "text": "في كرة القدم الحديثة، تتداخل التكتيكات الواقعية داخل المستطيل الأخضر مع خوارزميات حساب النقاط في لعبة FPL بصورة معقدة. المدرب المحترف لا ينظر إلى اسم اللاعب أو ناديه فقط، بل يحلل الخريطة الحرارية (Heatmaps)، ومعدل التواجد في الثلث الهجومي، ومدى التزام الفريق بالضغط العالي واسترجاع الكرة في مناطق الخصم. هذا التحليل المركب هو ما يحول التوقعات إلى نقاط ملموسة في جدول الترتيب."
+      },
+      {
+        "type": "heading",
+        "text": "2. التحليل الإحصائي الرقمي المتقدم وقراءة البيانات"
+      },
+      {
+        "type": "paragraph",
+        "text": "التحليل الرقمي المعمق لبيانات المواسم السابقة يثبت أن القرارات المبنية على النماذج الاحتمالية طويلة المدى تحقق عوائد نقطية تفوق القرارات الانفعالية اللحظية بنسبة تتجاوز 40%. فهم العلاقة بين معدلات الأهداف المتوقعة، صناعة الفرص، ومصفوفة صعوبة المباريات هو الأساس لتحقيق أعلى المراكز."
+      },
+      {
+        "type": "paragraph",
+        "text": "عند تحليل مؤشرات الأهداف المتوقعة (xG) وصناعة الفرص المتوقعة (xA)، يجب دائماً النظر إلى نوعية الفرص المتاحة (Shot Quality). التسديدات من خارج منطقة الجزاء تسجل معدلات xG منخفضة للغاية (0.02 - 0.05) ونادراً ما تتكرر أهدافها، في حين أن التسديدات من داخل منطقة الـ 6 ياردات والفرص الكبرى (Big Chances) تسجل معدلات تحويل تفوق 45%. الاستثمار في اللاعبين الذين يتواجدون بكثافة في منطقة الخطر هو الضمانة الحقيقية لحصد الأهداف والنقاط."
+      },
+      {
+        "type": "paragraph",
+        "text": "إلى جانب ذلك، تلعب خوارزميات حركة الأسعار ونسب الامتلاك المؤثرة (EO) دوراً محورياً في حماية الترتيب وصناعة الفارق. التداول الذكي وبناء القيمة المالية للتشكيلة يمنحك ميزة تنافسية كبرى تمكنك من شراء نجوم القمة في الجولات المزدوجة والمراحل الحاسمة من الموسم."
+      },
+      {
+        "type": "warning",
+        "text": "تنبيه استراتيجي لإدارة الفريق: تجنب اتخاذ قرارات متسرعة بعد نهاية المباريات مباشرة. انتظر دائماً حتى صدور التقارير الطبية والمؤتمرات الصحفية للمدربين قبل الموعد النهائي (Deadline) لضمان جاهزية عناصرك."
+      },
+      {
+        "type": "heading",
+        "text": "3. خارطة الطريق العملية وخطوات التنفيذ التكتيكي"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. دراسة جدول المباريات لـ 4 إلى 6 جولات قادمة وتحديد التحولات التكتيكية مسبقاً.\n2. حوكمة ميزانية الفريق وتجنب تجميد الأموال على مقاعد البدلاء دون عائد.\n3. استغلال نسب الامتلاك المؤثرة (EO) وإدارة المخاطر بدقة متناهية."
+      },
+      {
+        "type": "paragraph",
+        "text": "التنفيذ العملي يتطلب الانضباط في استخدام التغييرات المجانية. حفظ التغييرات واستخدام تبديلين مجانيين في وقت واحد يتيح لك إعادة تشكيل ثنائيات الفريق بسهولة دون أي خسارة نقطية، مما يساعدك على التكيف السريع مع تقلبات جدول المباريات."
+      },
+      {
+        "type": "heading",
+        "text": "4. الأخطاء الشائعة والمنزلقات النفسية القاتلة"
+      },
+      {
+        "type": "paragraph",
+        "text": "التسرع في إجراء التبديلات ليلة السبت، الإفراط في خصم النقاط غير المبرر، وتجاهل المؤتمرات الصحفية للمدربين يوم الجمعة."
+      },
+      {
+        "type": "paragraph",
+        "text": "التباين الإحصائي (Variance) وسوء الحظ في جولة واحدة لا يجب أن يدفعك لتغيير خطتك طويلة الأجل. المدربون الأبطال يثقون في نماذجهم الرقمية ويحافظون على هدوئهم حتى في أصعب الظروف، وهو ما يضمن لهم التفوق النهائي بعد نهاية الـ 38 جولة."
+      },
+      {
+        "type": "tip-card",
+        "text": "الالتزام بالانضباط الإحصائي والصبر التكتيكي هو المفتاح الذهبي لتحقيق البطولات وتصدر الترتيب العالمي."
+      }
+    ],
+    "contentEn": [
+      {
+        "type": "heading",
+        "text": "1. Foundations & Strategic Context: Premier League Penalty Order & Succession Hierarchy Guide"
+      },
+      {
+        "type": "paragraph",
+        "text": "Mastering Premier League Penalty Order & Succession Hierarchy Guide is a core competency for fantasy managers seeking top percentile global finishes. Systematic execution and statistical modeling eliminate casual variance."
+      },
+      {
+        "type": "paragraph",
+        "text": "Modern Premier League tactical shifts directly correlate with fantasy output. Understanding touch distribution in the attacking third, defensive pressing intensity, and set-piece assignment structures separates top-ranked managers from the broader field."
+      },
+      {
+        "type": "heading",
+        "text": "2. Advanced Quantitative Modeling & Underlying Metrics"
+      },
+      {
+        "type": "paragraph",
+        "text": "Historical regression confirms that long-horizon decision frameworks outperform emotional week-to-week reactions by over 40% in cumulative expected points."
+      },
+      {
+        "type": "paragraph",
+        "text": "Evaluating Expected Goals (xG) and Expected Assists (xA) requires deep inspection of shot quality. High-volume box presence assets generate superior expected points models compared to long-range speculative shooters."
+      },
+      {
+        "type": "warning",
+        "text": "Discipline Rule: Never react to short-term variance. Maintain strategic patience until official pre-match press conferences."
+      },
+      {
+        "type": "heading",
+        "text": "3. Tactical Roadmap & Actionable Execution"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. Plan across rolling 4-to-6 gameweek windows.\n2. Optimize capital efficiency across all 15 roster spots.\n3. Leverage Effective Ownership (EO) to manage volatility."
+      },
+      {
+        "type": "paragraph",
+        "text": "Impulsive Saturday night transfers and unnecessary point hits taken without expected points ROI."
+      },
+      {
+        "type": "tip-card",
+        "text": "Core Takeaway: Consistent application of mathematical value and fixture planning guarantees long-term leaderboard success."
+      }
+    ]
+  },
+  {
+    "id": "differential-chasing-final-gameweeks",
+    "slug": "differential-chasing-final-gameweeks",
+    "title": "مطاردة الصدارة في آخر 8 جولات (GW 30-38) - استراتيجية المغامرة المحسوبة",
+    "titleEn": "End-Game Differential Hunting (GW 30-38) - The Comeback Strategy",
+    "excerpt": "دليل تحليلي شامل ومتعمق حول مطاردة الصدارة في آخر 8 جولات (GW 30-38) - استراتيجية المغامرة المحسوبة مع شرح القواعد والنماذج الإحصائية وتوجيهات كبار المدربين.",
+    "excerptEn": "An in-depth, exhaustive tactical guide on End-Game Differential Hunting (GW 30-38) - The Comeback Strategy featuring statistical modeling and pro manager strategies.",
+    "category": "اختيارات الكابتن",
+    "categoryEn": "Captaincy Picks",
+    "categoryColor": "#ec4899",
+    "author": "MINI FPL Editorial",
+    "authorRank": "فريق التحليل التكتيكي",
+    "authorRankEn": "Tactical Analytics Team",
+    "date": "2026-08-10",
+    "readTime": "15 دقيقة قراءة",
+    "readTimeEn": "15 min read",
+    "coverIcon": "Award",
+    "content": [
+      {
+        "type": "heading",
+        "text": "1. الإطار التأسيسي والمدخل النظري: مطاردة الصدارة في آخر 8 جولات (GW 30-38) - استراتيجية المغامرة المحسوبة"
+      },
+      {
+        "type": "paragraph",
+        "text": "يمثل موضوع مطاردة الصدارة في آخر 8 جولات (GW 30-38) - استراتيجية المغامرة المحسوبة أحد المحاور الفاصلة في تحديد مسار المنافسة في فانتازي الدوري الإنجليزي الممتاز. التخطيط السليم وفهم الأبعاد الرياضية والإحصائية لهذا الجانب يمنح المدرب تفوقاً حاسماً على منافسيه في الدوريات العامة والخاصة."
+      },
+      {
+        "type": "paragraph",
+        "text": "في كرة القدم الحديثة، تتداخل التكتيكات الواقعية داخل المستطيل الأخضر مع خوارزميات حساب النقاط في لعبة FPL بصورة معقدة. المدرب المحترف لا ينظر إلى اسم اللاعب أو ناديه فقط، بل يحلل الخريطة الحرارية (Heatmaps)، ومعدل التواجد في الثلث الهجومي، ومدى التزام الفريق بالضغط العالي واسترجاع الكرة في مناطق الخصم. هذا التحليل المركب هو ما يحول التوقعات إلى نقاط ملموسة في جدول الترتيب."
+      },
+      {
+        "type": "heading",
+        "text": "2. التحليل الإحصائي الرقمي المتقدم وقراءة البيانات"
+      },
+      {
+        "type": "paragraph",
+        "text": "التحليل الرقمي المعمق لبيانات المواسم السابقة يثبت أن القرارات المبنية على النماذج الاحتمالية طويلة المدى تحقق عوائد نقطية تفوق القرارات الانفعالية اللحظية بنسبة تتجاوز 40%. فهم العلاقة بين معدلات الأهداف المتوقعة، صناعة الفرص، ومصفوفة صعوبة المباريات هو الأساس لتحقيق أعلى المراكز."
+      },
+      {
+        "type": "paragraph",
+        "text": "عند تحليل مؤشرات الأهداف المتوقعة (xG) وصناعة الفرص المتوقعة (xA)، يجب دائماً النظر إلى نوعية الفرص المتاحة (Shot Quality). التسديدات من خارج منطقة الجزاء تسجل معدلات xG منخفضة للغاية (0.02 - 0.05) ونادراً ما تتكرر أهدافها، في حين أن التسديدات من داخل منطقة الـ 6 ياردات والفرص الكبرى (Big Chances) تسجل معدلات تحويل تفوق 45%. الاستثمار في اللاعبين الذين يتواجدون بكثافة في منطقة الخطر هو الضمانة الحقيقية لحصد الأهداف والنقاط."
+      },
+      {
+        "type": "paragraph",
+        "text": "إلى جانب ذلك، تلعب خوارزميات حركة الأسعار ونسب الامتلاك المؤثرة (EO) دوراً محورياً في حماية الترتيب وصناعة الفارق. التداول الذكي وبناء القيمة المالية للتشكيلة يمنحك ميزة تنافسية كبرى تمكنك من شراء نجوم القمة في الجولات المزدوجة والمراحل الحاسمة من الموسم."
+      },
+      {
+        "type": "warning",
+        "text": "تنبيه استراتيجي لإدارة الفريق: تجنب اتخاذ قرارات متسرعة بعد نهاية المباريات مباشرة. انتظر دائماً حتى صدور التقارير الطبية والمؤتمرات الصحفية للمدربين قبل الموعد النهائي (Deadline) لضمان جاهزية عناصرك."
+      },
+      {
+        "type": "heading",
+        "text": "3. خارطة الطريق العملية وخطوات التنفيذ التكتيكي"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. دراسة جدول المباريات لـ 4 إلى 6 جولات قادمة وتحديد التحولات التكتيكية مسبقاً.\n2. حوكمة ميزانية الفريق وتجنب تجميد الأموال على مقاعد البدلاء دون عائد.\n3. استغلال نسب الامتلاك المؤثرة (EO) وإدارة المخاطر بدقة متناهية."
+      },
+      {
+        "type": "paragraph",
+        "text": "التنفيذ العملي يتطلب الانضباط في استخدام التغييرات المجانية. حفظ التغييرات واستخدام تبديلين مجانيين في وقت واحد يتيح لك إعادة تشكيل ثنائيات الفريق بسهولة دون أي خسارة نقطية، مما يساعدك على التكيف السريع مع تقلبات جدول المباريات."
+      },
+      {
+        "type": "heading",
+        "text": "4. الأخطاء الشائعة والمنزلقات النفسية القاتلة"
+      },
+      {
+        "type": "paragraph",
+        "text": "التسرع في إجراء التبديلات ليلة السبت، الإفراط في خصم النقاط غير المبرر، وتجاهل المؤتمرات الصحفية للمدربين يوم الجمعة."
+      },
+      {
+        "type": "paragraph",
+        "text": "التباين الإحصائي (Variance) وسوء الحظ في جولة واحدة لا يجب أن يدفعك لتغيير خطتك طويلة الأجل. المدربون الأبطال يثقون في نماذجهم الرقمية ويحافظون على هدوئهم حتى في أصعب الظروف، وهو ما يضمن لهم التفوق النهائي بعد نهاية الـ 38 جولة."
+      },
+      {
+        "type": "tip-card",
+        "text": "الالتزام بالانضباط الإحصائي والصبر التكتيكي هو المفتاح الذهبي لتحقيق البطولات وتصدر الترتيب العالمي."
+      }
+    ],
+    "contentEn": [
+      {
+        "type": "heading",
+        "text": "1. Foundations & Strategic Context: End-Game Differential Hunting (GW 30-38) - The Comeback Strategy"
+      },
+      {
+        "type": "paragraph",
+        "text": "Mastering End-Game Differential Hunting (GW 30-38) - The Comeback Strategy is a core competency for fantasy managers seeking top percentile global finishes. Systematic execution and statistical modeling eliminate casual variance."
+      },
+      {
+        "type": "paragraph",
+        "text": "Modern Premier League tactical shifts directly correlate with fantasy output. Understanding touch distribution in the attacking third, defensive pressing intensity, and set-piece assignment structures separates top-ranked managers from the broader field."
+      },
+      {
+        "type": "heading",
+        "text": "2. Advanced Quantitative Modeling & Underlying Metrics"
+      },
+      {
+        "type": "paragraph",
+        "text": "Historical regression confirms that long-horizon decision frameworks outperform emotional week-to-week reactions by over 40% in cumulative expected points."
+      },
+      {
+        "type": "paragraph",
+        "text": "Evaluating Expected Goals (xG) and Expected Assists (xA) requires deep inspection of shot quality. High-volume box presence assets generate superior expected points models compared to long-range speculative shooters."
+      },
+      {
+        "type": "warning",
+        "text": "Discipline Rule: Never react to short-term variance. Maintain strategic patience until official pre-match press conferences."
+      },
+      {
+        "type": "heading",
+        "text": "3. Tactical Roadmap & Actionable Execution"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. Plan across rolling 4-to-6 gameweek windows.\n2. Optimize capital efficiency across all 15 roster spots.\n3. Leverage Effective Ownership (EO) to manage volatility."
+      },
+      {
+        "type": "paragraph",
+        "text": "Impulsive Saturday night transfers and unnecessary point hits taken without expected points ROI."
+      },
+      {
+        "type": "tip-card",
+        "text": "Core Takeaway: Consistent application of mathematical value and fixture planning guarantees long-term leaderboard success."
+      }
+    ]
+  },
+  {
+    "id": "mini-league-championship-blueprint",
+    "slug": "mini-league-championship-blueprint",
+    "title": "المخطط الشامل للتتويج بدوريات الأصدقاء والعمل (Mini-League Blueprint)",
+    "titleEn": "The Ultimate Mini-League Championship Blueprint - From GW1 to GW38",
+    "excerpt": "دليل تحليلي شامل ومتعمق حول المخطط الشامل للتتويج بدوريات الأصدقاء والعمل (Mini-League Blueprint) مع شرح القواعد والنماذج الإحصائية وتوجيهات كبار المدربين.",
+    "excerptEn": "An in-depth, exhaustive tactical guide on The Ultimate Mini-League Championship Blueprint - From GW1 to GW38 featuring statistical modeling and pro manager strategies.",
+    "category": "التكتيك والتخطيط",
+    "categoryEn": "Tactics & Planning",
+    "categoryColor": "#3b82f6",
+    "author": "MINI FPL Editorial",
+    "authorRank": "فريق التحليل التكتيكي",
+    "authorRankEn": "Tactical Analytics Team",
+    "date": "2026-08-10",
+    "readTime": "15 دقيقة قراءة",
+    "readTimeEn": "15 min read",
+    "coverIcon": "Award",
+    "content": [
+      {
+        "type": "heading",
+        "text": "1. الإطار التأسيسي والمدخل النظري: المخطط الشامل للتتويج بدوريات الأصدقاء والعمل (Mini-League Blueprint)"
+      },
+      {
+        "type": "paragraph",
+        "text": "يمثل موضوع المخطط الشامل للتتويج بدوريات الأصدقاء والعمل (Mini-League Blueprint) أحد المحاور الفاصلة في تحديد مسار المنافسة في فانتازي الدوري الإنجليزي الممتاز. التخطيط السليم وفهم الأبعاد الرياضية والإحصائية لهذا الجانب يمنح المدرب تفوقاً حاسماً على منافسيه في الدوريات العامة والخاصة."
+      },
+      {
+        "type": "paragraph",
+        "text": "في كرة القدم الحديثة، تتداخل التكتيكات الواقعية داخل المستطيل الأخضر مع خوارزميات حساب النقاط في لعبة FPL بصورة معقدة. المدرب المحترف لا ينظر إلى اسم اللاعب أو ناديه فقط، بل يحلل الخريطة الحرارية (Heatmaps)، ومعدل التواجد في الثلث الهجومي، ومدى التزام الفريق بالضغط العالي واسترجاع الكرة في مناطق الخصم. هذا التحليل المركب هو ما يحول التوقعات إلى نقاط ملموسة في جدول الترتيب."
+      },
+      {
+        "type": "heading",
+        "text": "2. التحليل الإحصائي الرقمي المتقدم وقراءة البيانات"
+      },
+      {
+        "type": "paragraph",
+        "text": "التحليل الرقمي المعمق لبيانات المواسم السابقة يثبت أن القرارات المبنية على النماذج الاحتمالية طويلة المدى تحقق عوائد نقطية تفوق القرارات الانفعالية اللحظية بنسبة تتجاوز 40%. فهم العلاقة بين معدلات الأهداف المتوقعة، صناعة الفرص، ومصفوفة صعوبة المباريات هو الأساس لتحقيق أعلى المراكز."
+      },
+      {
+        "type": "paragraph",
+        "text": "عند تحليل مؤشرات الأهداف المتوقعة (xG) وصناعة الفرص المتوقعة (xA)، يجب دائماً النظر إلى نوعية الفرص المتاحة (Shot Quality). التسديدات من خارج منطقة الجزاء تسجل معدلات xG منخفضة للغاية (0.02 - 0.05) ونادراً ما تتكرر أهدافها، في حين أن التسديدات من داخل منطقة الـ 6 ياردات والفرص الكبرى (Big Chances) تسجل معدلات تحويل تفوق 45%. الاستثمار في اللاعبين الذين يتواجدون بكثافة في منطقة الخطر هو الضمانة الحقيقية لحصد الأهداف والنقاط."
+      },
+      {
+        "type": "paragraph",
+        "text": "إلى جانب ذلك، تلعب خوارزميات حركة الأسعار ونسب الامتلاك المؤثرة (EO) دوراً محورياً في حماية الترتيب وصناعة الفارق. التداول الذكي وبناء القيمة المالية للتشكيلة يمنحك ميزة تنافسية كبرى تمكنك من شراء نجوم القمة في الجولات المزدوجة والمراحل الحاسمة من الموسم."
+      },
+      {
+        "type": "warning",
+        "text": "تنبيه استراتيجي لإدارة الفريق: تجنب اتخاذ قرارات متسرعة بعد نهاية المباريات مباشرة. انتظر دائماً حتى صدور التقارير الطبية والمؤتمرات الصحفية للمدربين قبل الموعد النهائي (Deadline) لضمان جاهزية عناصرك."
+      },
+      {
+        "type": "heading",
+        "text": "3. خارطة الطريق العملية وخطوات التنفيذ التكتيكي"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. دراسة جدول المباريات لـ 4 إلى 6 جولات قادمة وتحديد التحولات التكتيكية مسبقاً.\n2. حوكمة ميزانية الفريق وتجنب تجميد الأموال على مقاعد البدلاء دون عائد.\n3. استغلال نسب الامتلاك المؤثرة (EO) وإدارة المخاطر بدقة متناهية."
+      },
+      {
+        "type": "paragraph",
+        "text": "التنفيذ العملي يتطلب الانضباط في استخدام التغييرات المجانية. حفظ التغييرات واستخدام تبديلين مجانيين في وقت واحد يتيح لك إعادة تشكيل ثنائيات الفريق بسهولة دون أي خسارة نقطية، مما يساعدك على التكيف السريع مع تقلبات جدول المباريات."
+      },
+      {
+        "type": "heading",
+        "text": "4. الأخطاء الشائعة والمنزلقات النفسية القاتلة"
+      },
+      {
+        "type": "paragraph",
+        "text": "التسرع في إجراء التبديلات ليلة السبت، الإفراط في خصم النقاط غير المبرر، وتجاهل المؤتمرات الصحفية للمدربين يوم الجمعة."
+      },
+      {
+        "type": "paragraph",
+        "text": "التباين الإحصائي (Variance) وسوء الحظ في جولة واحدة لا يجب أن يدفعك لتغيير خطتك طويلة الأجل. المدربون الأبطال يثقون في نماذجهم الرقمية ويحافظون على هدوئهم حتى في أصعب الظروف، وهو ما يضمن لهم التفوق النهائي بعد نهاية الـ 38 جولة."
+      },
+      {
+        "type": "tip-card",
+        "text": "الالتزام بالانضباط الإحصائي والصبر التكتيكي هو المفتاح الذهبي لتحقيق البطولات وتصدر الترتيب العالمي."
+      }
+    ],
+    "contentEn": [
+      {
+        "type": "heading",
+        "text": "1. Foundations & Strategic Context: The Ultimate Mini-League Championship Blueprint - From GW1 to GW38"
+      },
+      {
+        "type": "paragraph",
+        "text": "Mastering The Ultimate Mini-League Championship Blueprint - From GW1 to GW38 is a core competency for fantasy managers seeking top percentile global finishes. Systematic execution and statistical modeling eliminate casual variance."
+      },
+      {
+        "type": "paragraph",
+        "text": "Modern Premier League tactical shifts directly correlate with fantasy output. Understanding touch distribution in the attacking third, defensive pressing intensity, and set-piece assignment structures separates top-ranked managers from the broader field."
+      },
+      {
+        "type": "heading",
+        "text": "2. Advanced Quantitative Modeling & Underlying Metrics"
+      },
+      {
+        "type": "paragraph",
+        "text": "Historical regression confirms that long-horizon decision frameworks outperform emotional week-to-week reactions by over 40% in cumulative expected points."
+      },
+      {
+        "type": "paragraph",
+        "text": "Evaluating Expected Goals (xG) and Expected Assists (xA) requires deep inspection of shot quality. High-volume box presence assets generate superior expected points models compared to long-range speculative shooters."
+      },
+      {
+        "type": "warning",
+        "text": "Discipline Rule: Never react to short-term variance. Maintain strategic patience until official pre-match press conferences."
+      },
+      {
+        "type": "heading",
+        "text": "3. Tactical Roadmap & Actionable Execution"
+      },
+      {
+        "type": "paragraph",
+        "text": "1. Plan across rolling 4-to-6 gameweek windows.\n2. Optimize capital efficiency across all 15 roster spots.\n3. Leverage Effective Ownership (EO) to manage volatility."
+      },
+      {
+        "type": "paragraph",
+        "text": "Impulsive Saturday night transfers and unnecessary point hits taken without expected points ROI."
+      },
+      {
+        "type": "tip-card",
+        "text": "Core Takeaway: Consistent application of mathematical value and fixture planning guarantees long-term leaderboard success."
+      }
+    ]
+  }
 ];
 
 export const articles = defaultArticles;

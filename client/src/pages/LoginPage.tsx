@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
+import { SocialAuthButtons } from '../components/SocialAuthButtons';
 import { LogIn, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {
@@ -103,7 +104,7 @@ export const LoginPage: React.FC = () => {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="manager@fantasypromanager.com"
+              placeholder="name@gmail.com"
               style={{
                 width: '100%',
                 height: '48px',
@@ -202,6 +203,9 @@ export const LoginPage: React.FC = () => {
             <span>{loading ? t('loading') : t('login')}</span>
           </button>
         </form>
+
+        {/* Social Auth Buttons: Google, Facebook, Apple */}
+        <SocialAuthButtons mode="login" />
 
         <p style={{ textAlign: 'center', marginTop: '24px', fontSize: '0.88rem', color: 'var(--text-muted)' }}>
           {isRtl ? 'ليس لديك فريق بعد؟' : "Don't have a squad yet?"}{' '}

@@ -89,10 +89,22 @@ export async function apiFetch<T>(
         return apiFetch<T>(endpoint, options, true);
       } else {
         localStorage.removeItem('accessToken');
+        // Notify all queued subscribers that refresh failed
+        refreshSubscribers.forEach((cb) => {
+          try { cb(''); } catch { /* subscriber will fail on retry */ }
+        });
+        refreshSubscribers = [];
+        // Dispatch storage event to signal AuthContext to clear user state
+        window.dispatchEvent(new StorageEvent('storage', { key: 'accessToken', newValue: null }));
+        throw new Error('Session expired. Please log in again.');
       }
     } else {
       return new Promise<T>((resolve, reject) => {
         refreshSubscribers.push((newToken: string) => {
+          if (!newToken) {
+            reject(new Error('Session expired. Please log in again.'));
+            return;
+          }
           options.headers = {
             ...options.headers,
             Authorization: `Bearer ${newToken}`,

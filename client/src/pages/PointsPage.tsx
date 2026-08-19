@@ -4,7 +4,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { PitchView, SquadSlotItem } from '../components/PitchView';
 import { PlayerDetailModal, PlayerDetailData } from '../components/PlayerDetailModal';
 import { GoogleAd } from '../components/GoogleAd';
-import { ChevronLeft, ChevronRight, Eye } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export const PointsPage: React.FC = () => {
   const { t, isRtl } = useLanguage();
@@ -59,6 +59,8 @@ export const PointsPage: React.FC = () => {
   const avgScore = data?.summary?.averagePoints ?? (data?.summary?.is_final ? 48 : 0);
   const highestScore = data?.summary?.highestPoints ?? (data?.summary?.is_final ? 94 : 0);
 
+  const isTripleCaptainActive = data?.summary?.chip === '3xc' || data?.summary?.active_chip === '3xc' || data?.chip === '3xc';
+
   return (
     <div style={{ maxWidth: '900px', margin: '0 auto', paddingBottom: '40px' }}>
       {/* Top Banner Gradient Header matching Official FPL Mobile Points View */}
@@ -104,7 +106,7 @@ export const PointsPage: React.FC = () => {
           </button>
 
           <h2 style={{ margin: 0, fontSize: '1.6rem', fontWeight: 900, letterSpacing: '-0.5px' }}>
-            Gameweek {gw}
+            {isRtl ? `الجولة ${gw}` : `Gameweek ${gw}`}
           </h2>
 
           <button
@@ -156,7 +158,7 @@ export const PointsPage: React.FC = () => {
               boxShadow: viewMode === 'squad' ? '0 4px 12px rgba(0,0,0,0.1)' : 'none',
             }}
           >
-            {isRtl ? 'التشكيلة (Squad)' : 'Squad'}
+            {isRtl ? 'التشكيلة' : 'Squad'}
           </button>
           <button
             onClick={() => setViewMode('list')}
@@ -174,7 +176,7 @@ export const PointsPage: React.FC = () => {
               boxShadow: viewMode === 'list' ? '0 4px 12px rgba(0,0,0,0.1)' : 'none',
             }}
           >
-            {isRtl ? 'القائمة (List)' : 'List'}
+            {isRtl ? 'القائمة' : 'List'}
           </button>
         </div>
 
@@ -195,7 +197,7 @@ export const PointsPage: React.FC = () => {
               {avgScore}
             </div>
             <div style={{ fontSize: '0.85rem', fontWeight: 700, opacity: 0.9, marginTop: '4px' }}>
-              {isRtl ? 'المتوسط (Average)' : 'Average'}
+              {isRtl ? 'المتوسط' : 'Average'}
             </div>
           </div>
 
@@ -213,7 +215,7 @@ export const PointsPage: React.FC = () => {
               {userScore}
             </div>
             <div style={{ fontSize: '0.9rem', fontWeight: 900, marginTop: '6px', color: '#ffffff' }}>
-              {isRtl ? 'نقاطك (Your Score)' : 'Your Score'}
+              {isRtl ? 'نقاطك' : 'Your Score'}
             </div>
           </div>
 
@@ -223,7 +225,7 @@ export const PointsPage: React.FC = () => {
               {highestScore}
             </div>
             <div style={{ fontSize: '0.85rem', fontWeight: 700, opacity: 0.9, marginTop: '4px' }}>
-              {isRtl ? 'الأعلى (Highest)' : 'Highest'}
+              {isRtl ? 'الأعلى' : 'Highest'}
             </div>
           </div>
         </div>
@@ -250,7 +252,7 @@ export const PointsPage: React.FC = () => {
         /* List View View Mode */
         <div className="glass-card" style={{ padding: '20px' }}>
           <h3 style={{ marginBottom: '16px', fontSize: '1.1rem', color: 'var(--fpl-purple)', fontWeight: 800 }}>
-            {isRtl ? `تفاصيل لاعبين الجولة ${gw}` : `Gameweek ${gw} Player Breakdown`}
+            {isRtl ? `تفاصيل لاعبي الجولة ${gw}` : `Gameweek ${gw} Player Breakdown`}
           </h3>
 
           <div style={{ overflowX: 'auto' }}>
@@ -258,44 +260,52 @@ export const PointsPage: React.FC = () => {
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>{t('playerSelection')}</th>
-                  <th>{t('gkp')}</th>
+                  <th>{isRtl ? 'اللاعب' : 'Player'}</th>
+                  <th>{isRtl ? 'الفريق' : 'Team'}</th>
                   <th style={{ textAlign: 'center' }}>{t('rawPoints')}</th>
                   <th style={{ textAlign: 'center' }}>{isRtl ? 'المضاعف' : 'Multiplier'}</th>
                   <th style={{ textAlign: 'right' }}>{t('netPoints')}</th>
                 </tr>
               </thead>
               <tbody>
-                {formattedPicks.map((p, idx) => (
-                  <tr key={p.playerId || idx}>
-                    <td>{idx + 1}</td>
-                    <td>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <span style={{ fontWeight: 800, color: '#0f172a' }}>{p.webName}</span>
-                        {p.isCaptain && (
-                          <span className="fpl-role-badge-pill captain">(C)</span>
-                        )}
-                        {p.isVice && (
-                          <span className="fpl-role-badge-pill vice">(V)</span>
-                        )}
-                      </div>
-                    </td>
-                    <td>
-                      <span className="player-team">{p.teamShortName}</span>
-                    </td>
-                    <td style={{ textAlign: 'center', fontWeight: 700 }}>
-                      {p.fullData?.total_points || 0}
-                    </td>
-                    <td style={{ textAlign: 'center' }}>
-                      <span style={{ background: '#f1f5f9', padding: '2px 8px', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 800 }}>
-                        {p.isCaptain ? '2x' : '1x'}
-                      </span>
-                    </td>
-                    <td style={{ textAlign: 'right', fontWeight: 900, color: 'var(--fpl-green)', fontSize: '1.05rem' }}>
-                      {p.points || 0} {t('pts')}
-                    </td>
-                  </tr>
-                ))}
+                {formattedPicks.map((p, idx) => {
+                  const rawScore = (data?.picks?.[idx]?.raw_points ?? data?.picks?.[idx]?.rawPoints) !== undefined
+                    ? (data?.picks?.[idx]?.raw_points ?? data?.picks?.[idx]?.rawPoints)
+                    : (p.isCaptain ? Math.round((p.points || 0) / (isTripleCaptainActive ? 3 : 2)) : (p.points || 0));
+
+                  const multiplierLabel = p.isCaptain ? (isTripleCaptainActive ? '3x' : '2x') : '1x';
+
+                  return (
+                    <tr key={p.playerId || idx}>
+                      <td>{idx + 1}</td>
+                      <td>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <span style={{ fontWeight: 800, color: '#0f172a' }}>{p.webName}</span>
+                          {p.isCaptain && (
+                            <span className="fpl-role-badge-pill captain">{isTripleCaptainActive ? '(3x C)' : '(C)'}</span>
+                          )}
+                          {p.isVice && (
+                            <span className="fpl-role-badge-pill vice">(V)</span>
+                          )}
+                        </div>
+                      </td>
+                      <td>
+                        <span className="player-team">{p.teamShortName}</span>
+                      </td>
+                      <td style={{ textAlign: 'center', fontWeight: 700 }}>
+                        {rawScore}
+                      </td>
+                      <td style={{ textAlign: 'center' }}>
+                        <span style={{ background: '#f1f5f9', padding: '2px 8px', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 800 }}>
+                          {multiplierLabel}
+                        </span>
+                      </td>
+                      <td style={{ textAlign: 'right', fontWeight: 900, color: 'var(--fpl-green)', fontSize: '1.05rem' }}>
+                        {p.points || 0} {t('pts')}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

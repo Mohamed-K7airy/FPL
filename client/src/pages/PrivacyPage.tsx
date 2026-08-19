@@ -41,7 +41,7 @@ export const PrivacyPage: React.FC = () => {
                 <li>تستخدم شركة Google ومزودو الخدمة الجدد ملفات تعريف الارتباط (Cookies) لعرض الإعلانات بناءً على زيارات المستخدم السابقة لموقعنا أو لمواقع أخرى على شبكة الإنترنت.</li>
                 <li>يساعد استخدام Google لملفات تعريف الإعلانات (مثل DART cookie) على عرض إعلانات مخصصة للمستخدمين بناءً على تصفحهم لموقعنا والمواقع الأخرى.</li>
                 <li>يمكن للمستخدمين إيقاف الإعلانات المخصصة عبر التوجه إلى <a href="https://www.google.com/settings/ads" target="_blank" rel="noreferrer" style={{ color: 'var(--fpl-cyan)', textDecoration: 'underline' }}>إعدادات الإعلانات من Google</a>.</li>
-                <li>كما يمكنك زيارة موقع <a href="http://www.aboutads.info/choices/" target="_blank" rel="noreferrer" style={{ color: 'var(--fpl-cyan)', textDecoration: 'underline' }}>AboutAds.info</a> لإلغاء استخدام ملفات تعريف الارتباط من قِبل موردي الإعلانات الخارجين.</li>
+                <li>كما يمكنك زيارة موقع <a href="http://www.aboutads.info/choices/" target="_blank" rel="noreferrer" style={{ color: 'var(--fpl-cyan)', textDecoration: 'underline' }}>AboutAds.info</a> لإلغاء استخدام ملفات تعريف الارتباط من قِبل موردي الإعلانات الخارجيين.</li>
               </ul>
             </section>
 
@@ -64,7 +64,7 @@ export const PrivacyPage: React.FC = () => {
                 <Mail size={20} /> 4. حقوق المستخدم والتواصل معنا
               </h2>
               <p>
-                يحق لكل مستخدم طلب تعديل أو حذف بياناته أو استفساره حول أي بنود متعلقة بالخصوصية. يسعدنا استقبال استفساراتكم عبر التواصل الإلكتورني على:
+                يحق لكل مستخدم طلب تعديل أو حذف بياناته أو استفساره حول أي بنود متعلقة بالخصوصية. يسعدنا استقبال استفساراتكم عبر التواصل الإلكتروني على:
                 <br />
                 <span style={{ color: 'var(--fpl-purple)', fontWeight: 700 }}>support@sphinxcs.online</span>
               </p>

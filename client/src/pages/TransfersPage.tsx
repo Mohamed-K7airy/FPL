@@ -5,7 +5,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { PitchView, SquadSlotItem } from '../components/PitchView';
 import { PlayerDetailModal, PlayerDetailData } from '../components/PlayerDetailModal';
 import { GoogleAd } from '../components/GoogleAd';
-import { Search, Sparkles, RotateCcw, Trash2, CheckCircle2, AlertCircle, Info, ChevronLeft, ChevronRight, Eye, EyeOff, Bot, Headset, GitCompare } from 'lucide-react';
+import { Search, RotateCcw, CheckCircle2, AlertCircle, Info, X } from 'lucide-react';
 
 const SLOT_POSITIONS: Record<number, 1 | 2 | 3 | 4> = {
   1: 1,
@@ -34,6 +34,7 @@ export const TransfersPage: React.FC = () => {
   });
 
   const [selectedSlot, setSelectedSlot] = useState<number | null>(null);
+  const [isMobilePickerOpen, setIsMobilePickerOpen] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
@@ -220,6 +221,7 @@ export const TransfersPage: React.FC = () => {
     }));
 
     setSelectedSlot(null);
+    setIsMobilePickerOpen(false);
   };
 
   const handleAutoPick = async () => {
@@ -263,6 +265,7 @@ export const TransfersPage: React.FC = () => {
   const handleEmptySlotClick = (position: 1 | 2 | 3 | 4, slot: number) => {
     setSelectedSlot(slot);
     setPositionFilter(position);
+    setIsMobilePickerOpen(true);
   };
 
   const handlePitchSlotClick = (slot: number) => {
@@ -271,6 +274,7 @@ export const TransfersPage: React.FC = () => {
     if (player) {
       setPositionFilter(player.position);
     }
+    setIsMobilePickerOpen(true);
   };
 
   const handleReset = () => {
@@ -314,7 +318,7 @@ export const TransfersPage: React.FC = () => {
 
       await refreshUser();
       await fetchExistingSquad();
-      setMessage({ type: 'success', text: isRtl ? 'تم حفظ التغييرات والتواكيل بنجاح!' : 'Team changes & squad saved successfully!' });
+      setMessage({ type: 'success', text: isRtl ? 'تم حفظ التشكيلة وتعيين الكابتن بنجاح!' : 'Team changes & squad saved successfully!' });
     } catch (err) {
       setMessage({ type: 'error', text: (err as Error).message });
     } finally {
@@ -546,7 +550,7 @@ export const TransfersPage: React.FC = () => {
                   {isWildcardActive ? (
                     <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
                       <div style={{ background: '#10b981', color: '#ffffff', padding: '4px 2px', borderRadius: '6px', fontSize: '0.7rem', fontWeight: 900, textAlign: 'center' }}>
-                        وايلد كارد (مفعل)
+                        {isRtl ? 'وايلد كارد (مفعل)' : 'Wildcard (Active)'}
                       </div>
                       <button
                         onClick={() => handleDeactivateChip('wildcard')}
@@ -562,14 +566,14 @@ export const TransfersPage: React.FC = () => {
                       disabled={activatingChip}
                       style={{ flex: 1, background: '#1e1b4b', color: '#38bdf8', border: '1px solid #38bdf8', padding: '6px 4px', borderRadius: '8px', fontSize: '0.72rem', fontWeight: 900, cursor: 'pointer' }}
                     >
-                      تفعيل وايلد كارد
+                      {isRtl ? 'تفعيل وايلد كارد' : 'Activate Wildcard'}
                     </button>
                   )}
 
                   {isFreeHitActive ? (
                     <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
                       <div style={{ background: '#10b981', color: '#ffffff', padding: '4px 2px', borderRadius: '6px', fontSize: '0.7rem', fontWeight: 900, textAlign: 'center' }}>
-                        فري هيت (مفعل)
+                        {isRtl ? 'فري هيت (مفعل)' : 'Free Hit (Active)'}
                       </div>
                       <button
                         onClick={() => handleDeactivateChip('freehit')}
@@ -585,7 +589,7 @@ export const TransfersPage: React.FC = () => {
                       disabled={activatingChip}
                       style={{ flex: 1, background: '#1e1b4b', color: '#ec4899', border: '1px solid #ec4899', padding: '6px 4px', borderRadius: '8px', fontSize: '0.72rem', fontWeight: 900, cursor: 'pointer' }}
                     >
-                      تفعيل فري هيت
+                      {isRtl ? 'تفعيل فري هيت' : 'Activate Free Hit'}
                     </button>
                   )}
                 </div>
@@ -604,7 +608,7 @@ export const TransfersPage: React.FC = () => {
                 <div className="widget-badge purple" style={{ fontSize: (gw === 1 || isWildcardActive || isFreeHitActive || !hasExistingSquad) ? '0.88rem' : '1.05rem' }}>
                   {(gw === 1 || isWildcardActive || isFreeHitActive || !hasExistingSquad)
                     ? (isRtl ? 'غير محدود' : 'Unlimited')
-                    : ((user?.free_transfers ?? 1) > 0 ? (isRtl ? `${user?.free_transfers ?? 1} نقلة مجانية` : `${user?.free_transfers ?? 1} Free`) : (isRtl ? '0 نقلات' : '0 Free'))}
+                    : ((user?.free_transfers ?? 1) > 0 ? (isRtl ? `${user?.free_transfers ?? 1} نقلة مجانية` : `${user?.free_transfers ?? 1} Free`) : (isRtl ? '0 نقلة' : '0 Free'))}
                 </div>
                 <div className="widget-sub-label" style={{ marginTop: '4px', fontSize: '0.7rem' }}>
                   {(gw === 1 || !hasExistingSquad)
@@ -632,7 +636,7 @@ export const TransfersPage: React.FC = () => {
               />
             </div>
 
-            {/* Floating Action Control Bar matching FantasyProManager bottom bar */}
+            {/* Floating Action Control Bar */}
             <div className="fpl-bottom-toolbar-container">
               {/* Primary Emerald Button: Create Team */}
               <button
@@ -641,26 +645,8 @@ export const TransfersPage: React.FC = () => {
                 className="fpl-main-submit-emerald-btn"
               >
                 <CheckCircle2 size={18} />
-                <span>{submitting ? t('submitting') : (isRtl ? 'إنشاء فريق' : 'Create Squad')}</span>
+                <span>{submitting ? t('submitting') : (hasExistingSquad ? (isRtl ? 'تأكيد وحفظ الانتقالات' : 'Save Transfers') : (isRtl ? 'إنشاء فريق' : 'Create Squad'))}</span>
               </button>
-
-              {/* Toolbar Secondary Actions */}
-              <div className="fpl-toolbar-actions-row">
-                <button className="fpl-tool-btn gray">
-                  <GitCompare size={16} />
-                  <span>{isRtl ? 'مقارنة الفرق' : 'Compare Teams'}</span>
-                </button>
-
-                <button onClick={handleAutoPick} className="fpl-tool-btn cyan">
-                  <Headset size={16} />
-                  <span>{isRtl ? 'استشارة خبير' : 'Expert Advice'}</span>
-                </button>
-
-                <button onClick={handleAutoPick} className="fpl-tool-btn purple">
-                  <Bot size={16} />
-                  <span>{isRtl ? 'تغييرات بالذكاء الاصطناعي' : 'AI Smart Transfers'}</span>
-                </button>
-              </div>
             </div>
           </div>
 
@@ -670,6 +656,166 @@ export const TransfersPage: React.FC = () => {
 
       {activePlayerModal && (
         <PlayerDetailModal player={activePlayerModal} onClose={() => setActivePlayerModal(null)} />
+      )}
+
+      {/* Mobile Pop-up Player Picker Sheet / Modal */}
+      {isMobilePickerOpen && (
+        <div className="fpl-mobile-picker-overlay" onClick={() => setIsMobilePickerOpen(false)}>
+          <div className="fpl-mobile-picker-sheet" onClick={(e) => e.stopPropagation()}>
+            {/* Top Drag Handle */}
+            <div className="fpl-sheet-drag-handle" />
+
+            {/* Header */}
+            <div className="fpl-sheet-header">
+              <div>
+                <div className="fpl-sheet-title">
+                  {selectedSlot === 1
+                    ? (isRtl ? 'اختر حارس المرمى (GKP)' : 'Select Goalkeeper (GKP)')
+                    : selectedSlot === 2
+                    ? (isRtl ? 'اختر المدافع (DEF)' : 'Select Defender (DEF)')
+                    : selectedSlot === 3 || selectedSlot === 4
+                    ? (isRtl ? 'اختر لاعب الوسط (MID)' : 'Select Midfielder (MID)')
+                    : selectedSlot === 5
+                    ? (isRtl ? 'اختر المهاجم (FWD)' : 'Select Forward (FWD)')
+                    : (isRtl ? 'اختر لاعباً لتشكيلتك' : 'Select a Player')}
+                </div>
+                <div className="fpl-sheet-sub">
+                  {isRtl
+                    ? `الميزانية المتبقية: £${((500 - totalCost) / 10).toFixed(1)}m`
+                    : `Remaining Budget: £${((500 - totalCost) / 10).toFixed(1)}m`}
+                </div>
+              </div>
+              <button className="fpl-sheet-close-btn" onClick={() => setIsMobilePickerOpen(false)}>
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Search Input */}
+            <div className="fpl-search-box" style={{ margin: '14px 0 10px 0' }}>
+              <Search className="search-icon" size={16} />
+              <input
+                type="text"
+                placeholder={t('searchByName')}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="fpl-search-input"
+              />
+            </div>
+
+            {/* Filter Row */}
+            <div className="fpl-filter-row" style={{ marginBottom: '12px' }}>
+              <select
+                value={positionFilter || ''}
+                onChange={(e) => setPositionFilter(e.target.value ? parseInt(e.target.value, 10) : undefined)}
+                className="fpl-filter-pill"
+              >
+                <option value="">{t('allPlayers')}</option>
+                <option value="1">{t('goalkeepers')}</option>
+                <option value="2">{t('defenders')}</option>
+                <option value="3">{t('midfielders')}</option>
+                <option value="4">{t('forwards')}</option>
+              </select>
+
+              <select
+                value={sort}
+                onChange={(e) => setSort(e.target.value)}
+                className="fpl-filter-pill"
+              >
+                <option value="total_points">{t('sortByPoints')}</option>
+                <option value="price">{t('sortByPrice')}</option>
+                <option value="name">{t('sortByName')}</option>
+              </select>
+
+              <button onClick={handleReset} className="fpl-filter-pill reset" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <RotateCcw size={12} />
+                <span>{t('reset')}</span>
+              </button>
+            </div>
+
+            {/* Scrollable Player List */}
+            <div className="fpl-player-list" style={{ maxHeight: '55vh', overflowY: 'auto' }}>
+              <table className="fpl-table">
+                <thead>
+                  <tr>
+                    <th style={{ width: '24px' }}></th>
+                    <th>{isRtl ? 'اللاعب' : 'Player'}</th>
+                    <th style={{ textAlign: 'right' }}>{isRtl ? 'السعر' : 'Price'}</th>
+                    <th style={{ textAlign: 'right' }}>{isRtl ? 'النقاط' : 'TP'}</th>
+                    <th style={{ textAlign: 'center', width: '36px' }}></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {loading ? (
+                    <tr>
+                      <td colSpan={5} style={{ textAlign: 'center', padding: '20px', color: 'var(--text-muted)' }}>
+                        {t('loading')}
+                      </td>
+                    </tr>
+                  ) : (
+                    players.map((p) => {
+                      const isSelected = Object.values(squadSlots).some((sp) => sp && sp.id === p.id);
+                      return (
+                        <tr
+                          key={p.id}
+                          className={`fpl-table-row ${isSelected ? 'selected' : ''}`}
+                          onClick={() => handleAddOrTogglePlayer(p)}
+                          style={{ cursor: 'pointer' }}
+                        >
+                          <td>
+                            <button
+                              className="fpl-table-info-btn"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setActivePlayerModal({
+                                  id: p.id,
+                                  web_name: p.web_name,
+                                  full_name: p.full_name,
+                                  position: p.position,
+                                  teamShort: p.fpl_teams?.short_name || 'FPL',
+                                  teamName: p.fpl_teams?.name || 'Premier League',
+                                  now_cost: p.now_cost,
+                                  total_points: p.total_points || 0,
+                                  goals: p.goals || p.goals_scored || 0,
+                                  assists: p.assists || 0,
+                                  clean_sheets: p.clean_sheets || 0,
+                                  bonus: p.bonus || 0,
+                                  form: p.form || '0.0',
+                                });
+                              }}
+                            >
+                              <Info size={14} />
+                            </button>
+                          </td>
+                          <td>
+                            <div className="fpl-table-player-name">{p.web_name}</div>
+                            <div className="fpl-table-team-name">{p.fpl_teams?.name || 'Premier League'}</div>
+                          </td>
+                          <td style={{ textAlign: 'right', fontWeight: 800 }}>
+                            £{(p.now_cost / 10).toFixed(1)}m
+                          </td>
+                          <td style={{ textAlign: 'right', fontWeight: 900, color: 'var(--fpl-cyan)' }}>
+                            {p.total_points || 0}
+                          </td>
+                          <td style={{ textAlign: 'center' }}>
+                            <button
+                              className={`fpl-table-action-btn ${isSelected ? 'remove' : 'add'}`}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleAddOrTogglePlayer(p);
+                              }}
+                            >
+                              {isSelected ? '×' : '+'}
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

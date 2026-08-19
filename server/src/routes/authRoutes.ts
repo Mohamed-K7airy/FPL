@@ -88,7 +88,7 @@ router.post('/register', authLimiter, async (req: Request, res: Response): Promi
         password_hash: passwordHash,
         team_name: teamName,
         role,
-        bank: 1000, // £100.0M in tenths
+        bank: 500, // £50.0M in tenths (matches validation & transfer budget)
         free_transfers: 1,
         squad_complete: false,
       })

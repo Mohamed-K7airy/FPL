@@ -76,7 +76,12 @@ export const LeaguesPage: React.FC = () => {
         method: 'POST',
         body: JSON.stringify({ name: createName }),
       });
-      setMessage({ type: 'success', text: `League "${data.league.name}" created! Code: ${data.league.code}` });
+      setMessage({
+        type: 'success',
+        text: isRtl
+          ? `تم إنشاء دوري "${data.league.name}" بنجاح! كود الانضمام: ${data.league.code}`
+          : `League "${data.league.name}" created! Code: ${data.league.code}`,
+      });
       setCreateName('');
       fetchMyLeagues();
     } catch (err) {
@@ -347,63 +352,103 @@ export const LeaguesPage: React.FC = () => {
           </div>
         </div>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
-          {/* Create League Card */}
-          <div className="glass-card">
-            <h3 style={{ marginBottom: '16px', color: 'var(--fpl-purple)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <PlusCircle size={20} style={{ color: 'var(--fpl-green)' }} />
-              <span>{t('createLeague')}</span>
-            </h3>
-            <form onSubmit={handleCreateLeague} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-              <input
-                type="text"
-                required
-                placeholder={t('leagueNamePlaceholder')}
-                value={createName}
-                onChange={(e) => setCreateName(e.target.value)}
-                style={{
-                  padding: '12px 14px',
-                  borderRadius: '10px',
-                  border: '1px solid var(--border-color)',
-                  background: '#f8fafc',
-                  color: '#0f172a',
-                  outline: 'none',
-                }}
-              />
-              <button type="submit" className="btn-primary">
-                {t('createBtn')}
-              </button>
-            </form>
+        <>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
+            {/* Create League Card */}
+            <div className="glass-card">
+              <h3 style={{ marginBottom: '16px', color: 'var(--fpl-purple)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <PlusCircle size={20} style={{ color: 'var(--fpl-green)' }} />
+                <span>{t('createLeague')}</span>
+              </h3>
+              <form onSubmit={handleCreateLeague} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                <input
+                  type="text"
+                  required
+                  placeholder={t('leagueNamePlaceholder')}
+                  value={createName}
+                  onChange={(e) => setCreateName(e.target.value)}
+                  style={{
+                    padding: '12px 14px',
+                    borderRadius: '10px',
+                    border: '1px solid var(--border-color)',
+                    background: '#f8fafc',
+                    color: '#0f172a',
+                    outline: 'none',
+                  }}
+                />
+                <button type="submit" className="btn-primary">
+                  {t('createBtn')}
+                </button>
+              </form>
+            </div>
+
+            {/* Join League Card */}
+            <div className="glass-card">
+              <h3 style={{ marginBottom: '16px', color: 'var(--fpl-purple)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <UserPlus size={20} style={{ color: 'var(--fpl-cyan)' }} />
+                <span>{t('joinLeague')}</span>
+              </h3>
+              <form onSubmit={handleJoinLeague} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                <input
+                  type="text"
+                  required
+                  placeholder={t('joinCodePlaceholder')}
+                  value={joinCode}
+                  onChange={(e) => setJoinCode(e.target.value)}
+                  style={{
+                    padding: '12px 14px',
+                    borderRadius: '10px',
+                    border: '1px solid var(--border-color)',
+                    background: '#f8fafc',
+                    color: '#0f172a',
+                    outline: 'none',
+                  }}
+                />
+                <button type="submit" className="btn-secondary">
+                  {t('joinBtn')}
+                </button>
+              </form>
+            </div>
           </div>
 
-          {/* Join League Card */}
-          <div className="glass-card">
-            <h3 style={{ marginBottom: '16px', color: 'var(--fpl-purple)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <UserPlus size={20} style={{ color: 'var(--fpl-cyan)' }} />
-              <span>{t('joinLeague')}</span>
-            </h3>
-            <form onSubmit={handleJoinLeague} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-              <input
-                type="text"
-                required
-                placeholder={t('joinCodePlaceholder')}
-                value={joinCode}
-                onChange={(e) => setJoinCode(e.target.value)}
-                style={{
-                  padding: '12px 14px',
-                  borderRadius: '10px',
-                  border: '1px solid var(--border-color)',
-                  background: '#f8fafc',
-                  color: '#0f172a',
-                  outline: 'none',
-                }}
-              />
-              <button type="submit" className="btn-secondary">
-                {t('joinBtn')}
-              </button>
-            </form>
+        {/* My Leagues List */}
+        {loading ? (
+          <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-muted)' }}>
+            {t('loading')}
           </div>
-        </div>
+        ) : myLeagues.length > 0 ? (
+          <div className="glass-card" style={{ padding: 0, overflow: 'hidden', marginTop: '20px' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.9rem' }}>
+              <thead>
+                <tr style={{ background: '#f8fafc', borderBottom: '2px solid var(--border-color)', color: 'var(--text-muted)' }}>
+                  <th style={{ padding: '14px 20px' }}>{isRtl ? 'اسم الدوري' : 'League Name'}</th>
+                  <th style={{ padding: '14px 20px' }}>{isRtl ? 'الكود' : 'Code'}</th>
+                  <th style={{ padding: '14px 20px', textAlign: 'right' }}>{isRtl ? 'عدد الأعضاء' : 'Members'}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {myLeagues.map((league: any) => (
+                  <tr key={league.id} style={{ borderBottom: '1px solid var(--border-color)' }}>
+                    <td style={{ padding: '14px 20px', fontWeight: 700, color: '#0f172a' }}>{league.name}</td>
+                    <td style={{ padding: '14px 20px' }}>
+                      <span style={{ background: '#f1f5f9', padding: '4px 10px', borderRadius: '6px', fontSize: '0.82rem', fontWeight: 800, fontFamily: 'monospace', color: 'var(--fpl-purple)' }}>
+                        {league.code}
+                      </span>
+                    </td>
+                    <td style={{ padding: '14px 20px', textAlign: 'right', fontWeight: 800, color: 'var(--fpl-cyan)' }}>
+                      {league.member_count || league.members?.length || '-'}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <div style={{ textAlign: 'center', padding: '30px', color: 'var(--text-muted)', marginTop: '20px' }}>
+            {isRtl ? 'لم تنضم لأي دوري خاص بعد.' : 'You haven\'t joined any private leagues yet.'}
+          </div>
+        )}
+      </>
       )}
 
       <GoogleAd adSlot="7788990011" />

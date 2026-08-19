@@ -6,7 +6,7 @@ import { PitchView, SquadSlotItem } from '../components/PitchView';
 import { PlayerDetailModal, PlayerDetailData } from '../components/PlayerDetailModal';
 import { GoogleAd } from '../components/GoogleAd';
 import { useNavigate } from 'react-router-dom';
-import { Bot, Headset, GitCompare, Edit, Save, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Edit, Save, CheckCircle2, AlertCircle } from 'lucide-react';
 
 export const SquadPage: React.FC = () => {
   const { user } = useAuth();
@@ -323,9 +323,9 @@ export const SquadPage: React.FC = () => {
             <div className="widget-sub-label">{isRtl ? 'إجمالي قيمة لاعبي التشكيلة' : 'Total squad value'}</div>
           </div>
 
-          {/* Card 3 (اليسار - Left): ترتيب الجولة بين جميع المشاركين */}
+          {/* Card 3 (اليسار - Left): الترتيب العام بين جميع المشاركين */}
           <div className="fpl-widget-card">
-            <div className="widget-label">{isRtl ? 'ترتيب الجولة' : 'GW Rank'}</div>
+            <div className="widget-label">{isRtl ? 'الترتيب العام' : 'Overall Rank'}</div>
             <div className="widget-badge purple">
               #{user?.rank || 1}
             </div>

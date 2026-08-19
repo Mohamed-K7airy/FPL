@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
+import { SocialAuthButtons } from '../components/SocialAuthButtons';
 import { Shield, Mail, Lock, Eye, EyeOff, UserCheck } from 'lucide-react';
 
 export const RegisterPage: React.FC = () => {
@@ -104,7 +105,7 @@ export const RegisterPage: React.FC = () => {
               required
               value={teamName}
               onChange={(e) => setTeamName(e.target.value)}
-              placeholder={isRtl ? 'مثال: أبطال مصر / Al-Ahly FC' : 'e.g. Gunners XI / Al-Ahly FC'}
+              placeholder={isRtl ? 'مثال: أبطال الفانتازي / Gunners XI' : 'e.g. Gunners XI / Al-Ahly FC'}
               style={{
                 width: '100%',
                 height: '48px',
@@ -142,7 +143,7 @@ export const RegisterPage: React.FC = () => {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="manager@fantasypromanager.com"
+              placeholder="name@gmail.com"
               style={{
                 width: '100%',
                 height: '48px',
@@ -241,6 +242,9 @@ export const RegisterPage: React.FC = () => {
             <span>{loading ? t('loading') : (isRtl ? 'إنشاء الحساب' : 'Create Account')}</span>
           </button>
         </form>
+
+        {/* Social Auth Buttons: Google, Facebook, Apple */}
+        <SocialAuthButtons mode="register" />
 
         <p style={{ textAlign: 'center', marginTop: '24px', fontSize: '0.88rem', color: 'var(--text-muted)' }}>
           {isRtl ? 'لديك حساب بالفعل؟' : 'Already have a team?'}{' '}

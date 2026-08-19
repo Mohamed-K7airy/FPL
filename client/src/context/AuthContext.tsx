@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { apiFetch } from '../services/api';
+import { supabase } from '../supabaseClient';
 
 export interface User {
   id: number;
@@ -46,6 +47,39 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } else {
       setLoading(false);
     }
+
+    // Listen for Supabase OAuth Callback Session (Google, Facebook, Apple)
+    const { data: authListener } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      if (session?.user?.email) {
+        const sbEmail = session.user.email;
+        // Generate a cryptographically random password for social users
+        const socialPassword = crypto.randomUUID() + '_social_' + Date.now();
+        try {
+          const data = await apiFetch<{ user: User; accessToken: string }>('/auth/login', {
+            method: 'POST',
+            body: JSON.stringify({ email: sbEmail, password: socialPassword, isSocialAuth: true }),
+          });
+          localStorage.setItem('accessToken', data.accessToken);
+          setUser(data.user);
+        } catch {
+          try {
+            const teamName = session.user.user_metadata?.full_name || sbEmail.split('@')[0] + ' FC';
+            const regData = await apiFetch<{ user: User; accessToken: string }>('/auth/register', {
+              method: 'POST',
+              body: JSON.stringify({ email: sbEmail, password: socialPassword, teamName, isSocialAuth: true }),
+            });
+            localStorage.setItem('accessToken', regData.accessToken);
+            setUser(regData.user);
+          } catch (err) {
+            console.error('Supabase OAuth sync error:', err);
+          }
+        }
+      }
+    });
+
+    return () => {
+      authListener?.subscription?.unsubscribe();
+    };
   }, []);
 
   const login = async (email: string, password: string) => {

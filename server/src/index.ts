@@ -35,7 +35,11 @@ app.use(
       ) {
         callback(null, true);
       } else {
-        callback(null, true); // Permissive CORS for seamless multi-platform access
+        if (config.nodeEnv === 'production') {
+          callback(new Error(`Origin ${origin} not allowed by CORS`));
+        } else {
+          callback(null, true); // Permissive in development only
+        }
       }
     },
     credentials: true,

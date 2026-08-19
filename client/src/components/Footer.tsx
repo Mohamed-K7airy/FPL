@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
-import { ShieldCheck, ExternalLink } from 'lucide-react';
+import { ShieldCheck } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const { t, lang } = useLanguage();
