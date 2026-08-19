@@ -44,8 +44,7 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode; adminOnly?: boolean 
 export const AppContent: React.FC = () => {
   const location = useLocation();
 
-  // Site Lockdown & Coming Soon Mode
-  // Default is true (Coming Soon Mode enabled)
+  // Site Lockdown & Coming Soon Mode (default: true)
   const [comingSoonMode, setComingSoonMode] = useState<boolean>(true);
   
   // Check for admin preview mode override via URL parameter ?preview=true or localStorage
@@ -68,16 +67,15 @@ export const AppContent: React.FC = () => {
     setIsPreviewMode(false);
   };
 
-  // If coming soon mode is enabled and user is NOT in admin preview mode, restrict everything to LandingPage
   const isLocked = comingSoonMode && !isPreviewMode;
 
-  if (isLocked) {
-    return (
-      <Routes>
-        <Route path="*" element={<LandingPage onBypassLock={enablePreviewMode} />} />
-      </Routes>
-    );
-  }
+  // Helper guard for private game app routes (/squad, /transfers, /points, /leagues, /login, /register)
+  const PrivateGameRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    if (isLocked) {
+      return <Navigate to="/" replace />;
+    }
+    return <>{children}</>;
+  };
 
   return (
     <div className="app-container">
@@ -114,66 +112,82 @@ export const AppContent: React.FC = () => {
         </div>
       )}
 
-      <Navbar />
+      {/* Render Navbar when not locked on Homepage, or render LandingPage header inside LandingPage */}
+      {!isLocked && <Navbar />}
+      
       <main className="main-content">
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          {/* Homepage: Renders LandingPage during lockdown, or HomePage when preview mode active */}
+          <Route path="/" element={isLocked ? <LandingPage onBypassLock={enablePreviewMode} /> : <HomePage />} />
           <Route path="/intro" element={<LandingPage onBypassLock={enablePreviewMode} />} />
+
+          {/* PUBLIC SEO CONTENT ROUTES - Open for Googlebot Indexing */}
           <Route path="/guides" element={<GuidesPage />} />
           <Route path="/rules" element={<GuidesPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/tips" element={<TipsPage />} />
           <Route path="/tips/:slug" element={<ArticlePage />} />
           <Route path="/terms" element={<TermsPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/contact" element={<ContactPage />} />
 
+          {/* PRIVATE GAME APP ROUTES - Locked to LandingPage during Coming Soon Mode */}
+          <Route path="/login" element={<PrivateGameRoute><LoginPage /></PrivateGameRoute>} />
+          <Route path="/register" element={<PrivateGameRoute><RegisterPage /></PrivateGameRoute>} />
           <Route
             path="/squad"
             element={
-              <ProtectedRoute>
-                <SquadPage />
-              </ProtectedRoute>
+              <PrivateGameRoute>
+                <ProtectedRoute>
+                  <SquadPage />
+                </ProtectedRoute>
+              </PrivateGameRoute>
             }
           />
           <Route
             path="/transfers"
             element={
-              <ProtectedRoute>
-                <TransfersPage />
-              </ProtectedRoute>
+              <PrivateGameRoute>
+                <ProtectedRoute>
+                  <TransfersPage />
+                </ProtectedRoute>
+              </PrivateGameRoute>
             }
           />
           <Route
             path="/points"
             element={
-              <ProtectedRoute>
-                <PointsPage />
-              </ProtectedRoute>
+              <PrivateGameRoute>
+                <ProtectedRoute>
+                  <PointsPage />
+                </ProtectedRoute>
+              </PrivateGameRoute>
             }
           />
           <Route
             path="/leagues"
             element={
-              <ProtectedRoute>
-                <LeaguesPage />
-              </ProtectedRoute>
+              <PrivateGameRoute>
+                <ProtectedRoute>
+                  <LeaguesPage />
+                </ProtectedRoute>
+              </PrivateGameRoute>
             }
           />
           <Route
             path="/admin"
             element={
-              <ProtectedRoute adminOnly={true}>
-                <AdminPage />
-              </ProtectedRoute>
+              <PrivateGameRoute>
+                <ProtectedRoute adminOnly={true}>
+                  <AdminPage />
+                </ProtectedRoute>
+              </PrivateGameRoute>
             }
           />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
-      <Footer />
+      {!isLocked && <Footer />}
     </div>
   );
 };
