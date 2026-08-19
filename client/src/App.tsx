@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { Navbar } from './components/Navbar';
@@ -19,6 +19,7 @@ import { AboutPage } from './pages/AboutPage';
 import { TipsPage } from './pages/TipsPage';
 import { ArticlePage } from './pages/ArticlePage';
 import { ContactPage } from './pages/ContactPage';
+import { LandingPage } from './pages/LandingPage';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode; adminOnly?: boolean }> = ({ children, adminOnly }) => {
   const { user, loading } = useAuth();
@@ -41,12 +42,83 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode; adminOnly?: boolean 
 };
 
 export const AppContent: React.FC = () => {
+  const location = useLocation();
+
+  // Site Lockdown & Coming Soon Mode
+  // Default is true (Coming Soon Mode enabled)
+  const [comingSoonMode, setComingSoonMode] = useState<boolean>(true);
+  
+  // Check for admin preview mode override via URL parameter ?preview=true or localStorage
+  const [isPreviewMode, setIsPreviewMode] = useState<boolean>(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    if (searchParams.get('preview') === 'true' || searchParams.get('admin') === 'true') {
+      localStorage.setItem('minifpl_preview_mode', 'true');
+      return true;
+    }
+    return localStorage.getItem('minifpl_preview_mode') === 'true';
+  });
+
+  const enablePreviewMode = () => {
+    localStorage.setItem('minifpl_preview_mode', 'true');
+    setIsPreviewMode(true);
+  };
+
+  const disablePreviewMode = () => {
+    localStorage.removeItem('minifpl_preview_mode');
+    setIsPreviewMode(false);
+  };
+
+  // If coming soon mode is enabled and user is NOT in admin preview mode, restrict everything to LandingPage
+  const isLocked = comingSoonMode && !isPreviewMode;
+
+  if (isLocked) {
+    return (
+      <Routes>
+        <Route path="*" element={<LandingPage onBypassLock={enablePreviewMode} />} />
+      </Routes>
+    );
+  }
+
   return (
     <div className="app-container">
+      {/* Admin Preview Mode Banner */}
+      {isPreviewMode && (
+        <div style={{
+          background: 'linear-gradient(90deg, #2e1065, #00ff85)',
+          color: '#ffffff',
+          padding: '8px 16px',
+          textAlign: 'center',
+          fontSize: '0.85rem',
+          fontWeight: 800,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '12px',
+          zIndex: 9999
+        }}>
+          <span>أنت تشاهد المعاينة الخاصة بالأدمن (Admin Preview Mode Enabled)</span>
+          <button 
+            onClick={disablePreviewMode}
+            style={{
+              background: 'rgba(0,0,0,0.4)',
+              color: '#ffffff',
+              border: '1px solid rgba(255,255,255,0.4)',
+              borderRadius: '6px',
+              padding: '2px 10px',
+              fontSize: '0.78rem',
+              cursor: 'pointer'
+            }}
+          >
+            إغلاق المعاينة والعودة لوضع القفل
+          </button>
+        </div>
+      )}
+
       <Navbar />
       <main className="main-content">
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/intro" element={<LandingPage onBypassLock={enablePreviewMode} />} />
           <Route path="/guides" element={<GuidesPage />} />
           <Route path="/rules" element={<GuidesPage />} />
           <Route path="/about" element={<AboutPage />} />
@@ -98,6 +170,7 @@ export const AppContent: React.FC = () => {
               </ProtectedRoute>
             }
           />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
       <Footer />
@@ -118,3 +191,4 @@ export const App: React.FC = () => {
 };
 
 export default App;
+
