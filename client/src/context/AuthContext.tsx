@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import LogRocket from 'logrocket';
 import { apiFetch } from '../services/api';
 import { supabase } from '../supabaseClient';
 
@@ -27,6 +28,17 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (user) {
+      LogRocket.identify(String(user.id), {
+        email: user.email,
+        team_name: user.team_name,
+        role: user.role,
+      });
+    }
+  }, [user]);
+
 
   const refreshUser = async () => {
     try {
