@@ -41,8 +41,23 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode; adminOnly?: boolean 
   return <>{children}</>;
 };
 
+declare global {
+  interface Window {
+    gtag?: (...args: any[]) => void;
+  }
+}
+
 export const AppContent: React.FC = () => {
   const location = useLocation();
+
+  // Track Google Analytics pageviews on route change
+  useEffect(() => {
+    if (typeof window.gtag === 'function') {
+      window.gtag('config', 'G-TQB2VKNFRS', {
+        page_path: location.pathname + location.search,
+      });
+    }
+  }, [location]);
 
   // Site Lockdown & Coming Soon Mode (default: true)
   const [comingSoonMode, setComingSoonMode] = useState<boolean>(true);
