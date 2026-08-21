@@ -136,13 +136,14 @@ export class TransferService {
       throw new Error(`Transfer validation failed: ${validation.errors.join(' ')}`);
     }
 
-    // Calculate transfer cost & free transfers remaining
-    const isFreeChip = activeChip === 'wildcard' || activeChip === 'freehit';
+    // Calculate transfer cost & free transfers remaining (0 for pre-season / GW <= 1 or wildcard/freehit)
+    const isFreeChip = activeChip === 'wildcard' || activeChip === 'freehit' || gw <= 1;
     let transferCost = 0;
     let freeTransfersRemaining = user.free_transfers;
 
     if (isFreeChip) {
       transferCost = 0;
+      freeTransfersRemaining = user.free_transfers;
     } else {
       const freeAvailable = user.free_transfers;
       const totalTransfersCount = transfers.length;

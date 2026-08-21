@@ -53,13 +53,24 @@ export class ScoringService {
       .eq('gw', gw);
 
     const statsMap = new Map<number, PlayerStatItem>();
-    (statsData || []).forEach((s: any) => {
-      statsMap.set(s.player_id, {
-        points: s.total_points || 0,
-        played: Boolean(s.played),
-        fixturesDone: Boolean(s.is_final),
+    if (statsData && statsData.length > 0) {
+      statsData.forEach((s: any) => {
+        statsMap.set(s.player_id, {
+          points: s.total_points || 0,
+          played: Boolean(s.played),
+          fixturesDone: Boolean(s.is_final),
+        });
       });
-    });
+    } else if (gw === 1) {
+      const { data: allPlayers } = await supabase.from('players').select('id, total_points');
+      (allPlayers || []).forEach((p: any) => {
+        statsMap.set(p.id, {
+          points: p.total_points || 0,
+          played: (p.total_points || 0) > 0,
+          fixturesDone: isFinal,
+        });
+      });
+    }
 
     // 2. Fetch all picks snapshot for this GW
     const { data: picksData } = await supabase
@@ -97,17 +108,19 @@ export class ScoringService {
       userChipMap.set(c.user_id, c.chip as ChipType);
     });
 
-    // 4. Fetch transfers cost for this GW
-    const { data: transfersData } = await supabase
-      .from('transfers')
-      .select('user_id, cost')
-      .eq('gw', gw);
-
+    // 4. Fetch transfers cost for this GW (0 for GW <= 1)
     const userTransferCostMap = new Map<number, number>();
-    (transfersData || []).forEach((t: any) => {
-      const currentCost = userTransferCostMap.get(t.user_id) || 0;
-      userTransferCostMap.set(t.user_id, currentCost + t.cost);
-    });
+    if (gw > 1) {
+      const { data: transfersData } = await supabase
+        .from('transfers')
+        .select('user_id, cost')
+        .eq('gw', gw);
+
+      (transfersData || []).forEach((t: any) => {
+        const currentCost = userTransferCostMap.get(t.user_id) || 0;
+        userTransferCostMap.set(t.user_id, currentCost + t.cost);
+      });
+    }
 
     // 5. Calculate score for each user
     const scoreRows: any[] = [];

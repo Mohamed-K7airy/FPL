@@ -69,15 +69,23 @@ export class ScoringEngine {
 
     const captainMultiplierValue = isTripleCaptain ? 3 : 2;
 
-    // Apply default multipliers for starters
+    // Apply default multipliers for starters (1 for starters, 0 for bench)
     workingPicks.forEach((p) => {
       p.multiplier = p.slot <= 5 ? 1 : 0;
     });
 
-    if (captainPlayed && captainObj && captainObj.slot <= 5) {
-      captainObj.multiplier = captainMultiplierValue;
-    } else if (!captainPlayed && vicePlayed && viceCaptainObj && viceCaptainObj.slot <= 5) {
-      viceCaptainObj.multiplier = captainMultiplierValue;
+    if (captainObj && captainObj.slot <= 5) {
+      if (opts.isFinal) {
+        if (!captainPlayed && vicePlayed && viceCaptainObj && viceCaptainObj.slot <= 5) {
+          viceCaptainObj.multiplier = captainMultiplierValue;
+        } else if (captainPlayed) {
+          captainObj.multiplier = captainMultiplierValue;
+        } else {
+          captainObj.multiplier = captainMultiplierValue;
+        }
+      } else {
+        captainObj.multiplier = captainMultiplierValue;
+      }
     }
 
     // Calculate total points

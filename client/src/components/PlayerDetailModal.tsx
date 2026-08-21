@@ -12,6 +12,7 @@ export interface PlayerDetailData {
   teamShort?: string;
   now_cost: number;
   total_points: number;
+  gw_points?: number;
   form?: number;
   status?: string;
   news?: string;
@@ -181,20 +182,26 @@ export const PlayerDetailModal: React.FC<PlayerDetailModalProps> = ({ player, on
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '12px',
+            gridTemplateColumns: player.gw_points !== undefined ? 'repeat(4, 1fr)' : 'repeat(3, 1fr)',
+            gap: '10px',
             marginBottom: '20px',
           }}
         >
-          <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', padding: '12px', borderRadius: '14px', textAlign: 'center' }}>
+          {player.gw_points !== undefined && (
+            <div style={{ background: '#f0fdf4', border: '1.5px solid #86efac', padding: '10px 6px', borderRadius: '14px', textAlign: 'center' }}>
+              <div style={{ fontSize: '0.72rem', color: '#166534', fontWeight: 800 }}>{isRtl ? 'نقاط الجولة' : 'GW Points'}</div>
+              <div style={{ fontSize: '1.4rem', fontWeight: 900, color: 'var(--fpl-green)' }}>{player.gw_points}</div>
+            </div>
+          )}
+          <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', padding: '10px 6px', borderRadius: '14px', textAlign: 'center' }}>
             <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 700 }}>{t('totalPoints')}</div>
-            <div style={{ fontSize: '1.4rem', fontWeight: 900, color: 'var(--fpl-green)' }}>{player.total_points}</div>
+            <div style={{ fontSize: '1.4rem', fontWeight: 900, color: 'var(--fpl-purple)' }}>{player.total_points}</div>
           </div>
-          <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', padding: '12px', borderRadius: '14px', textAlign: 'center' }}>
+          <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', padding: '10px 6px', borderRadius: '14px', textAlign: 'center' }}>
             <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 700 }}>{t('price')}</div>
             <div style={{ fontSize: '1.4rem', fontWeight: 900, color: 'var(--fpl-purple)' }}>£{(player.now_cost / 10).toFixed(1)}m</div>
           </div>
-          <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', padding: '12px', borderRadius: '14px', textAlign: 'center' }}>
+          <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', padding: '10px 6px', borderRadius: '14px', textAlign: 'center' }}>
             <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 700 }}>{t('form')}</div>
             <div style={{ fontSize: '1.4rem', fontWeight: 900, color: 'var(--fpl-cyan)' }}>{player.form || '0.0'}</div>
           </div>

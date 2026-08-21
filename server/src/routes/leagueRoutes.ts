@@ -23,6 +23,57 @@ function generateLeagueCode(): string {
   return code;
 }
 
+async function computeLiveScoresMap(targetGw: number = 1): Promise<Map<number, number>> {
+  const liveSquadScoreMap = new Map<number, number>();
+
+  try {
+    // 1. Fetch live player stats for this GW
+    const { data: playerGwStats } = await supabase
+      .from('player_gw_stats')
+      .select('player_id, total_points')
+      .eq('gw', targetGw);
+
+    const playerLiveStatsMap = new Map<number, number>();
+    (playerGwStats || []).forEach((s: any) => {
+      playerLiveStatsMap.set(s.player_id, s.total_points);
+    });
+
+    // 2. Fetch chips
+    const { data: activeChips } = await supabase
+      .from('chips_used')
+      .select('user_id, chip')
+      .eq('gw', targetGw);
+
+    const userChipMap = new Map<number, string>();
+    (activeChips || []).forEach((c: any) => {
+      userChipMap.set(c.user_id, c.chip);
+    });
+
+    // 3. Fetch all user squads
+    const { data: allSquads } = await supabase
+      .from('squad')
+      .select('user_id, player_id, slot, is_captain, is_vice, players(position, total_points)')
+      .order('slot', { ascending: true });
+
+    (allSquads || []).forEach((item: any) => {
+      if (item.slot <= 5) {
+        const is3xc = userChipMap.get(item.user_id) === '3xc';
+        const multiplier = item.is_captain ? (is3xc ? 3 : 2) : 1;
+        const pts = playerLiveStatsMap.has(item.player_id)
+          ? (playerLiveStatsMap.get(item.player_id) ?? 0)
+          : (targetGw === 1 ? (item.players?.total_points ?? 0) : 0);
+
+        const current = liveSquadScoreMap.get(item.user_id) || 0;
+        liveSquadScoreMap.set(item.user_id, current + (pts * multiplier));
+      }
+    });
+  } catch (err) {
+    logger.error(err, 'Error computing live squad scores map');
+  }
+
+  return liveSquadScoreMap;
+}
+
 // GET /api/leagues/leaderboard (Global Overall, Weekly, or Monthly Leaderboard)
 router.get('/leaderboard', async (req: Request, res: Response): Promise<void> => {
   try {
@@ -73,12 +124,21 @@ router.get('/leaderboard', async (req: Request, res: Response): Promise<void> =>
       scoreMap.set(s.user_id, current + s.net_points);
     });
 
+    const liveScores = await computeLiveScoresMap(targetGw);
+
     const leaderboard = usersData
-      .map((u: any) => ({
-        userId: u.id,
-        teamName: u.team_name,
-        totalPoints: scoreMap.get(u.id) || 0,
-      }))
+      .map((u: any) => {
+        const scoreFromTable = scoreMap.get(u.id);
+        const finalScore = (scoreFromTable !== undefined && scoreFromTable !== 0)
+          ? scoreFromTable
+          : (liveScores.get(u.id) || 0);
+
+        return {
+          userId: u.id,
+          teamName: u.team_name,
+          totalPoints: finalScore,
+        };
+      })
       .sort((a, b) => b.totalPoints - a.totalPoints)
       .slice(offset, offset + limit)
       .map((item, idx) => ({ rank: offset + idx + 1, ...item }));
@@ -270,13 +330,22 @@ router.get('/:id/standings', authenticateToken, async (req: Request, res: Respon
       scoreMap.set(s.user_id, current + s.net_points);
     });
 
+    const liveScores = await computeLiveScoresMap(league.start_gw || 1);
+
     const standings = members
-      .map((m: any) => ({
-        userId: m.user_id,
-        teamName: m.users.team_name,
-        joinedGw: m.joined_gw,
-        totalPoints: scoreMap.get(m.user_id) || 0,
-      }))
+      .map((m: any) => {
+        const scoreFromTable = scoreMap.get(m.user_id);
+        const finalScore = (scoreFromTable !== undefined && scoreFromTable !== 0)
+          ? scoreFromTable
+          : (liveScores.get(m.user_id) || 0);
+
+        return {
+          userId: m.user_id,
+          teamName: (m.users as any)?.team_name || 'Team',
+          joinedGw: m.joined_gw,
+          totalPoints: finalScore,
+        };
+      })
       .sort((a, b) => b.totalPoints - a.totalPoints)
       .map((item, idx) => ({ rank: idx + 1, ...item }));
 

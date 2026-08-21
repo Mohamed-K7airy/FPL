@@ -116,6 +116,12 @@ export const SquadPage: React.FC = () => {
           total_points: item.players?.total_points || 0,
           form: item.players?.form,
           news: item.players?.news,
+          status: item.players?.status,
+          chance_of_playing: item.players?.chance_of_playing,
+          goals: item.players?.goals || 0,
+          assists: item.players?.assists || 0,
+          clean_sheets: item.players?.clean_sheets || 0,
+          bonus: item.players?.bonus || 0,
         },
       }));
 

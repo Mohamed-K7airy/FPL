@@ -34,30 +34,39 @@ export const PointsPage: React.FC = () => {
 
   const formattedPicks: SquadSlotItem[] = (data?.picks || []).map((item: any) => ({
     playerId: item.player_id,
-    webName: item.players?.web_name || 'Player',
+    webName: item.players?.web_name || item.players?.full_name || 'Player',
     position: item.players?.position || 2,
     teamShortName: item.players?.fpl_teams?.short_name || 'FPL',
     nowCost: item.players?.now_cost || 50,
     slot: item.slot,
     isCaptain: Boolean(item.is_captain),
     isVice: Boolean(item.is_vice),
-    points: item.calculatedPoints,
+    points: item.calculatedPoints ?? item.points ?? 0,
     autoSubbed: Boolean(item.auto_subbed),
     fullData: {
       id: item.player_id,
-      web_name: item.players?.web_name || 'Player',
-      full_name: item.players?.full_name || 'Player',
+      web_name: item.players?.web_name || item.players?.full_name || 'Player',
+      full_name: item.players?.full_name || item.players?.web_name || 'Player',
       position: item.players?.position || 2,
-      teamName: item.players?.fpl_teams?.name,
-      teamShort: item.players?.fpl_teams?.short_name,
+      teamName: item.players?.fpl_teams?.name || 'Premier League Club',
+      teamShort: item.players?.fpl_teams?.short_name || 'FPL',
       now_cost: item.players?.now_cost || 50,
-      total_points: item.calculatedPoints || 0,
+      total_points: item.players?.total_points ?? 0,
+      gw_points: item.calculatedPoints ?? item.points ?? 0,
+      form: item.players?.form ?? 0,
+      status: item.players?.status,
+      news: item.players?.news,
+      chance_of_playing: item.players?.chance_of_playing,
+      goals: item.stats?.goals ?? item.players?.goals ?? 0,
+      assists: item.stats?.assists ?? item.players?.assists ?? 0,
+      clean_sheets: item.stats?.clean_sheets ?? item.players?.clean_sheets ?? 0,
+      bonus: item.stats?.bonus ?? item.players?.bonus ?? 0,
     },
   }));
 
-  const userScore = data?.summary?.net_points ?? (data?.summary?.raw_points || 0);
-  const avgScore = data?.summary?.averagePoints ?? (data?.summary?.is_final ? 48 : 0);
-  const highestScore = data?.summary?.highestPoints ?? (data?.summary?.is_final ? 94 : 0);
+  const userScore = data?.summary?.net_points ?? (data?.summary?.raw_points ?? (data?.userScore ?? 0));
+  const avgScore = data?.summary?.averagePoints ?? (data?.avgScore ?? (data?.summary?.is_final ? 48 : 0));
+  const highestScore = data?.summary?.highestPoints ?? (data?.highestScore ?? (data?.summary?.is_final ? 94 : 0));
 
   const isTripleCaptainActive = data?.summary?.chip === '3xc' || data?.summary?.active_chip === '3xc' || data?.chip === '3xc';
 

@@ -35,9 +35,20 @@ router.get('/:gw', authenticateToken, async (req: AuthenticatedRequest, res: Res
       .select('*')
       .eq('user_id', userId)
       .eq('gw', gw)
-      .single();
+      .maybeSingle();
 
-    // Fetch user picks snapshot for this GW (or fallback to current squad for pre-season)
+    // Fetch active chip for this user in this GW
+    const { data: chipRecord } = await supabase
+      .from('chips_used')
+      .select('chip')
+      .eq('user_id', userId)
+      .eq('gw', gw)
+      .maybeSingle();
+
+    const activeChip = (scoreSummary?.chip || chipRecord?.chip || null) as string | null;
+    const isTripleCaptain = activeChip === '3xc';
+
+    // Fetch user picks snapshot for this GW (or fallback to current squad for pre-season / unfinalized GW)
     let { data: picks } = await supabase
       .from('gw_picks')
       .select('*, players(*, fpl_teams(name, short_name))')
@@ -55,8 +66,14 @@ router.get('/:gw', authenticateToken, async (req: AuthenticatedRequest, res: Res
       picks = (currentSquad || []).map((s: any) => ({
         ...s,
         gw,
-        multiplier: s.is_captain ? 2 : 1,
+        multiplier: s.slot <= 5 ? (s.is_captain ? (isTripleCaptain ? 3 : 2) : 1) : 0,
         auto_subbed: false,
+      }));
+    } else {
+      // Ensure multiplier matches 3x if Triple Captain is active
+      picks = picks.map((p: any) => ({
+        ...p,
+        multiplier: p.slot <= 5 ? (p.is_captain ? (isTripleCaptain ? 3 : 2) : (p.multiplier || 1)) : 0,
       }));
     }
 
@@ -73,25 +90,85 @@ router.get('/:gw', authenticateToken, async (req: AuthenticatedRequest, res: Res
 
     const detailedPicks = picks.map((p: any) => {
       const stat = statsMap.get(p.player_id) || {};
-      const singlePoints = stat.total_points || 0;
+      const singlePoints = stat.total_points !== undefined
+        ? stat.total_points
+        : (gw === 1 ? (p.players?.total_points || 0) : 0);
+      const multiplier = p.slot <= 5 ? (p.is_captain ? (isTripleCaptain ? 3 : 2) : 1) : 0;
       return {
         ...p,
+        multiplier,
         stats: stat,
         singlePoints,
-        calculatedPoints: singlePoints * p.multiplier,
+        calculatedPoints: singlePoints * multiplier,
       };
     });
 
+    // Compute live raw points (starters in slots 1..5)
+    const liveRawPoints = detailedPicks
+      .filter((p: any) => p.slot <= 5)
+      .reduce((sum: number, p: any) => sum + (p.calculatedPoints || 0), 0);
+
+    // Fetch transfer costs for this GW (0 for pre-season / GW <= 1 or free chips)
+    const isFreeTransfers = activeChip === 'wildcard' || activeChip === 'freehit' || gw <= 1;
+    let effectiveTransferCost = 0;
+
+    if (!isFreeTransfers) {
+      const { data: transfers } = await supabase
+        .from('transfers')
+        .select('cost')
+        .eq('user_id', userId)
+        .eq('gw', gw);
+
+      effectiveTransferCost = (transfers || []).reduce((acc: number, t: any) => acc + (t.cost || 0), 0);
+    }
+    const liveNetPoints = liveRawPoints - effectiveTransferCost;
+
+    // Fetch Average and Highest Points across all users for this GW
+    const { data: allGwScores } = await supabase
+      .from('gw_scores')
+      .select('net_points')
+      .eq('gw', gw);
+
+    let avgScore = 0;
+    let highestScore = 0;
+
+    if (allGwScores && allGwScores.length > 0) {
+      const scores = allGwScores.map((s: any) => s.net_points || 0);
+      highestScore = Math.max(...scores);
+      const total = scores.reduce((a: number, b: number) => a + b, 0);
+      avgScore = Math.round(total / scores.length);
+    } else {
+      const { data: gwInfo } = await supabase
+        .from('gameweeks')
+        .select('avg_score')
+        .eq('id', gw)
+        .maybeSingle();
+
+      if (gwInfo?.avg_score) {
+        avgScore = gwInfo.avg_score;
+      }
+    }
+
+    const finalSummary = {
+      raw_points: scoreSummary?.is_final ? scoreSummary.raw_points : liveRawPoints,
+      transfer_cost: scoreSummary?.is_final ? scoreSummary.transfer_cost : effectiveTransferCost,
+      net_points: scoreSummary?.is_final ? scoreSummary.net_points : liveNetPoints,
+      total_points: scoreSummary?.is_final ? scoreSummary.total_points : liveNetPoints,
+      chip: activeChip,
+      is_final: scoreSummary?.is_final || false,
+      averagePoints: avgScore,
+      highestPoints: highestScore,
+    };
+
     res.status(200).json({
       gw,
-      summary: scoreSummary || {
-        raw_points: 0,
-        transfer_cost: 0,
-        net_points: 0,
-        total_points: 0,
-        chip: null,
-        is_final: false,
-      },
+      summary: finalSummary,
+      userScore: finalSummary.net_points,
+      user_score: finalSummary.net_points,
+      avgScore: finalSummary.averagePoints,
+      avg_score: finalSummary.averagePoints,
+      highestScore: finalSummary.highestPoints,
+      highest_score: finalSummary.highestPoints,
       picks: detailedPicks,
     });
   } catch (err) {
