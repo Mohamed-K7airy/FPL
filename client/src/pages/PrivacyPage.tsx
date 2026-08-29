@@ -26,21 +26,21 @@ export const PrivacyPage: React.FC = () => {
                 <FileText size={20} /> 1. مقدمة وهدف السياسة
               </h2>
               <p>
-                أهلاً بكم في منصة <strong>MINI FPL</strong>. نحن نولي خصوصية زوارنا ومستخدمينا أهمية قصوى ونلتزم بحمايتها بشكل كامل. توضح سياسة الخصوصية هذه كيفية جمع واستخدام وتأمين البيانات الشخصية والمعلومات التقنية، وتتوافق التزاماً تاماً مع شروط وسياسات برنامج <strong>Google AdSense</strong> ولوائح حماية البيانات العامة (GDPR).
+                أهلاً بكم في منصة <strong>MINI FPL</strong>. نحن نولي خصوصية زوارنا ومستخدمينا أهمية قصوى ونلتزم بحمايتها بشكل كامل. توضح سياسة الخصوصية هذه كيفية جمع واستخدام وتأمين البيانات الشخصية والمعلومات التقنية، وتتوافق مع المعايير الدولية لحماية البيانات وسياسات منصات الإعلانات الشريكة مثل <strong>Monetag</strong> ولوائح حماية البيانات العامة (GDPR).
               </p>
             </section>
 
             <section style={{ marginBottom: '28px' }}>
               <h2 style={{ color: 'var(--fpl-cyan)', fontSize: '1.3rem', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Cookie size={20} /> 2. إعلانات Google AdSense وملفات تعريف الارتباط (Cookies)
+                <Cookie size={20} /> 2. إعلانات الشركاء (Monetag) وملفات تعريف الارتباط (Cookies)
               </h2>
               <p>
-                نحن نستخدم شركات إعلانية من طرف ثالث، وفي مقدمتها <strong>Google AdSense</strong>، لتقديم الإعلانات عند زيارتك لمنصتنا:
+                نحن نستخدم شبكات إعلانية من طرف ثالث، ومن بينها <strong>Monetag</strong>، لتقديم الإعلانات وعروض الرعاية عند زيارتك لمنصتنا:
               </p>
               <ul style={{ paddingRight: '24px', marginTop: '10px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                <li>تستخدم شركة Google ومزودو الخدمة الجدد ملفات تعريف الارتباط (Cookies) لعرض الإعلانات بناءً على زيارات المستخدم السابقة لموقعنا أو لمواقع أخرى على شبكة الإنترنت.</li>
-                <li>يساعد استخدام Google لملفات تعريف الإعلانات (مثل DART cookie) على عرض إعلانات مخصصة للمستخدمين بناءً على تصفحهم لموقعنا والمواقع الأخرى.</li>
-                <li>يمكن للمستخدمين إيقاف الإعلانات المخصصة عبر التوجه إلى <a href="https://www.google.com/settings/ads" target="_blank" rel="noreferrer" style={{ color: 'var(--fpl-cyan)', textDecoration: 'underline' }}>إعدادات الإعلانات من Google</a>.</li>
+                <li>قد تستخدم شبكات الإعلانات ملفات تعريف الارتباط وتقنيات التتبع المجهولة لعرض الإعلانات المناسبة وقياس كفاءة الحملات.</li>
+                <li>تساعد هذه الملفات على توفير محتوى إعلاني ملائم دون جمع أي معلومات تعريف شخصية حساسة.</li>
+                <li>يمكن للمستخدمين ضبط خيارات ملفات تعريف الارتباط والتحكم فيها أو مسحها في أي وقت عبر إعدادات المتصفح الخاص بهم.</li>
                 <li>كما يمكنك زيارة موقع <a href="http://www.aboutads.info/choices/" target="_blank" rel="noreferrer" style={{ color: 'var(--fpl-cyan)', textDecoration: 'underline' }}>AboutAds.info</a> لإلغاء استخدام ملفات تعريف الارتباط من قِبل موردي الإعلانات الخارجيين.</li>
               </ul>
             </section>
@@ -87,20 +87,20 @@ export const PrivacyPage: React.FC = () => {
                 <FileText size={20} /> 1. Overview & Policy Objective
               </h2>
               <p>
-                Welcome to <strong>MINI FPL</strong>. We respect the privacy of our visitors and users and are committed to protecting personal data in full compliance with <strong>Google AdSense Publisher Policies</strong> and general data protection standards (GDPR / CCPA).
+                Welcome to <strong>MINI FPL</strong>. We respect the privacy of our visitors and users and are committed to protecting personal data in full compliance with advertising network standards (including <strong>Monetag</strong>) and general data protection regulations (GDPR / CCPA).
               </p>
             </section>
 
             <section style={{ marginBottom: '28px' }}>
               <h2 style={{ color: 'var(--fpl-cyan)', fontSize: '1.3rem', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Cookie size={20} /> 2. Google AdSense & Cookies Policy
+                <Cookie size={20} /> 2. Advertising Partners (Monetag) & Cookies Policy
               </h2>
               <p>
-                We use third-party advertising vendors including <strong>Google AdSense</strong> to serve advertisements when you visit our website:
+                We use third-party advertising vendors including <strong>Monetag</strong> to serve advertisements and sponsorship offers when you visit our website:
               </p>
               <ul style={{ paddingLeft: '24px', marginTop: '10px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                <li>Google's use of advertising cookies enables it and its partners to serve ads based on user visits to our site and/or other sites on the Internet.</li>
-                <li>Users may opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noreferrer" style={{ color: 'var(--fpl-cyan)', textDecoration: 'underline' }}>Google Ads Settings</a>.</li>
+                <li>Third-party advertising networks may utilize cookies and anonymous identifiers to deliver relevant ads and evaluate performance.</li>
+                <li>Users may customize or block cookie storage at any time through their browser settings.</li>
                 <li>Alternatively, users can opt out of third-party vendor use of cookies for personalized advertising by visiting <a href="http://www.aboutads.info/choices/" target="_blank" rel="noreferrer" style={{ color: 'var(--fpl-cyan)', textDecoration: 'underline' }}>AboutAds.info</a>.</li>
               </ul>
             </section>

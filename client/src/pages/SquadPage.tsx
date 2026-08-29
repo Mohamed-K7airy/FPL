@@ -22,6 +22,7 @@ export const SquadPage: React.FC = () => {
   const [hasChanges, setHasChanges] = useState(false);
   const [hideFixtures, setHideFixtures] = useState(false);
   const [gw, setGw] = useState(1);
+  const [gwInfo, setGwInfo] = useState<any>(null);
   const [usedChips, setUsedChips] = useState<string[]>([]);
   const [activatingChip, setActivatingChip] = useState(false);
 
@@ -88,11 +89,21 @@ export const SquadPage: React.FC = () => {
       const data = await apiFetch<{
         squad: any[];
         squadComplete: boolean;
+        currentGw?: any;
+        nextGw?: any;
+        upcomingGw?: any;
+        isDeadlinePassed?: boolean;
       }>('/squad');
 
       if (!data.squadComplete || data.squad.length === 0) {
         navigate('/transfers');
         return;
+      }
+
+      const activeInfo = data.upcomingGw || data.currentGw;
+      if (activeInfo) {
+        setGwInfo(activeInfo);
+        setGw(activeInfo.id || 2);
       }
 
       const formatted: SquadSlotItem[] = data.squad.map((item: any) => ({
@@ -239,25 +250,33 @@ export const SquadPage: React.FC = () => {
 
       {/* FantasyProManager Style Master Pitch Card */}
       <div className="fpl-pitch-master-card">
-        {/* Top Nav Bar (السابق / الجولة 1 / التالي) */}
-        <div className="fpl-top-nav-bar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <button
-            onClick={() => setGw((prev) => Math.max(1, prev - 1))}
-            className="fpl-nav-purple-btn"
-          >
-            {isRtl ? 'السابق' : 'Previous'}
-          </button>
-
-          <div className="fpl-gw-pill-badge" style={{ margin: '0 auto' }}>
-            <span className="fpl-dot-live" />
-            <span>{isRtl ? `الجولة ${gw}` : `Gameweek ${gw}`}</span>
+        {/* Top Nav Bar: Official FPL Style Gameweek & Deadline Badge + Link to Points */}
+        <div className="fpl-top-nav-bar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div className="fpl-gw-pill-badge" style={{ margin: 0 }}>
+              <span className="fpl-dot-live" />
+              <span>{gwInfo ? (isRtl ? `تشكيلة ${gwInfo.name || `الجولة ${gw}`}` : `${gwInfo.name || `Gameweek ${gw}`} Lineup`) : (isRtl ? `الجولة ${gw}` : `Gameweek ${gw}`)}</span>
+            </div>
+            {gwInfo?.deadline_time && (
+              <span style={{ fontSize: '0.78rem', color: 'rgba(255, 255, 255, 0.9)', fontWeight: 700 }}>
+                {isRtl ? 'الموعد النهائي: ' : 'Deadline: '}
+                {new Date(gwInfo.deadline_time).toLocaleDateString(isRtl ? 'ar-EG' : 'en-GB', {
+                  weekday: 'short',
+                  day: 'numeric',
+                  month: 'short',
+                  hour: '2-digit',
+                  minute: '2-digit',
+                })}
+              </span>
+            )}
           </div>
 
           <button
-            onClick={() => setGw((prev) => Math.min(38, prev + 1))}
+            onClick={() => navigate('/points')}
             className="fpl-nav-purple-btn"
+            style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.82rem', padding: '6px 14px' }}
           >
-            {isRtl ? 'التالي' : 'Next'}
+            {isRtl ? 'عرض النقاط المباشرة' : 'View Live Points'}
           </button>
         </div>
 

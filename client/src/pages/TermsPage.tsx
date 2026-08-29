@@ -65,7 +65,7 @@ export const TermsPage: React.FC = () => {
               4. الإعلانات والشركاء
             </h2>
             <p style={{ marginBottom: '20px', color: 'var(--text-muted)' }}>
-              تستخدم المنصة إعلانات طرف ثالث مثل Google AdSense لدعم استمرار وتطوير الخدمات المجانية للمستخدمين. تخضع هذه الإعلانات لسياسات المزودين الرسميين.
+              تستخدم المنصة إعلانات طرف ثالث وشبكات إعلانية معتمدة (مثل Monetag) لدعم استمرار وتطوير الخدمات المجانية للمستخدمين. تخضع هذه الإعلانات لسياسات المزودين الرسميين.
             </p>
           </>
         ) : (
@@ -95,7 +95,7 @@ export const TermsPage: React.FC = () => {
               4. Advertising & Partners
             </h2>
             <p style={{ marginBottom: '20px', color: 'var(--text-muted)' }}>
-              The platform uses third-party advertisements such as Google AdSense to support the continuation and development of free services for users. These advertisements are subject to the official providers' policies.
+              The platform uses third-party advertisements and certified advertising networks (such as Monetag) to support the continuation and development of free services for users. These advertisements are subject to the official providers' policies.
             </p>
           </>
         )}

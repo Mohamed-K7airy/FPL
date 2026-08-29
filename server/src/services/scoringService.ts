@@ -1,6 +1,7 @@
 import { supabase } from '../db/supabase.js';
 import { ScoringEngine, PickItem, PlayerStatItem, ChipType } from './scoringEngine.js';
 import { logger } from '../utils/logger.js';
+import { SyncService } from './syncService.js';
 
 export class ScoringService {
   /**
@@ -47,30 +48,32 @@ export class ScoringService {
     logger.info({ gw, isFinal }, 'Calculating user scores for Gameweek');
 
     // 1. Fetch live player stats for this GW
-    const { data: statsData } = await supabase
+    let { data: statsData } = await supabase
       .from('player_gw_stats')
       .select('*')
       .eq('gw', gw);
 
-    const statsMap = new Map<number, PlayerStatItem>();
-    if (statsData && statsData.length > 0) {
-      statsData.forEach((s: any) => {
-        statsMap.set(s.player_id, {
-          points: s.total_points || 0,
-          played: Boolean(s.played),
-          fixturesDone: Boolean(s.is_final),
-        });
-      });
-    } else if (gw === 1) {
-      const { data: allPlayers } = await supabase.from('players').select('id, total_points');
-      (allPlayers || []).forEach((p: any) => {
-        statsMap.set(p.id, {
-          points: p.total_points || 0,
-          played: (p.total_points || 0) > 0,
-          fixturesDone: isFinal,
-        });
-      });
+    if (!statsData || statsData.length === 0) {
+      try {
+        await SyncService.syncLive(gw);
+        const { data: syncedStats } = await supabase
+          .from('player_gw_stats')
+          .select('*')
+          .eq('gw', gw);
+        statsData = syncedStats || [];
+      } catch (err) {
+        logger.warn({ gw, err }, 'Failed to auto-sync live stats in calculateScores');
+      }
     }
+
+    const statsMap = new Map<number, PlayerStatItem>();
+    (statsData || []).forEach((s: any) => {
+      statsMap.set(s.player_id, {
+        points: s.total_points || 0,
+        played: Boolean(s.played),
+        fixturesDone: Boolean(s.is_final),
+      });
+    });
 
     // 2. Fetch all picks snapshot for this GW
     const { data: picksData } = await supabase
@@ -122,7 +125,21 @@ export class ScoringService {
       });
     }
 
-    // 5. Calculate score for each user
+    // 5. Fetch previous cumulative scores up to gw - 1
+    const userPreviousScoresMap = new Map<number, number>();
+    if (gw > 1) {
+      const { data: prevScores } = await supabase
+        .from('gw_scores')
+        .select('user_id, net_points')
+        .lt('gw', gw);
+
+      (prevScores || []).forEach((ps: any) => {
+        const currentTotal = userPreviousScoresMap.get(ps.user_id) || 0;
+        userPreviousScoresMap.set(ps.user_id, currentTotal + (ps.net_points || 0));
+      });
+    }
+
+    // 6. Calculate score for each user
     const scoreRows: any[] = [];
     const updatedPickRows: any[] = [];
 
@@ -136,6 +153,9 @@ export class ScoringService {
         isFinal,
       });
 
+      const previousTotal = userPreviousScoresMap.get(userId) || 0;
+      const cumulativeTotal = previousTotal + scoreResult.netPoints;
+
       // Prepare gw_scores row
       scoreRows.push({
         gw,
@@ -143,7 +163,7 @@ export class ScoringService {
         raw_points: scoreResult.rawPoints,
         transfer_cost: scoreResult.transferCostApplied,
         net_points: scoreResult.netPoints,
-        total_points: scoreResult.netPoints, // Cumulative updated below
+        total_points: cumulativeTotal,
         chip: chip || null,
         is_final: isFinal,
         calculated_at: new Date().toISOString(),

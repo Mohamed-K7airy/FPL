@@ -43,18 +43,22 @@ class PointsProvider extends ChangeNotifier {
   void setGw(int gw) {
     if (gw < 1 || gw > 38) return;
     _currentGw = gw;
-    fetchPoints();
+    fetchPoints(gw);
   }
 
-  Future<void> fetchPoints() async {
+  Future<void> fetchPoints([int? gwNum]) async {
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
 
     try {
-      final data = await _api.get('${ApiConstants.points}/$_currentGw');
+      final target = gwNum ?? (_currentGw > 1 ? _currentGw : 'current');
+      final data = await _api.get('${ApiConstants.points}/$target');
       if (data != null) {
         _gwPoints = GameweekPointsModel.fromJson(data);
+        if (data['gw'] != null && data['gw'] is int) {
+          _currentGw = data['gw'];
+        }
       }
     } catch (e) {
       _errorMessage = e.toString();

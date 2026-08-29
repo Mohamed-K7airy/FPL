@@ -1,1 +1,1 @@
-google.com, pub-6219326586167234, DIRECT, f08c47fec0942fa0
+# Monetag ads.txt records can be placed here

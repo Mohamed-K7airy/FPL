@@ -12,6 +12,7 @@ import chipRoutes from './routes/chipRoutes.js';
 import pointsRoutes from './routes/pointsRoutes.js';
 import leagueRoutes from './routes/leagueRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
+import gameweekRoutes from './routes/gameweekRoutes.js';
 import { startScheduler } from './jobs/scheduler.js';
 
 const app = express();
@@ -80,6 +81,7 @@ app.use('/api/chips', chipRoutes);
 app.use('/api/points', pointsRoutes);
 app.use('/api/leagues', leagueRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/gameweeks', gameweekRoutes);
 
 // Start Background Jobs Scheduler
 startScheduler();

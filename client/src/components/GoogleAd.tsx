@@ -9,6 +9,10 @@ interface GoogleAdProps {
   className?: string;
 }
 
-export const GoogleAd: React.FC<GoogleAdProps> = ({ adSlot, adFormat = 'auto', fullWidthResponsive = true, style }) => {
-  return <AdBanner slotId={adSlot} format={adFormat} responsive={fullWidthResponsive} style={style} />;
+/**
+ * @deprecated Google AdSense has been decommissioned in favor of Monetag.
+ * This component remains as a fallback wrapper around AdBanner to preserve layout compatibility.
+ */
+export const GoogleAd: React.FC<GoogleAdProps> = ({ adSlot, adFormat = 'auto', fullWidthResponsive = true, style, className }) => {
+  return <AdBanner slotId={adSlot} format={adFormat} responsive={fullWidthResponsive} style={style} className={className} />;
 };

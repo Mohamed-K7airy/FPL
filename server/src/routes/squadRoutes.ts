@@ -118,11 +118,32 @@ router.get('/', authenticateToken, async (req: AuthenticatedRequest, res: Respon
       }
     }
 
+    const { data: currentGw } = await supabase
+      .from('gameweeks')
+      .select('*')
+      .eq('is_current', true)
+      .maybeSingle();
+
+    const { data: nextGw } = await supabase
+      .from('gameweeks')
+      .select('*')
+      .eq('is_next', true)
+      .maybeSingle();
+
+    const now = Date.now();
+    const currentDeadline = currentGw ? new Date(currentGw.deadline_time).getTime() : 0;
+    const isDeadlinePassed = now >= currentDeadline;
+    const upcomingGw = isDeadlinePassed && nextGw ? nextGw : (currentGw || nextGw);
+
     res.status(200).json({
       squad: squadItems || [],
       bank: computedBank,
       freeTransfers: user?.free_transfers || 1,
       squadComplete: Boolean(user?.squad_complete) && Boolean(squadItems && squadItems.length === 5),
+      currentGw,
+      nextGw,
+      upcomingGw,
+      isDeadlinePassed,
     });
   } catch (err) {
     logger.error(err, 'Error in GET /api/squad');

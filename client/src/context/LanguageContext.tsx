@@ -94,7 +94,7 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Footer
     footerRights: 'جميع الحقوق محفوظة منصة MINI FPL © 2026',
-    adDisclaimer: 'هذا الموقع مستقل ويستخدم إعلانات جوجل AdSense ببيانات مجانية ودعم فني متكامل.',
+    adDisclaimer: 'هذا الموقع مستقل ويوفر تحليلات وإحصائيات فانتازي متكاملة ببيانات مباشرة ودعم فني مستمر.',
 
     // Common
     loading: 'جاري التحميل...',
@@ -190,7 +190,7 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Footer
     footerRights: 'All rights reserved MINI FPL Platform © 2026',
-    adDisclaimer: 'Independent Fantasy Premier League clone powered by live data and AdSense.',
+    adDisclaimer: 'Independent Fantasy Premier League platform powered by live data and analytics.',
 
     // Common
     loading: 'Loading...',

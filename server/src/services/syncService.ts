@@ -53,6 +53,13 @@ export class SyncService {
       const { error: gwErr } = await supabase.from('gameweeks').upsert(gameweeks);
       if (gwErr) throw gwErr;
 
+      // 4. Automatically sync fixtures
+      try {
+        await SyncService.syncFixtures();
+      } catch (fixErr) {
+        logger.warn(fixErr, 'Non-critical: Fixtures sync failed during bootstrap');
+      }
+
       const durationMs = Date.now() - startTime;
       await supabase.from('sync_log').insert({
         kind: 'bootstrap',

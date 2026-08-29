@@ -8,7 +8,8 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export const PointsPage: React.FC = () => {
   const { t, isRtl } = useLanguage();
-  const [gw, setGw] = useState(1);
+  const [gw, setGw] = useState<number>(1);
+  const [activeGwId, setActiveGwId] = useState<number>(1);
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -21,6 +22,9 @@ export const PointsPage: React.FC = () => {
     try {
       const res = await apiFetch<any>(`/points/${gwNum}`);
       setData(res);
+      if (res?.activePointsGwId) {
+        setActiveGwId(res.activePointsGwId);
+      }
     } catch (err) {
       setError((err as Error).message);
     } finally {
@@ -28,9 +32,49 @@ export const PointsPage: React.FC = () => {
     }
   };
 
+  // Initial load: Fetch current active gameweek status first
   useEffect(() => {
-    fetchPoints(gw);
-  }, [gw]);
+    let isMounted = true;
+    const initGameweek = async () => {
+      try {
+        const status = await apiFetch<any>('/gameweeks/status');
+        if (isMounted && status?.activePointsGwId) {
+          const targetGw = status.activePointsGwId;
+          setGw(targetGw);
+          setActiveGwId(targetGw);
+          fetchPoints(targetGw);
+          return;
+        }
+      } catch {
+        // Fallback: fetch current directly
+      }
+      if (isMounted) {
+        fetchPoints(gw);
+      }
+    };
+
+    initGameweek();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const handlePrevGw = () => {
+    const newGw = Math.max(1, gw - 1);
+    setGw(newGw);
+    fetchPoints(newGw);
+  };
+
+  const handleNextGw = () => {
+    const newGw = Math.min(38, gw + 1);
+    setGw(newGw);
+    fetchPoints(newGw);
+  };
+
+  const handleJumpToCurrent = () => {
+    setGw(activeGwId);
+    fetchPoints(activeGwId);
+  };
 
   const formattedPicks: SquadSlotItem[] = (data?.picks || []).map((item: any) => ({
     playerId: item.player_id,
@@ -85,57 +129,124 @@ export const PointsPage: React.FC = () => {
           position: 'relative',
         }}
       >
-        {/* Gameweek Selector Bar */}
+        {/* Gameweek Selector Bar with Live Status */}
         <div
           style={{
             display: 'flex',
+            flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '16px',
-            marginBottom: '20px',
+            gap: '8px',
+            marginBottom: '16px',
           }}
         >
-          <button
-            onClick={() => setGw((prev) => Math.max(1, prev - 1))}
+          <div
             style={{
-              background: 'rgba(255, 255, 255, 0.25)',
-              border: 'none',
-              color: '#ffffff',
-              borderRadius: '12px',
-              width: '36px',
-              height: '36px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              cursor: 'pointer',
-              transition: 'all 0.2s ease',
+              gap: '16px',
             }}
           >
-            <ChevronLeft size={22} />
-          </button>
+            <button
+              onClick={handlePrevGw}
+              disabled={gw <= 1 || loading}
+              title={isRtl ? 'الجولة السابقة' : 'Previous Gameweek'}
+              style={{
+                background: 'rgba(255, 255, 255, 0.25)',
+                border: 'none',
+                color: '#ffffff',
+                borderRadius: '12px',
+                width: '36px',
+                height: '36px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: gw <= 1 ? 'not-allowed' : 'pointer',
+                opacity: gw <= 1 ? 0.4 : 1,
+                transition: 'all 0.2s ease',
+              }}
+            >
+              {isRtl ? <ChevronRight size={22} /> : <ChevronLeft size={22} />}
+            </button>
 
-          <h2 style={{ margin: 0, fontSize: '1.6rem', fontWeight: 900, letterSpacing: '-0.5px' }}>
-            {isRtl ? `الجولة ${gw}` : `Gameweek ${gw}`}
-          </h2>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <h2 style={{ margin: 0, fontSize: '1.7rem', fontWeight: 900, letterSpacing: '-0.5px' }}>
+                {isRtl ? `الجولة ${gw}` : `Gameweek ${gw}`}
+              </h2>
+            </div>
 
-          <button
-            onClick={() => setGw((prev) => Math.min(38, prev + 1))}
-            style={{
-              background: 'rgba(255, 255, 255, 0.25)',
-              border: 'none',
-              color: '#ffffff',
-              borderRadius: '12px',
-              width: '36px',
-              height: '36px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              transition: 'all 0.2s ease',
-            }}
-          >
-            <ChevronRight size={22} />
-          </button>
+            <button
+              onClick={handleNextGw}
+              disabled={gw >= 38 || loading}
+              title={isRtl ? 'الجولة التالية' : 'Next Gameweek'}
+              style={{
+                background: 'rgba(255, 255, 255, 0.25)',
+                border: 'none',
+                color: '#ffffff',
+                borderRadius: '12px',
+                width: '36px',
+                height: '36px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: gw >= 38 ? 'not-allowed' : 'pointer',
+                opacity: gw >= 38 ? 0.4 : 1,
+                transition: 'all 0.2s ease',
+              }}
+            >
+              {isRtl ? <ChevronLeft size={22} /> : <ChevronRight size={22} />}
+            </button>
+          </div>
+
+          {/* Dynamic Status Pill */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            {gw === activeGwId ? (
+              <div
+                style={{
+                  background: '#10b981',
+                  color: '#ffffff',
+                  padding: '2px 10px',
+                  borderRadius: '20px',
+                  fontSize: '0.75rem',
+                  fontWeight: 800,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '5px',
+                  boxShadow: '0 2px 6px rgba(16, 185, 129, 0.4)',
+                }}
+              >
+                <span
+                  style={{
+                    width: '7px',
+                    height: '7px',
+                    borderRadius: '50%',
+                    background: '#ffffff',
+                    display: 'inline-block',
+                    animation: 'pulse 1.5s infinite',
+                  }}
+                />
+                {isRtl ? 'الجولة الحالية (مباشر)' : 'Current Gameweek (Live)'}
+              </div>
+            ) : (
+              <button
+                onClick={handleJumpToCurrent}
+                style={{
+                  background: 'rgba(255, 255, 255, 0.2)',
+                  border: '1px solid rgba(255, 255, 255, 0.4)',
+                  color: '#ffffff',
+                  padding: '3px 12px',
+                  borderRadius: '20px',
+                  fontSize: '0.75rem',
+                  fontWeight: 800,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                }}
+              >
+                {isRtl ? `← الانتقال للجولة الحالية (${activeGwId})` : `→ Jump to Current GW (${activeGwId})`}
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Squad / List Toggle Segmented Pill */}

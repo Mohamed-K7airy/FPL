@@ -23,26 +23,36 @@ function generateLeagueCode(): string {
   return code;
 }
 
-async function computeLiveScoresMap(targetGw: number = 1): Promise<Map<number, number>> {
+async function computeLiveScoresMap(targetGw?: number): Promise<Map<number, number>> {
   const liveSquadScoreMap = new Map<number, number>();
 
   try {
+    let resolvedGw = targetGw;
+    if (!resolvedGw) {
+      const { data: currentGw } = await supabase
+        .from('gameweeks')
+        .select('id')
+        .eq('is_current', true)
+        .maybeSingle();
+      resolvedGw = currentGw?.id || 1;
+    }
+
     // 1. Fetch live player stats for this GW
     const { data: playerGwStats } = await supabase
       .from('player_gw_stats')
       .select('player_id, total_points')
-      .eq('gw', targetGw);
+      .eq('gw', resolvedGw);
 
     const playerLiveStatsMap = new Map<number, number>();
     (playerGwStats || []).forEach((s: any) => {
-      playerLiveStatsMap.set(s.player_id, s.total_points);
+      playerLiveStatsMap.set(s.player_id, s.total_points || 0);
     });
 
     // 2. Fetch chips
     const { data: activeChips } = await supabase
       .from('chips_used')
       .select('user_id, chip')
-      .eq('gw', targetGw);
+      .eq('gw', resolvedGw);
 
     const userChipMap = new Map<number, string>();
     (activeChips || []).forEach((c: any) => {
@@ -52,16 +62,14 @@ async function computeLiveScoresMap(targetGw: number = 1): Promise<Map<number, n
     // 3. Fetch all user squads
     const { data: allSquads } = await supabase
       .from('squad')
-      .select('user_id, player_id, slot, is_captain, is_vice, players(position, total_points)')
+      .select('user_id, player_id, slot, is_captain, is_vice, players(position)')
       .order('slot', { ascending: true });
 
     (allSquads || []).forEach((item: any) => {
       if (item.slot <= 5) {
         const is3xc = userChipMap.get(item.user_id) === '3xc';
         const multiplier = item.is_captain ? (is3xc ? 3 : 2) : 1;
-        const pts = playerLiveStatsMap.has(item.player_id)
-          ? (playerLiveStatsMap.get(item.player_id) ?? 0)
-          : (targetGw === 1 ? (item.players?.total_points ?? 0) : 0);
+        const pts = playerLiveStatsMap.get(item.player_id) ?? 0;
 
         const current = liveSquadScoreMap.get(item.user_id) || 0;
         liveSquadScoreMap.set(item.user_id, current + (pts * multiplier));
@@ -78,7 +86,15 @@ async function computeLiveScoresMap(targetGw: number = 1): Promise<Map<number, n
 router.get('/leaderboard', async (req: Request, res: Response): Promise<void> => {
   try {
     const type = (req.query.type as string) || 'overall'; // 'overall' | 'weekly' | 'monthly'
-    const targetGw = req.query.gw ? parseInt(req.query.gw as string, 10) : 1;
+    let targetGw = req.query.gw ? parseInt(req.query.gw as string, 10) : undefined;
+    if (!targetGw) {
+      const { data: currentGwRecord } = await supabase
+        .from('gameweeks')
+        .select('id')
+        .eq('is_current', true)
+        .maybeSingle();
+      targetGw = currentGwRecord?.id || 1;
+    }
     const targetMonth = (req.query.month as string) || 'august';
 
     const page = parseInt(req.query.page as string || '1', 10);

@@ -2,6 +2,7 @@ import { Router, Response } from 'express';
 import { supabase } from '../db/supabase.js';
 import { logger } from '../utils/logger.js';
 import { authenticateToken, AuthenticatedRequest } from '../middlewares/authMiddleware.js';
+import { SyncService } from '../services/syncService.js';
 
 const router = Router();
 
@@ -23,13 +24,47 @@ router.get('/history', authenticateToken, async (req: AuthenticatedRequest, res:
   }
 });
 
-// GET /api/points/:gw
-router.get('/:gw', authenticateToken, async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+// Handler for points by gameweek or current
+async function handleGetPoints(req: AuthenticatedRequest, res: Response, paramGw?: string): Promise<void> {
   try {
     const userId = req.user!.id;
-    const gw = parseInt(String(req.params.gw), 10);
 
-    // Fetch user GW score summary
+    // 1. Resolve Gameweek number
+    let gw: number;
+    const { data: allGws } = await supabase
+      .from('gameweeks')
+      .select('*')
+      .order('id', { ascending: true });
+
+    const currentActiveGw = (allGws || []).find((g) => g.is_current) || allGws?.[0];
+    const latestFinishedGw = (allGws || []).filter((g) => g.finished).sort((a, b) => b.id - a.id)?.[0];
+    const defaultPointsGwId = currentActiveGw ? currentActiveGw.id : (latestFinishedGw ? latestFinishedGw.id : 1);
+
+    if (!paramGw || paramGw === 'current' || paramGw === 'latest') {
+      gw = defaultPointsGwId;
+    } else {
+      const parsed = parseInt(paramGw, 10);
+      gw = isNaN(parsed) ? defaultPointsGwId : Math.max(1, Math.min(38, parsed));
+    }
+
+    const currentGwInfo = (allGws || []).find((g) => g.id === gw);
+
+    // 2. On-demand auto-sync for live/finished gameweeks if stats are missing
+    const { count: existingStatsCount } = await supabase
+      .from('player_gw_stats')
+      .select('*', { count: 'exact', head: true })
+      .eq('gw', gw);
+
+    if ((!existingStatsCount || existingStatsCount === 0) && gw <= (currentActiveGw?.id || 38)) {
+      try {
+        logger.info({ gw }, 'On-demand sync: No player stats found for gameweek in DB, syncing from FPL API');
+        await SyncService.syncLive(gw);
+      } catch (syncErr) {
+        logger.warn({ gw, err: syncErr }, 'On-demand sync failed, falling back to cached DB records');
+      }
+    }
+
+    // 3. Fetch user GW score summary
     const { data: scoreSummary } = await supabase
       .from('gw_scores')
       .select('*')
@@ -37,7 +72,7 @@ router.get('/:gw', authenticateToken, async (req: AuthenticatedRequest, res: Res
       .eq('gw', gw)
       .maybeSingle();
 
-    // Fetch active chip for this user in this GW
+    // 4. Fetch active chip for this user in this GW
     const { data: chipRecord } = await supabase
       .from('chips_used')
       .select('chip')
@@ -48,7 +83,7 @@ router.get('/:gw', authenticateToken, async (req: AuthenticatedRequest, res: Res
     const activeChip = (scoreSummary?.chip || chipRecord?.chip || null) as string | null;
     const isTripleCaptain = activeChip === '3xc';
 
-    // Fetch user picks snapshot for this GW (or fallback to current squad for pre-season / unfinalized GW)
+    // 5. Fetch user picks snapshot for this GW (or fallback to current squad for pre-season / unfinalized GW)
     let { data: picks } = await supabase
       .from('gw_picks')
       .select('*, players(*, fpl_teams(name, short_name))')
@@ -77,7 +112,7 @@ router.get('/:gw', authenticateToken, async (req: AuthenticatedRequest, res: Res
       }));
     }
 
-    // Fetch player live stats for this GW
+    // 6. Fetch player live stats for this specific GW
     const playerIds = picks.map((p: any) => p.player_id);
     const { data: playerStats } = await supabase
       .from('player_gw_stats')
@@ -90,9 +125,8 @@ router.get('/:gw', authenticateToken, async (req: AuthenticatedRequest, res: Res
 
     const detailedPicks = picks.map((p: any) => {
       const stat = statsMap.get(p.player_id) || {};
-      const singlePoints = stat.total_points !== undefined
-        ? stat.total_points
-        : (gw === 1 ? (p.players?.total_points || 0) : 0);
+      // Single GW points MUST come exclusively from player_gw_stats (never cumulative season total)
+      const singlePoints = typeof stat.total_points === 'number' ? stat.total_points : 0;
       const multiplier = p.slot <= 5 ? (p.is_captain ? (isTripleCaptain ? 3 : 2) : 1) : 0;
       return {
         ...p,
@@ -103,12 +137,12 @@ router.get('/:gw', authenticateToken, async (req: AuthenticatedRequest, res: Res
       };
     });
 
-    // Compute live raw points (starters in slots 1..5)
+    // 7. Compute live raw points (starters in slots 1..5)
     const liveRawPoints = detailedPicks
       .filter((p: any) => p.slot <= 5)
       .reduce((sum: number, p: any) => sum + (p.calculatedPoints || 0), 0);
 
-    // Fetch transfer costs for this GW (0 for pre-season / GW <= 1 or free chips)
+    // 8. Fetch transfer costs for this GW (0 for pre-season / GW <= 1 or free chips)
     const isFreeTransfers = activeChip === 'wildcard' || activeChip === 'freehit' || gw <= 1;
     let effectiveTransferCost = 0;
 
@@ -123,7 +157,7 @@ router.get('/:gw', authenticateToken, async (req: AuthenticatedRequest, res: Res
     }
     const liveNetPoints = liveRawPoints - effectiveTransferCost;
 
-    // Fetch Average and Highest Points across all users for this GW
+    // 9. Fetch Average and Highest Points across all users for this GW
     const { data: allGwScores } = await supabase
       .from('gw_scores')
       .select('net_points')
@@ -137,16 +171,8 @@ router.get('/:gw', authenticateToken, async (req: AuthenticatedRequest, res: Res
       highestScore = Math.max(...scores);
       const total = scores.reduce((a: number, b: number) => a + b, 0);
       avgScore = Math.round(total / scores.length);
-    } else {
-      const { data: gwInfo } = await supabase
-        .from('gameweeks')
-        .select('avg_score')
-        .eq('id', gw)
-        .maybeSingle();
-
-      if (gwInfo?.avg_score) {
-        avgScore = gwInfo.avg_score;
-      }
+    } else if (currentGwInfo?.avg_score) {
+      avgScore = currentGwInfo.avg_score;
     }
 
     const finalSummary = {
@@ -162,6 +188,10 @@ router.get('/:gw', authenticateToken, async (req: AuthenticatedRequest, res: Res
 
     res.status(200).json({
       gw,
+      gwName: currentGwInfo?.name || `Gameweek ${gw}`,
+      isCurrent: Boolean(currentGwInfo?.is_current),
+      isFinished: Boolean(currentGwInfo?.finished),
+      activePointsGwId: defaultPointsGwId,
       summary: finalSummary,
       userScore: finalSummary.net_points,
       user_score: finalSummary.net_points,
@@ -172,9 +202,19 @@ router.get('/:gw', authenticateToken, async (req: AuthenticatedRequest, res: Res
       picks: detailedPicks,
     });
   } catch (err) {
-    logger.error(err, 'Error in GET /api/points/:gw');
+    logger.error(err, 'Error in handleGetPoints');
     res.status(500).json({ error: { code: 'SERVER_ERROR', message: 'Failed to fetch points breakdown.' } });
   }
+}
+
+// GET /api/points (default to current active gameweek)
+router.get('/', authenticateToken, async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  await handleGetPoints(req, res);
+});
+
+// GET /api/points/:gw
+router.get('/:gw', authenticateToken, async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  await handleGetPoints(req, res, String(req.params.gw));
 });
 
 export default router;

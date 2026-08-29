@@ -24,20 +24,16 @@ export function startScheduler(): void {
         .from('gameweeks')
         .select('*')
         .eq('is_current', true)
-        .single();
+        .maybeSingle();
 
       if (!currentGw) return;
 
-      // Check if any match in current GW is started and not finished
-      const { data: activeFixtures } = await supabase
-        .from('fixtures')
-        .select('id')
-        .eq('gw', currentGw.id)
-        .eq('started', true)
-        .eq('finished', false);
+      const deadline = new Date(currentGw.deadline_time).getTime();
+      const now = Date.now();
 
-      if (activeFixtures && activeFixtures.length > 0) {
-        logger.info({ gw: currentGw.id }, 'Cron: Active matches detected, syncing live stats');
+      // If current gameweek is underway (deadline passed and not yet finalized)
+      if (now >= deadline && !currentGw.finished) {
+        logger.info({ gw: currentGw.id }, 'Cron: Active gameweek underway, syncing live stats and scores');
         await SyncService.syncLive(currentGw.id);
         await ScoringService.calculateScores(currentGw.id, false);
       }

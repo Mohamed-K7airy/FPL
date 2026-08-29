@@ -27,6 +27,7 @@ export const TransfersPage: React.FC = () => {
   const [activePlayerModal, setActivePlayerModal] = useState<PlayerDetailData | null>(null);
 
   const [gw, setGw] = useState(1);
+  const [gwInfo, setGwInfo] = useState<any>(null);
   const [hideFixtures, setHideFixtures] = useState(false);
 
   const [squadSlots, setSquadSlots] = useState<Record<number, any | null>>({
@@ -43,7 +44,21 @@ export const TransfersPage: React.FC = () => {
 
   const fetchExistingSquad = async () => {
     try {
-      const data = await apiFetch<{ squad: any[]; squadComplete: boolean }>('/squad');
+      const data = await apiFetch<{
+        squad: any[];
+        squadComplete: boolean;
+        currentGw?: any;
+        nextGw?: any;
+        upcomingGw?: any;
+        isDeadlinePassed?: boolean;
+      }>('/squad');
+
+      const activeInfo = data.upcomingGw || data.currentGw;
+      if (activeInfo) {
+        setGwInfo(activeInfo);
+        setGw(activeInfo.id || 2);
+      }
+
       if (data.squad && data.squad.length > 0) {
         setHasExistingSquad(true);
         const newSlots: Record<number, any> = { 1: null, 2: null, 3: null, 4: null, 5: null };
@@ -543,26 +558,26 @@ export const TransfersPage: React.FC = () => {
         <div className="fpl-pitch-panel-col">
           {/* Top Gradient Container Wrapper */}
           <div className="fpl-pitch-master-card">
-            {/* Top Bar Navigation (السابق / الجولة 1 / التالي) */}
-            <div className="fpl-top-nav-bar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <button
-                onClick={() => setGw((prev) => Math.max(1, prev - 1))}
-                className="fpl-nav-purple-btn"
-              >
-                {isRtl ? 'السابق' : 'Previous'}
-              </button>
-
-              <div className="fpl-gw-pill-badge" style={{ margin: '0 auto' }}>
-                <span className="fpl-dot-live" />
-                <span>{isRtl ? `الجولة ${gw}` : `Gameweek ${gw}`}</span>
+            {/* Top Bar: Official FPL Style Transfers Gameweek & Deadline Badge */}
+            <div className="fpl-top-nav-bar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <div className="fpl-gw-pill-badge" style={{ margin: 0 }}>
+                  <span className="fpl-dot-live" />
+                  <span>{gwInfo ? (isRtl ? `انتقالات ${gwInfo.name || `الجولة ${gw}`}` : `${gwInfo.name || `Gameweek ${gw}`} Transfers`) : (isRtl ? `الجولة ${gw}` : `Gameweek ${gw}`)}</span>
+                </div>
+                {gwInfo?.deadline_time && (
+                  <span style={{ fontSize: '0.78rem', color: 'rgba(255, 255, 255, 0.9)', fontWeight: 700 }}>
+                    {isRtl ? 'الموعد النهائي: ' : 'Deadline: '}
+                    {new Date(gwInfo.deadline_time).toLocaleDateString(isRtl ? 'ar-EG' : 'en-GB', {
+                      weekday: 'short',
+                      day: 'numeric',
+                      month: 'short',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    })}
+                  </span>
+                )}
               </div>
-
-              <button
-                onClick={() => setGw((prev) => Math.min(38, prev + 1))}
-                className="fpl-nav-purple-btn"
-              >
-                {isRtl ? 'التالي' : 'Next'}
-              </button>
             </div>
 
             {/* Official FPL Transfers Stat Cards Row (خواص الانتقالات / الميزانية المتبقية / اللاعبون المختارون) */}
